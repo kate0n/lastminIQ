@@ -1,0 +1,43 @@
+.button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 16px;
+  color: #fff;
+  width: 100%;
+  max-width: 264px;
+  height: 34px;
+  padding: 5px 14px 5px 24px;
+  // box-shadow: $shadow;
+  position: relative;
+  font-size: 20px;
+
+  &--pink {
+    background-color: $pink;
+  }
+
+  &--blue {
+    background-color: $blue;
+  }
+
+  &--green {
+    background-color: $green;
+  }
+
+  &--gray {
+    background-color: $dark-gray;
+  }
+
+  &--fb {
+    background-color: #435081;
+    width: 274px;
+    &:before {
+      content: url("/fb-logo.svg");
+      position: absolute;
+      top: 6px;
+      left: 14px;
+      width: 23px;
+      height: 23px;
+    }
+  }
+}

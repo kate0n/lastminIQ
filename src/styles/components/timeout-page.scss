@@ -1,0 +1,14 @@
+.timeout-page {
+  justify-content: flex-start;
+  margin-top: 51px;
+
+  &__warning {
+    width: 204px;
+    height: 204px;
+    background-color: $pink;
+    color: #fff;
+    border-radius: 50%;
+    @include flex-center;
+    cursor: pointer;
+  }
+}

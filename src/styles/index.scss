@@ -1,0 +1,209 @@
+@import "utils/normalize";
+@import "utils/reset";
+@import "variables";
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Raleway-Medium"),
+    url("../styles/fonts/Raleway-Medium.ttf") format("opentype");
+  // url("../../static/fonts/gt-walsheim-medium.woff2") format("woff2"),
+  // url("../../static/fonts/gt-walsheim-medium.woff") format("woff");
+}
+
+body,
+html {
+  overflow-x: hidden;
+  overflow: auto;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Raleway";
+  font-weight: 400;
+  color: #000;
+  background-color: #fff;
+  overscroll-behavior: contain;
+  -webkit-font-smoothing: antialiased;
+}
+
+// body {
+//   position: fixed; //для скрола на ios
+//   -webkit-overflow-scrolling: scroll;
+// }
+
+.app-wrapper {
+  height: 100%;
+  width: 100%;
+  transition: all 0.8s;
+  transform: translateX(0);
+  max-width: 700px;
+  margin: 0 auto;
+  &--open {
+    height: 100%;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    transition: all 0.8s;
+    transform: translateX(-80%);
+  }
+}
+
+#___gatsby {
+  overflow-x: hidden;
+  height: 100%;
+}
+
+#gatsby-focus-wrapper {
+  height: 100%;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.outer-container {
+  width: 100%;
+  max-width: 700px;
+  height: 100%;
+  margin: 0 auto;
+  // min-height: 100vh;
+  @include flex-column-center;
+
+  // @media (max-width: $breakpoint) {
+  //   min-height: calc(100vh - 70px);
+  // }
+}
+
+.inner-container {
+  width: 100%;
+  height: 100%;
+  padding: 0 32px;
+  @include flex-column-center;
+  justify-content: flex-start;
+}
+
+.text-lg {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+.text-md {
+  font-size: 21px;
+  line-height: 29px;
+}
+
+.text-sm {
+  font-size: 16px;
+  line-height: 24px;
+  color: $dark-gray;
+}
+
+.text-gray {
+  font-size: 18px;
+  line-height: 24px;
+  color: $dark-gray;
+}
+
+.main {
+  justify-content: flex-start;
+}
+
+.logo {
+  &__wrapper {
+    width: 100%;
+    max-width: 256px;
+    height: 64px;
+    margin-bottom: 87px;
+    margin-top: 80px;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.quiz-header {
+  width: 100%;
+  height: 47px;
+  padding: 2px 0;
+
+  background-image: linear-gradient(
+    to right,
+    #df248d 0%,
+    #005fc9 32%,
+    #007a74 56%,
+    #005fc9 78%,
+    #df248d 101%
+  );
+  border-right: none;
+  border-left: none;
+  @include flex-center;
+
+  &__text {
+    width: 100%;
+    height: 100%;
+    @include flex-center;
+    background-color: #fff;
+    color: $dark-gray;
+  }
+}
+
+.lang-wrapper {
+  @include flex-center;
+  cursor: pointer;
+}
+
+.lang {
+  margin-left: 32px;
+  position: relative;
+  padding: 16px 0;
+  width: 150px;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 1px;
+    background-color: #808080;
+  }
+}
+
+.lang-wrapper:last-child .lang:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  height: 1px;
+  background-color: #808080;
+}
+
+@import "components/direct-url";
+@import "components/home-page";
+@import "components/quiz-start";
+@import "components/question-page";
+@import "components/timeout-page";
+@import "components/answer-result-page";
+@import "components/final-page";
+@import "components/payment-page";
+
+@import "components/header";
+@import "components/button";
+@import "components/sidebar-menu";
