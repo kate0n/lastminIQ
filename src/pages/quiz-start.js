@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
+import "../styles/index.scss"
 
 const QuizStart = () => {
   const { state } = React.useContext(Context)
@@ -19,7 +20,10 @@ const QuizStart = () => {
           </div>
 
           <div className="quiz-start__desc text-sm">
-            {state.dictionary.info.startHintText}
+            {state.dictionary.info.startHintText.replace(
+              "{accrualPoints}",
+              state.dictionary.settings.accrualPoints
+            )}
           </div>
         </div>
         <Button

@@ -28,8 +28,18 @@ module.exports = {
       },
     },
     `gatsby-plugin-sass`,
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    // {
+    //   resolve: `gatsby-plugin-intl`,
+    //   options: {
+    //     // language JSON resource path
+    //     path: `${__dirname}/locale`,
+    //     // supported language
+    //     languages: [`LV`, `RU`, `LT`, `EE`, `EN`, `FI`],
+    //     // language file path
+    //     defaultLanguage: `EN`,
+    //     // option to redirect to `/EN` when connecting `/`
+    //     redirect: true,
+    //   },
+    // },
   ],
 }

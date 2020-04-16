@@ -6,7 +6,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
   const { state, dispatch } = React.useContext(Context)
 
   const logout = () => {
-    navigate("/")
+    navigate("/login-page")
     dispatch({ type: "MIRAGE", payload: false })
     dispatch({ type: "LOGOUT" })
   }
@@ -37,8 +37,10 @@ const SidebarMenu = ({ isMenuOpen }) => {
 
         {/* score */}
         <div className="sidebar-menu__user-score">
-          {state.dictionary.info.sidebarScoreText}:{" "}
-          {(state.isBrowser && localStorage.getItem("score")) || 0}
+          {state.dictionary.info.sidebarScoreText.replace(
+            "{currentProgress}",
+            (state.isBrowser && localStorage.getItem("score")) || 0
+          )}
         </div>
 
         {/* score */}

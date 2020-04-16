@@ -14,17 +14,18 @@ const initialState = {
     userID: "",
   },
   score: 0, // текущий счет
-  accrualPoints: 5, // кол-во очков за верный ответ (0!!)
   subscription: false, // есть ли подписка
   countUserQuestions: 0, // кол-во вопросов, на которые юзер ответил
-  countFreeAnswers: 5, // кол-во free вопросов (оставить 0)
-  maxFreeQuestions: 15, // макс.кол-во вопросов (с подпиской) (оставить 0)
-  dictionary: config.default,
-  isLoading: false, //!!!!
+  intermediatePart: "", // кол-во free вопросов (оставить 0)
+  questionCount: "", // (длина массива в questions)
+  dictionary: config.default, // ""
+  questions: questions.default, //questions.default
+  answers: answers.default, // answers.default
+  lang: "EN",
+  // <===
+  isLoading: true, // вернуть на true
   isBrowser: typeof document !== `undefined`,
-  lang: "eng",
-  questions: questions.default,
-  answers: answers.default,
+
   mirage: false,
 }
 
@@ -75,7 +76,6 @@ const reducer = (state, action) => {
       }
 
     case "ADD_SUBSCRIPTION":
-      console.log("subscription", action.payload, typeof action.payload)
       localStorage.setItem("subscription", action.payload)
       return {
         ...state,
@@ -86,9 +86,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         dictionary: action.payload,
-        accrualPoints: parseInt(action.payload.settings.accrualPoints),
-        countFreeAnswers: parseInt(action.payload.settings.intermediatePart),
-        maxFreeQuestions: 15,
+        intermediatePart: parseInt(action.payload.settings.intermediatePart),
       }
 
     case "IS_LOADING":
@@ -107,6 +105,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         questions: action.payload,
+        questionCount: action.payload.questions.length,
       }
     case "ANSWERS":
       return {
@@ -126,6 +125,7 @@ const reducer = (state, action) => {
 
 const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  // <=========== MIRAGE ========>
   state.mirage &&
     new Server({
       models: {
@@ -159,58 +159,64 @@ const ContextProvider = ({ children }) => {
 
         // ОБНОВИТЬ ЮЗЕРА
         this.post("/updateStatusForUser", (schema, request) => {
+          // все юзеры в LS%
+          console.log("!!!!")
           const users = JSON.parse(localStorage.getItem("users"))
-          let id = JSON.parse(request.requestBody)[0]
+          console.log("user in LS", JSON.parse(localStorage.getItem("users")))
+          // юзер с обновленной инфой:
           let updatedUserInfo = JSON.parse(request.requestBody)
-          console.log(
-            "id",
-            id,
-            "updatedUserInfo",
-            updatedUserInfo,
-            "find in LS",
-            users[id]
-          )
-          users[id] = updatedUserInfo
+          // нужный юзер в LS%
+          users[updatedUserInfo[0]] = updatedUserInfo
           localStorage.setItem("users", JSON.stringify(users))
           return users
         })
       },
     })
+  // <=========== MIRAGE ========>
 
-  // React.useEffect(() => {
-  //   fetch("/config.json")
-  //     .then(response => {
-  //       return response.text()
-  //     })
-  //     .then(data => {
-  //       dispatch({ type: "DICTIONARY", payload: JSON.parse(data) })
-  //       dispatch({ type: "IS_LOADING", payload: false })
-  //     })
-  //     .catch(err => console.log("Error Reading data ", +err))
+  // <=========== DICTIONARY, QUESTIONS, ANSWERS ========>
+  const lang = state.isBrowser && localStorage.getItem("lang")
 
-  //   // запрос вопросов
-  //   fetch("/questions.json")
-  //     .then(response => {
-  //       dispatch({ type: "IS_LOADING", payload: true })
-  //       return response.text()
-  //     })
-  //     .then(data => {
-  //       dispatch({ type: "QUESTIONS", payload: JSON.parse(data) })
-  //       dispatch({ type: "IS_LOADING", payload: false })
-  //     })
-  //     .catch(err => console.log("Error Reading data ", +err))
-  //   // запрос ответов
-  //   fetch("/answers.json")
-  //     .then(response => {
-  //       dispatch({ type: "IS_LOADING", payload: true })
-  //       return response.text()
-  //     })
-  //     .then(data => {
-  //       dispatch({ type: "ANSWERS", payload: JSON.parse(data) })
-  //       dispatch({ type: "IS_LOADING", payload: false })
-  //     })
-  //     .catch(err => console.log("Error Reading data ", +err))
-  // }, [])
+  React.useEffect(() => {
+    // console.log(`/locale/${lang}.json`)
+    fetch(`/locale/${lang}.json`)
+      .then(response => {
+        dispatch({ type: "IS_LOADING", payload: true })
+        return response.text()
+      })
+      .then(data => {
+        console.log("DICTIONARY  fetch")
+        dispatch({ type: "DICTIONARY", payload: JSON.parse(data) })
+        dispatch({ type: "IS_LOADING", payload: false })
+      })
+      .catch(err => console.log("Error Reading data ", +err))
+
+    // QUESTIONS
+    fetch("/questions.json")
+      .then(response => {
+        dispatch({ type: "IS_LOADING", payload: true })
+        return response.text()
+      })
+      .then(data => {
+        console.log("QUESTIONS  fetch")
+        dispatch({ type: "QUESTIONS", payload: JSON.parse(data) })
+        dispatch({ type: "IS_LOADING", payload: false })
+      })
+      .catch(err => console.log("Error Reading data ", +err))
+    // ANSWERS
+    fetch("/answers.json")
+      .then(response => {
+        dispatch({ type: "IS_LOADING", payload: true })
+        return response.text()
+      })
+      .then(data => {
+        console.log("ANSWERS  fetch")
+        dispatch({ type: "ANSWERS", payload: JSON.parse(data) })
+        dispatch({ type: "IS_LOADING", payload: false })
+      })
+      .catch(err => console.log("Error Reading data ", +err))
+  }, [lang])
+
   return (
     <Context.Provider
       value={{

@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
+import "../styles/index.scss"
 
 const TimeoutPage = ({ location }) => {
   const { state } = React.useContext(Context)

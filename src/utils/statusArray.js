@@ -1,6 +1,7 @@
 import React from "react"
 import Context from "../context/Context"
 
+// массив значений для отправки на сервер при создании/обновлении юзера
 export const StatusArray = () => {
   const { state } = React.useContext(Context)
 
@@ -19,20 +20,20 @@ export const StatusArray = () => {
     (state.isBrowser && localStorage.getItem("subscription")) ||
     state.subscription
 
-  const lang = (state.isBrowser && localStorage.getItem("lang")) || state.lang
+  const lang = state.isBrowser && localStorage.getItem("lang")
 
   const userInfo =
     (state.isBrowser && JSON.parse(localStorage.getItem("userInfo"))) ||
     state.userInfo
 
   const statusArray = [
-    userInfo.userID || "",
-    score || "",
-    userQuestions || "",
-    subscription || "",
-    lang || "",
-    userInfo.name || "",
-    userInfo.email || "",
+    userInfo.userID,
+    score,
+    userQuestions,
+    subscription,
+    lang,
+    userInfo.name,
+    userInfo.email,
   ]
 
   return statusArray

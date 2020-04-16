@@ -7,18 +7,19 @@ import Context from "../context/Context"
 import FacebookLogin from "react-facebook-login"
 import IsUserHaveFreeQuestion, {
   IsSubsribtionOffer,
+  СountUserQuestions,
 } from "../utils/isUserHaveFreeQuestions"
 
 const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
+
+  // <------------------------удалить после отключения miragejs
   const { isReload = false } = location.state || ""
   if (isReload) {
     navigate("/login-page", { state: { isReload: false } })
     window.location.reload()
-  }
+  } // ------------------------------------------------------->
 
-  const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
-  const isSubsribtionOffer = IsSubsribtionOffer()
   const responseFacebook = response => {
     response.status !== "unkown" &&
       dispatch({
@@ -36,64 +37,62 @@ const LoginPage = ({ location }) => {
       state.score,
       state.countUserQuestions,
       state.subscription,
-      state.lang,
+      state.isBrowser && localStorage.getItem("lang"),
       response.name,
       response.email,
     ]
 
+    // <------ удалить после отключения miragejs
     dispatch({ type: "MIRAGE", payload: true })
+    // ---------->
 
-    //проверка наличия в системе
+    // <=======================  наличие в системе или создание юзера
     fetch("/api/getStatusForUser", {
       method: "POST",
       body: response.userID,
     })
       .then(response => (response.status === 500 ? false : response.json()))
-      .then(
-        data => (
-          console.log("registrationArray", JSON.stringify(registrationArray)),
-          data
-            ? updateLocalStoreFromServer(data)
-            : // создание нового юзера
-              fetch("/api/createUser", {
-                method: "POST",
-                body: JSON.stringify(registrationArray),
-              })
-                .then(response => response.json())
-                .then(createdUser => console.log("CREATED USER:", createdUser))
-        )
-      )
+      .then(data => {
+        data
+          ? updateLocalStoreFromServer(data)
+          : // создание нового юзера
+            fetch("/api/createUser", {
+              method: "POST",
+              body: JSON.stringify(registrationArray),
+            })
+              .then(response => response.json())
+              .then(createdUser => console.log("CREATED USER:", createdUser))
+      })
 
     const updateLocalStoreFromServer = response => {
+      console.log("update", JSON.parse(response))
+      const responseUserArray = JSON.parse(response)
       dispatch({
         type: "SCORE",
-        payload: response[1],
+        payload: responseUserArray[1],
       })
       dispatch({
         type: "COUNT_USER_QUESTIONS",
-        payload: response[2],
+        payload: responseUserArray[2],
       })
       dispatch({
         type: "ADD_SUBSCRIPTION",
-        payload: response[3],
+        payload: responseUserArray[3],
       })
       dispatch({
         type: "LANG",
-        payload: response[4],
+        payload: responseUserArray[4],
       })
     }
+
     navigate("/home-page")
-    response.status === "unkown" && navigate("/")
-  }
+    response.status === "unkown" && navigate("/login-page")
+  } // ====================================================>
 
-  // кол-во вопросов, на которые ответил юзер
-  const userQuestions =
-    state.isBrowser &&
-    parseInt(
-      localStorage.getItem("countUserQuestions") ||
-        parseInt(state.countUserQuestions)
-    )
-
+  // <==============РЕДИРЕКТ АВТОРИЗОВАННОГО=================
+  const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
+  const isSubsribtionOffer = IsSubsribtionOffer()
+  const userQuestions = СountUserQuestions()
   React.useEffect(
     () =>
       state.isBrowser && !localStorage.getItem("isAuthenticated")
@@ -111,11 +110,12 @@ const LoginPage = ({ location }) => {
       isUserHaveFreeQuestions,
       isSubsribtionOffer,
     ]
-  )
+  ) // ====================================================>
 
   if (state.isLoading) {
     return "Loading..."
   }
+
   return (
     <>
       <Head />
@@ -125,12 +125,17 @@ const LoginPage = ({ location }) => {
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
           <FacebookLogin
-            appId={state.dictionary.settings.facebookToken}
+            appId="630697047779114"
+            //appId={state.dictionary.settings.facebookToken}
             // appId="226488818440629" // for localhost
             fields="name,email,picture"
             onClick={console.log("")}
             callback={responseFacebook}
             icon="fa-facebook"
+            disableMobileRedirect={true}
+            textButton={
+              state.dictionary.info.facebookBtnText || "LOG IN WITH FACEBOOK"
+            }
           />
         </main>
       </div>

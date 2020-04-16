@@ -5,12 +5,24 @@ import Context from "../context/Context"
 
 const Header = ({ isMenuOpen, handleMenuClick }) => {
   const { state, dispatch } = useContext(Context)
+  const [isMobile, setIsMobile] = React.useState(false)
+
+  React.useEffect(() => {
+    state.isBrowser && window.innerWidth <= 700
+      ? setIsMobile(true)
+      : setIsMobile(false)
+  }, [])
 
   const logout = () => {
     dispatch({ type: "MIRAGE", payload: false })
     dispatch({ type: "LOGOUT" })
-    navigate("/")
+    navigate("/login-page")
   }
+
+  const userInfo =
+    state.isBrowser &&
+    localStorage.getItem("userInfo") &&
+    JSON.parse(localStorage.getItem("userInfo"))
 
   return (
     <header
@@ -30,12 +42,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
         <div className="header__user-photo">
           <img
             className="header__user-photo-img"
-            src={
-              (state.isBrowser &&
-                localStorage.getItem("userInfo") &&
-                JSON.parse(localStorage.getItem("userInfo")).photo) ||
-              state.userInfo.photo
-            }
+            src={(userInfo && userInfo.photo) || state.userInfo.photo}
             alt="User photo"
           />
         </div>
@@ -44,18 +51,20 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
           onClick={handleMenuClick}
           className="header__user__dropdown text_sm"
         >
-          {state.isBrowser &&
-            localStorage.getItem("userInfo") &&
-            JSON.parse(localStorage.getItem("userInfo")).name}{" "}
-          &nbsp;
+          {userInfo && userInfo.name}&nbsp;
         </div>
         {/* user  info desktop  */}
-        <div onClick={handleMenuClick} className="header__user-info text_sm">
-          <div>{state.userInfo.name || ""} &nbsp; &nbsp;</div>
+        <div
+          onClick={isMobile ? handleMenuClick : null}
+          className="header__user-info text_sm"
+        >
+          <div>{(userInfo && userInfo.name) || ""}&nbsp; &nbsp;</div>
           <div>
-            {state.dictionary.info.sidebarScoreText}:{" "}
-            {(state.isBrowser && localStorage.getItem("score")) || 0} &nbsp;
-            &nbsp;
+            {state.dictionary.info.sidebarScoreText.replace(
+              "{currentProgress}",
+              (state.isBrowser && localStorage.getItem("score")) || 0
+            )}
+            &nbsp; &nbsp;
           </div>
           <div onClick={logout} className="header__user-info__logout ">
             {state.dictionary.info.sidebarLogoutBtnText}

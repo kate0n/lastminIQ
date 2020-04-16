@@ -1,15 +1,21 @@
 .home-page {
+  // height: 86px;
+
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 86px);
+  overflow: hidden;
   background-image: url("/home-page-bg.jpg");
   background-position: center;
   &__button-group {
-    margin-top: 123px;
+    // margin-top: 123px;
 
-    height: 100%;
     width: 100%;
-    max-height: 222px;
+    // max-height: 222px;
     @include flex-column-center;
     justify-content: space-between;
+
+    .button {
+      margin-bottom: 40px;
+    }
   }
 }

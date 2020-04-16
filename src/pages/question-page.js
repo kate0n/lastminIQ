@@ -3,6 +3,7 @@ import { navigate } from "gatsby"
 import Layout from "../components/layout"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
+import "../styles/index.scss"
 
 import { StatusArray } from "../utils/statusArray"
 
@@ -12,6 +13,7 @@ const QuestionPage = () => {
   const answers = state.answers
   const statusArray = StatusArray()
   let timer
+
   let currentQuestionNumber = parseInt(
     (state.isBrowser && localStorage.getItem("countUserQuestions")) ||
       state.countUserQuestions
@@ -29,17 +31,19 @@ const QuestionPage = () => {
     if (isCorrect) {
       statusArray[1] =
         (parseInt(localStorage.getItem("score")) || state.score) +
-        state.accrualPoints
+        state.dictionary.settings.accrualPoints
     }
+
+    //to server
     statusArray[2] = parseInt(currentQuestionNumber) + 1
+    console.log(JSON.stringify(statusArray))
     fetch("/api/updateStatusForUser", {
       method: "POST",
       body: JSON.stringify(statusArray),
-    })
-      .then(response => response.json())
-      .then(updatedUser => console.log("UPDATED USER:", updatedUser))
+    }).then(response => response)
+    // .then(updatedUser => console.log("UPDATED USER:", updatedUser))
 
-    // +1 бесплатный вопрос
+    // +1  вопрос
     dispatch({
       type: "COUNT_USER_QUESTIONS",
       payload: parseInt(currentQuestionNumber) + 1,
@@ -51,7 +55,7 @@ const QuestionPage = () => {
         type: "SCORE",
         payload:
           (parseInt(localStorage.getItem("score")) || state.score) +
-          state.accrualPoints,
+          state.dictionary.settings.accrualPoints,
       })
   }
 

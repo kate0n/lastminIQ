@@ -4,6 +4,7 @@ import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
 import TextOverlay from "../components/text-overlay"
 import Context from "../context/Context"
+import "../styles/index.scss"
 
 const ContinuePage = () => {
   const { state } = React.useContext(Context)
@@ -17,7 +18,10 @@ const ContinuePage = () => {
           <QuizHeader />
           <TextOverlay text={state.dictionary.info.continueActionText} />
           <div className="quiz-start__desc text-sm">
-            {state.dictionary.info.startHintText}
+            {state.dictionary.info.startHintText.replace(
+              "{accrualPoints}",
+              state.dictionary.settings.accrualPoints
+            )}
           </div>
         </div>
         <Button

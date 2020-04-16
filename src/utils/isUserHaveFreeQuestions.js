@@ -1,6 +1,7 @@
 import React from "react"
 import Context from "../context/Context"
 
+// для определения редиректить ли юзера на subscription-offer
 export const IsSubsribtionOffer = () => {
   const { state } = React.useContext(Context)
 
@@ -13,16 +14,24 @@ export const IsSubsribtionOffer = () => {
     )
 
   // дефолтное кол-во free вопросов
-  const countFreeAnswers =
-    state.isBrowser &&
-    parseInt(
-      localStorage.getItem("countFreeAnswers") ||
-        parseInt(state.countFreeAnswers)
-    )
+  const countFreeAnswers = parseInt(state.intermediatePart)
 
   const isSubsribtionOffer = userQuestions === countFreeAnswers
 
   return isSubsribtionOffer
+}
+
+// кол-во вопросов, на которые ответил юзер
+export const СountUserQuestions = () => {
+  const { state } = React.useContext(Context)
+  const userQuestions =
+    state.isBrowser &&
+    parseInt(
+      localStorage.getItem("countUserQuestions") ||
+        parseInt(state.countUserQuestions)
+    )
+
+  return userQuestions
 }
 
 const IsUserHaveFreeQuestion = () => {
@@ -37,15 +46,10 @@ const IsUserHaveFreeQuestion = () => {
     )
 
   // дефолтное кол-во free вопросов
-  const countFreeAnswers =
-    state.isBrowser &&
-    parseInt(
-      localStorage.getItem("countFreeAnswers") ||
-        parseInt(state.countFreeAnswers)
-    )
+  const intermediatePart = parseInt(state.intermediatePart)
 
-  // макс.кол-во вопросов (с подпиской)
-  const maxQuestions = parseInt(state.maxFreeQuestions)
+  // макс.кол-во вопросов
+  const questionCount = parseInt(state.questionCount)
 
   const subscription =
     state.isBrowser && localStorage.getItem("subscription")
@@ -53,9 +57,15 @@ const IsUserHaveFreeQuestion = () => {
       : state.subscription
 
   const isUserHaveFreeQuestions = subscription
-    ? !(userQuestions === maxQuestions)
-    : !(userQuestions === countFreeAnswers) // true когда остались free вопросы
+    ? !(userQuestions === questionCount)
+    : !(userQuestions === intermediatePart) // true когда остались free вопросы
   return isUserHaveFreeQuestions
 }
 
+export const CurrentProgress = () => {
+  const { state } = React.useContext(Context)
+  const currentProgress =
+    (state.isBrowser && localStorage.getItem("score")) || state.score
+  return currentProgress
+}
 export default IsUserHaveFreeQuestion

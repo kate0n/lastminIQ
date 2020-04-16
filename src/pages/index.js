@@ -40,17 +40,19 @@ const langs = [
 
 const IndexPage = () => {
   const { state, dispatch } = React.useContext(Context)
+
   const handleLangClick = lang => {
     navigate("login-page", { state: { isReload: true } })
     dispatch({
       type: "LANG",
       payload: lang,
     })
+    // lang to server
   }
 
-  if (state.isLoading) {
-    return "Loading..."
-  }
+  // if (state.isLoading) {
+  //   return "Loading..."
+  // }
   return (
     <>
       <Head />

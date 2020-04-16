@@ -4,23 +4,21 @@ import Button, { ButtonWidthExternalLink } from "../components/button"
 import Context from "../context/Context"
 import IsUserHaveFreeQuestion, {
   IsSubsribtionOffer,
+  СountUserQuestions,
 } from "../utils/isUserHaveFreeQuestions"
-import { StatusArray } from "../utils/statusArray"
+import "../styles/index.scss"
 
 const HomePage = () => {
   const { state } = React.useContext(Context)
+
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
   const isSubsribtionOffer = IsSubsribtionOffer()
+  const userQuestions = СountUserQuestions()
 
-  // console.log("isSubsribtionOffer", isSubsribtionOffer)
+  React.useEffect(() => {
+    state.isBrowser && document.body.scrollTo(0, 0)
+  }, [])
 
-  // кол-во вопросов, на которые ответил юзер
-  const userQuestions =
-    state.isBrowser &&
-    parseInt(
-      localStorage.getItem("countUserQuestions") ||
-        parseInt(state.countUserQuestions)
-    )
   if (state.isLoading) {
     return "Loading..."
   }
@@ -39,8 +37,7 @@ const HomePage = () => {
                   ? "continue-page"
                   : isSubsribtionOffer
                   ? "subsription-offer"
-                  : "master-final-page "
-                //  на подписку если 5 вопросов, на master-nial-page если 15 вопросов
+                  : "final-page "
               }
             />
             <ButtonWidthExternalLink
