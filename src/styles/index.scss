@@ -123,6 +123,19 @@ html {
 
 .main {
   justify-content: flex-start;
+  padding: 64px 0 16px 0;
+}
+
+.login-page {
+  height: 100vh;
+
+  .logo__wrapper {
+    margin: 0;
+  }
+}
+
+.kep-login-facebook {
+  margin: 72px 0;
 }
 
 .logo {
@@ -132,6 +145,12 @@ html {
     height: 64px;
     margin-bottom: 72px;
     margin-top: 72px;
+
+    @media (max-width: 700px) {
+      margin-top: 0;
+
+      margin-bottom: 64px;
+    }
   }
 
   &__img {
@@ -174,7 +193,7 @@ html {
 .lang {
   margin-left: 32px;
   position: relative;
-  padding: 16px 0;
+  padding: 14px 0;
   width: 150px;
   &:after {
     content: "";

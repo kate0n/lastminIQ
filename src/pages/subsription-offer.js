@@ -9,8 +9,8 @@ import "../styles/index.scss"
 const SubsriptionOffer = () => {
   const { state } = React.useContext(Context)
 
-  const currentProgress =
-    (state.isBrowser && localStorage.getItem("score")) || state.score
+  // const currentProgress =
+  //   (state.isBrowser && localStorage.getItem("score")) || state.score
 
   useEffect(() => {
     state.isBrowser && document.body.scrollTo(0, 0)

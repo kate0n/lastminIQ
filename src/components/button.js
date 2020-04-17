@@ -1,9 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
 
-const Button = ({ text, className, link, locationState }) => {
+const Button = ({ text, className, link, locationState, onClick }) => {
   return (
-    <button className={`button button--${className}`}>
+    <button className={`button button--${className}`} onClick={onClick}>
       <Link to={link} state={locationState && locationState}>
         {text}
       </Link>

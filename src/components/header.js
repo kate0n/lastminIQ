@@ -16,7 +16,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
   const logout = () => {
     dispatch({ type: "MIRAGE", payload: false })
     dispatch({ type: "LOGOUT" })
-    navigate("/login-page")
+    navigate("/login-page", { state: { isReload: true } })
   }
 
   const userInfo =

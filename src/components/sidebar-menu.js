@@ -6,9 +6,9 @@ const SidebarMenu = ({ isMenuOpen }) => {
   const { state, dispatch } = React.useContext(Context)
 
   const logout = () => {
-    navigate("/login-page")
     dispatch({ type: "MIRAGE", payload: false })
     dispatch({ type: "LOGOUT" })
+    navigate("/login-page", { state: { isReload: true } })
   }
 
   return (

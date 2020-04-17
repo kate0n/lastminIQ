@@ -187,7 +187,7 @@ const Form = () => {
         </a>
       </div>
       <button type="submit" disabled={!stripe} className="payment-button">
-        Pay 1€
+        1.99 EUR
       </button>
     </form>
   )

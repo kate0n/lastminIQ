@@ -10,7 +10,8 @@ import { StatusArray } from "../utils/statusArray"
 const QuestionPage = () => {
   const { state, dispatch } = React.useContext(Context)
   const questions = state.questions
-  const answers = state.answers
+  // const answers = state.answers
+  // console.log("answers in question-page", state.answers)
   const statusArray = StatusArray()
   let timer
 
@@ -24,7 +25,7 @@ const QuestionPage = () => {
     questions.questions[currentQuestionNumber].questionText
 
   let answerOption = questions.questions[currentQuestionNumber]
-  let correctAnswer = answers.answers[currentQuestionNumber]
+  let correctAnswer = state.answers.answers[currentQuestionNumber]
 
   // обновление стейта при выборе или истечении таймера
   const updateLocalState = isCorrect => {
@@ -69,7 +70,7 @@ const QuestionPage = () => {
   // клик на кнопку с вариантом ответа
   const checkUserChoice = answerNumber => {
     // добавить: отправка результатов
-    clearTimeout(timer)
+    console.log("checkCorrectAnswer", checkCorrectAnswer(correctAnswer.correct))
 
     let isCorrect = parseInt(answerNumber) === parseInt(correctAnswer.correct)
 
@@ -81,6 +82,8 @@ const QuestionPage = () => {
         correctAnswer: checkCorrectAnswer(correctAnswer.correct),
       },
     })
+
+    clearTimeout(timer)
 
     updateLocalState(isCorrect)
   }

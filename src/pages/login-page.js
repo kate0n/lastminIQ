@@ -119,8 +119,8 @@ const LoginPage = ({ location }) => {
   return (
     <>
       <Head />
-      <div className="outer-container">
-        <main className="inner-container main">
+      <div className="outer-container login-page">
+        <main className="inner-container">
           <div className="logo__wrapper">
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
@@ -133,6 +133,7 @@ const LoginPage = ({ location }) => {
             callback={responseFacebook}
             icon="fa-facebook"
             disableMobileRedirect={true}
+            className="fb-btn"
             textButton={
               state.dictionary.info.facebookBtnText || "LOG IN WITH FACEBOOK"
             }

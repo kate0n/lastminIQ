@@ -11,6 +11,8 @@ const FinalPage = () => {
   const { state } = React.useContext(Context)
 
   const currentProgress = CurrentProgress()
+  const accuralPointsToAnswer =
+    currentProgress / state.dictionary.settings.accrualPoints
 
   if (state.isLoading) {
     return "Loading..."
@@ -22,8 +24,17 @@ const FinalPage = () => {
           <QuizHeader />
           <TextOverlay
             text={state.dictionary.info.finalPageText
+              .replace("{accuralPointsToAnswer}", accuralPointsToAnswer)
+              .replace(
+                "{questionCount}",
+                state.dictionary.settings.questionCount
+              )
+              .replace(
+                "{accrualPoints}",
+                state.dictionary.settings.accrualPoints
+              )
               .replace("{currentProgress}", currentProgress)
-              .replace("{currentProgress}", currentProgress)}
+              .replace("{awardDate}", state.dictionary.settings.awardDate)}
           />
         </div>
         <Button

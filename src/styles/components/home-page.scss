@@ -1,16 +1,13 @@
 .home-page {
-  // height: 86px;
-
   width: 100%;
   height: calc(100vh - 86px);
+  // height: calc(calc(var(--vh, 1vh) * 100) - 86px);
   overflow: hidden;
   background-image: url("/home-page-bg.jpg");
   background-position: center;
+  background-repeat: no-repeat;
   &__button-group {
-    // margin-top: 123px;
-
     width: 100%;
-    // max-height: 222px;
     @include flex-column-center;
     justify-content: space-between;
 

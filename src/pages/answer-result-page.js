@@ -12,7 +12,25 @@ const AnswerResultPage = ({ location }) => {
   const { isCorrect, correctAnswer, commentText, imgLink } =
     location.state || ""
 
-  const { state } = React.useContext(Context)
+  const { state, dispatch } = React.useContext(Context)
+
+  const maxIndex = parseInt(
+    state.dictionary.info.correctAnswerTitleText.length - 1
+  )
+
+  const handleAnswerTitleChange = () => {
+    if (parseInt(state.answerTitleIndex) === maxIndex) {
+      dispatch({
+        type: "ANSWER_TITLE_INDEX",
+        payload: 0,
+      })
+    } else {
+      dispatch({
+        type: "ANSWER_TITLE_INDEX",
+        payload: parseInt(state.answerTitleIndex) + 1,
+      })
+    }
+  }
 
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
   const isSubsribtionOffer = IsSubsribtionOffer()
@@ -23,7 +41,6 @@ const AnswerResultPage = ({ location }) => {
   return (
     <Layout>
       <div className="result-page">
-        {/* <div className="result-page__wrapper"> */}
         <QuizHeader />
         <div
           className={
@@ -33,11 +50,12 @@ const AnswerResultPage = ({ location }) => {
           }
         >
           {isCorrect
-            ? state.dictionary.info.correctAnswerTitleText
-            : state.dictionary.info.incorrectAnswerTitleText.replace(
-                "{correctAnswer}",
-                correctAnswer
-              )}
+            ? state.dictionary.info.correctAnswerTitleText[
+                state.answerTitleIndex
+              ]
+            : state.dictionary.info.incorrectAnswerTitleText[
+                state.answerTitleIndex
+              ].replace("{correctAnswer}", correctAnswer)}
         </div>
 
         <div className="result-page__img-wrapper text-gray">
@@ -46,6 +64,7 @@ const AnswerResultPage = ({ location }) => {
 
         <div className="result-page__comment text-sm">{commentText}</div>
         <Button
+          onClick={handleAnswerTitleChange}
           text="Continue"
           className="green"
           link={
@@ -56,7 +75,6 @@ const AnswerResultPage = ({ location }) => {
               : "final-page"
           }
         />
-        {/* </div> */}
       </div>
     </Layout>
   )

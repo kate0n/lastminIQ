@@ -37,7 +37,7 @@ const IntermediatePage = () => {
             .replace("{currentProgress}", currentProgress)}
         />
         <Button
-          text={state.dictionary.info.intermediatePageBtnText}
+          text={state.dictionary.info.finalPageBtnText}
           className="green"
           link="home-page"
         />

@@ -3,6 +3,8 @@ import { Server, Model } from "miragejs"
 import * as questions from "../questions.json"
 import * as answers from "../answers.json"
 import * as config from "../config.json"
+import { withErrorBoundary } from "../utils/errorBoundary"
+
 const Context = React.createContext()
 
 const initialState = {
@@ -25,7 +27,7 @@ const initialState = {
   // <===
   isLoading: true, // вернуть на true
   isBrowser: typeof document !== `undefined`,
-
+  answerTitleIndex: 0,
   mirage: false,
 }
 
@@ -54,13 +56,12 @@ const reducer = (state, action) => {
           userID: "",
         },
         score: 0,
-        isPremium: false,
+        subscription: false,
       }
 
     // сколько вопросов использовано пользователем
     case "COUNT_USER_QUESTIONS":
       localStorage.setItem("countUserQuestions", action.payload)
-      console.log("countUserQuestions", action.payload)
       return {
         ...state,
         countUserQuestions: action.payload,
@@ -68,7 +69,6 @@ const reducer = (state, action) => {
 
     // кол-во верных
     case "SCORE":
-      console.log("SCORE", action.payload)
       localStorage.setItem("score", action.payload)
       return {
         ...state,
@@ -108,9 +108,17 @@ const reducer = (state, action) => {
         questionCount: action.payload.questions.length,
       }
     case "ANSWERS":
+      // console.log("action.payload", action.payload)
       return {
         ...state,
         answers: action.payload,
+      }
+
+    case "ANSWER_TITLE_INDEX":
+      console.log("ANSWER_TITLE_INDEX", action.payload)
+      return {
+        ...state,
+        answerTitleIndex: action.payload,
       }
 
     case "MIRAGE":
@@ -160,7 +168,7 @@ const ContextProvider = ({ children }) => {
         // ОБНОВИТЬ ЮЗЕРА
         this.post("/updateStatusForUser", (schema, request) => {
           // все юзеры в LS%
-          console.log("!!!!")
+          // console.log("!!!!")
           const users = JSON.parse(localStorage.getItem("users"))
           console.log("user in LS", JSON.parse(localStorage.getItem("users")))
           // юзер с обновленной инфой:
@@ -175,7 +183,7 @@ const ContextProvider = ({ children }) => {
   // <=========== MIRAGE ========>
 
   // <=========== DICTIONARY, QUESTIONS, ANSWERS ========>
-  const lang = state.isBrowser && localStorage.getItem("lang")
+  const lang = (state.isBrowser && localStorage.getItem("lang")) || state.lang
 
   React.useEffect(() => {
     // console.log(`/locale/${lang}.json`)
@@ -210,9 +218,9 @@ const ContextProvider = ({ children }) => {
         return response.text()
       })
       .then(data => {
-        console.log("ANSWERS  fetch")
         dispatch({ type: "ANSWERS", payload: JSON.parse(data) })
         dispatch({ type: "IS_LOADING", payload: false })
+        // console.log("ANSWERS  fetch", JSON.parse(data))
       })
       .catch(err => console.log("Error Reading data ", +err))
   }, [lang])
