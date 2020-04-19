@@ -64,7 +64,12 @@ const LoginPage = () => {
             )
           : result.json()
       )
-      .then(user => updateLocalStoreFromServer(user))
+      .then(
+        user => (
+          console.log("CREATE USER FAILED:", user),
+          user && updateLocalStoreFromServer(user)
+        )
+      )
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
