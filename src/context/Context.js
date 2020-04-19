@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from "react"
-import { Server, Model } from "miragejs"
 import * as questions from "../questions.json"
 import * as answers from "../answers.json"
 import * as config from "../config.json"
@@ -21,14 +20,14 @@ const initialState = {
   intermediatePart: "", // кол-во free вопросов (оставить 0)
   questionCount: "", // (длина массива в questions)
   dictionary: config.default, // ""
-  questions: questions.default, //questions.default
-  answers: answers.default, // answers.default
+  questions: questions.default,
+  answers: answers.default,
   lang: "EN",
-  // <===
-  isLoading: true, // вернуть на true
+  isLoading: true,
   isBrowser: typeof document !== `undefined`,
   answerTitleIndex: 0,
-  mirage: false,
+  stripeToken: "",
+  stripeID: "",
 }
 
 const reducer = (state, action) => {
@@ -43,9 +42,7 @@ const reducer = (state, action) => {
       }
 
     case "LOGOUT":
-      const users = localStorage.getItem("users")
       localStorage.clear()
-      localStorage.setItem("users", users)
       return {
         ...state,
         isAuthenticated: false,
@@ -83,6 +80,10 @@ const reducer = (state, action) => {
       }
 
     case "DICTIONARY":
+      localStorage.setItem(
+        "intermediatePart",
+        action.payload.settings.intermediatePart
+      )
       return {
         ...state,
         dictionary: action.payload,
@@ -102,6 +103,7 @@ const reducer = (state, action) => {
         lang: action.payload,
       }
     case "QUESTIONS":
+      localStorage.setItem("questionCount", action.payload.questions.length)
       return {
         ...state,
         questions: action.payload,
@@ -121,10 +123,16 @@ const reducer = (state, action) => {
         answerTitleIndex: action.payload,
       }
 
-    case "MIRAGE":
+    case "STRIPE_TOKEN":
       return {
         ...state,
-        mirage: action.payload,
+        stripeToken: action.payload,
+      }
+
+    case "STRIPE_ID":
+      return {
+        ...state,
+        stripeID: action.payload,
       }
     default:
       return state
@@ -133,61 +141,13 @@ const reducer = (state, action) => {
 
 const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  // <=========== MIRAGE ========>
-  state.mirage &&
-    new Server({
-      models: {
-        users: Model,
-      },
-      routes() {
-        this.passthrough()
-        this.namespace = "api"
-
-        // НАЙТИ ЮЗЕРА
-        this.post("/getStatusForUser", (schema, request) => {
-          const users = JSON.parse(localStorage.getItem("users"))
-          let id = JSON.parse(request.requestBody)
-          console.log(users, id, users[id])
-          const findUser = JSON.stringify(users[id])
-          return findUser
-        })
-
-        // СОЗДАТЬ ЮЗЕРА
-        this.post("/createUser", (schema, request) => {
-          let users = localStorage.getItem("users")
-            ? JSON.parse(localStorage.getItem("users"))
-            : new Object()
-          let newUserId = JSON.parse(request.requestBody)[0]
-          users[newUserId] = request.requestBody
-          localStorage.setItem("users", JSON.stringify(users))
-          let user = JSON.parse(request.requestBody)
-          // schema.users.create(user)
-          return user
-        })
-
-        // ОБНОВИТЬ ЮЗЕРА
-        this.post("/updateStatusForUser", (schema, request) => {
-          // все юзеры в LS%
-          // console.log("!!!!")
-          const users = JSON.parse(localStorage.getItem("users"))
-          console.log("user in LS", JSON.parse(localStorage.getItem("users")))
-          // юзер с обновленной инфой:
-          let updatedUserInfo = JSON.parse(request.requestBody)
-          // нужный юзер в LS%
-          users[updatedUserInfo[0]] = updatedUserInfo
-          localStorage.setItem("users", JSON.stringify(users))
-          return users
-        })
-      },
-    })
-  // <=========== MIRAGE ========>
 
   // <=========== DICTIONARY, QUESTIONS, ANSWERS ========>
   const lang = (state.isBrowser && localStorage.getItem("lang")) || state.lang
 
   React.useEffect(() => {
     // console.log(`/locale/${lang}.json`)
-    fetch(`/locale/${lang}.json`)
+    fetch(`/locale/EN/config.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
         return response.text()
@@ -211,6 +171,7 @@ const ContextProvider = ({ children }) => {
         dispatch({ type: "IS_LOADING", payload: false })
       })
       .catch(err => console.log("Error Reading data ", +err))
+
     // ANSWERS
     fetch("/answers.json")
       .then(response => {
@@ -223,6 +184,15 @@ const ContextProvider = ({ children }) => {
         // console.log("ANSWERS  fetch", JSON.parse(data))
       })
       .catch(err => console.log("Error Reading data ", +err))
+
+    fetch("https://lastmin.makaroff.tech/stripe-key")
+      .then(result => {
+        return result.json()
+      })
+      .then(data => {
+        dispatch({ type: "STRIPE_TOKEN", payload: data.publishableKey })
+        localStorage.setItem("stripeToken", data.publishableKey)
+      })
   }, [lang])
 
   return (

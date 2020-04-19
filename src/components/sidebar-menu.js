@@ -1,14 +1,15 @@
 import React from "react"
 import { navigate } from "gatsby"
 import Context from "../context/Context"
+import { CurrentProgress } from "../utils/isUserHaveFreeQuestions"
 
 const SidebarMenu = ({ isMenuOpen }) => {
   const { state, dispatch } = React.useContext(Context)
+  const score = CurrentProgress()
 
   const logout = () => {
-    dispatch({ type: "MIRAGE", payload: false })
     dispatch({ type: "LOGOUT" })
-    navigate("/login-page", { state: { isReload: true } })
+    navigate("/login-page")
   }
 
   return (
@@ -39,7 +40,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
         <div className="sidebar-menu__user-score">
           {state.dictionary.info.sidebarScoreText.replace(
             "{currentProgress}",
-            (state.isBrowser && localStorage.getItem("score")) || 0
+            score
           )}
         </div>
 

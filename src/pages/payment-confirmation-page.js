@@ -16,9 +16,17 @@ const PaymentConfirmationPage = () => {
       <div className="quiz-start">
         <div className="quiz-start__wrapper">
           <QuizHeader />
-          <TextOverlay text={state.dictionary.info.paymentSuccessActionText} />
+          <div
+            className="quiz-start__title text-lg"
+            dangerouslySetInnerHTML={{
+              __html: state.dictionary.info.paymentSuccessActionText.replace(
+                "{additionalPartCount}",
+                state.questionCount - state.intermediatePart
+              ),
+            }}
+          />
           <div className="quiz-start__desc text-sm">
-            {state.dictionary.info.startHintText.replace(
+            {state.dictionary.info.paymentSuccessHintText.replace(
               "{accrualPoints}",
               state.dictionary.settings.accrualPoints
             )}

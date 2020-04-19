@@ -2,7 +2,7 @@ import React from "react"
 import Context from "../context/Context"
 
 // массив значений для отправки на сервер при создании/обновлении юзера
-export const StatusArray = () => {
+export const UserObject = () => {
   const { state } = React.useContext(Context)
 
   const score =
@@ -20,21 +20,22 @@ export const StatusArray = () => {
     (state.isBrowser && localStorage.getItem("subscription")) ||
     state.subscription
 
-  const lang = state.isBrowser && localStorage.getItem("lang")
+  const lang = (state.isBrowser && localStorage.getItem("lang")) || state.lang
 
   const userInfo =
     (state.isBrowser && JSON.parse(localStorage.getItem("userInfo"))) ||
     state.userInfo
 
-  const statusArray = [
-    userInfo.userID,
-    score,
-    userQuestions,
-    subscription,
-    lang,
-    userInfo.name,
-    userInfo.email,
-  ]
+  const userObject = {
+    username: userInfo.name,
+    email: userInfo.email,
+    facebook_id: userInfo.userID,
+    progress: score,
+    current_question: userQuestions,
+    stripe_id: "",
+    payment_ok: subscription,
+    localize: lang,
+  }
 
-  return statusArray
+  return userObject
 }

@@ -31,6 +31,11 @@ const QuizStart = () => {
           className="green"
           link="question-page"
         />
+        <div className="quiz-start__agree">
+          <a href="" target="__blank">
+            <b>Terms and conditions</b>
+          </a>
+        </div>
       </div>
     </Layout>
   )

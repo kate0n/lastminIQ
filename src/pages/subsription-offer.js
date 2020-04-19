@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import Layout from "../components/layout"
 import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
-import TextOverlay from "../components/text-overlay"
 import Context from "../context/Context"
 import "../styles/index.scss"
 
@@ -24,10 +23,8 @@ const SubsriptionOffer = () => {
       <div className="quiz-start" style={{ justifyContent: "flex-start" }}>
         <div className="quiz-start__wrapper">
           <QuizHeader />
-          <TextOverlay
-            text={state.dictionary.info.subscribeOfferActionText
-              // .replace("{currentProgress}", currentProgress)
-              // .replace("{currentProgress}", currentProgress)
+          <div className="quiz-start__title text-lg">
+            {state.dictionary.info.subscribeOfferActionText
               .replace(
                 "{accrualPoints}",
                 state.dictionary.settings.accrualPoints
@@ -36,7 +33,7 @@ const SubsriptionOffer = () => {
                 "{additionalPartCount}",
                 state.questionCount - state.intermediatePart
               )}
-          />
+          </div>
         </div>
         <div className="subcription">
           <Button

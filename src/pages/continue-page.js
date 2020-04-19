@@ -2,7 +2,6 @@ import React from "react"
 import Layout from "../components/layout"
 import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
-import TextOverlay from "../components/text-overlay"
 import Context from "../context/Context"
 import "../styles/index.scss"
 
@@ -16,7 +15,12 @@ const ContinuePage = () => {
       <div className="quiz-start">
         <div className="quiz-start__wrapper">
           <QuizHeader />
-          <TextOverlay text={state.dictionary.info.continueActionText} />
+          <div
+            className="quiz-start__title text-lg"
+            dangerouslySetInnerHTML={{
+              __html: state.dictionary.info.continueActionText,
+            }}
+          />
           <div className="quiz-start__desc text-sm">
             {state.dictionary.info.startHintText.replace(
               "{accrualPoints}",

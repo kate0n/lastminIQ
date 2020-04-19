@@ -5,14 +5,22 @@ import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import IsUserHaveFreeQuestion, {
   IsSubsribtionOffer,
+  СountUserQuestions,
 } from "../utils/isUserHaveFreeQuestions"
 import "../styles/index.scss"
 
 const AnswerResultPage = ({ location }) => {
-  const { isCorrect, correctAnswer, commentText, imgLink } =
-    location.state || ""
+  const {
+    isCorrect,
+    correctAnswer,
+    commentText,
+    imgLink,
+    timesUpAnswerTitleText,
+  } = location.state || ""
 
   const { state, dispatch } = React.useContext(Context)
+
+  let currentQuestionNumber = СountUserQuestions()
 
   const maxIndex = parseInt(
     state.dictionary.info.correctAnswerTitleText.length - 1
@@ -53,6 +61,11 @@ const AnswerResultPage = ({ location }) => {
             ? state.dictionary.info.correctAnswerTitleText[
                 state.answerTitleIndex
               ]
+            : timesUpAnswerTitleText // если из-за таймера
+            ? state.dictionary.info.timesUpAnswerTitleText.replace(
+                "{correctAnswer}",
+                correctAnswer
+              )
             : state.dictionary.info.incorrectAnswerTitleText[
                 state.answerTitleIndex
               ].replace("{correctAnswer}", correctAnswer)}

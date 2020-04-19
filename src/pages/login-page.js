@@ -10,15 +10,8 @@ import IsUserHaveFreeQuestion, {
   СountUserQuestions,
 } from "../utils/isUserHaveFreeQuestions"
 
-const LoginPage = ({ location }) => {
+const LoginPage = () => {
   const { state, dispatch } = React.useContext(Context)
-
-  // <------------------------удалить после отключения miragejs
-  const { isReload = false } = location.state || ""
-  if (isReload) {
-    navigate("/login-page", { state: { isReload: false } })
-    window.location.reload()
-  } // ------------------------------------------------------->
 
   const responseFacebook = response => {
     response.status !== "unkown" &&
@@ -32,56 +25,69 @@ const LoginPage = ({ location }) => {
         },
       })
 
-    const registrationArray = [
-      response.userID,
-      state.score,
-      state.countUserQuestions,
-      state.subscription,
-      state.isBrowser && localStorage.getItem("lang"),
-      response.name,
-      response.email,
-    ]
+    const lang = encodeURI(
+      (state.isBrowser && localStorage.getItem("lang")) || state.lang
+    )
 
-    // <------ удалить после отключения miragejs
-    dispatch({ type: "MIRAGE", payload: true })
-    // ---------->
+    const userObject = `username=${encodeURI(response.name)}&email=${encodeURI(
+      response.email
+    )}&facebook_id=${encodeURI(response.userID)}&progress=${encodeURI(
+      0
+    )}&current_question=${encodeURI(0)}&stripe_id=${encodeURI(
+      ""
+    )}&payment_ok=${encodeURI(false)}&localize=${lang}`
 
-    // <=======================  наличие в системе или создание юзера
-    fetch("/api/getStatusForUser", {
-      method: "POST",
-      body: response.userID,
-    })
-      .then(response => (response.status === 500 ? false : response.json()))
-      .then(data => {
-        data
-          ? updateLocalStoreFromServer(data)
-          : // создание нового юзера
-            fetch("/api/createUser", {
+    // <=========  наличие в системе или создание юзера ==============
+    fetch(
+      `https://lastmin.makaroff.tech/get_user?facebook_id=${response.userID}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then(result =>
+        result.status === 400
+          ? fetch("https://lastmin.makaroff.tech/create_user", {
               method: "POST",
-              body: JSON.stringify(registrationArray),
-            })
-              .then(response => response.json())
-              .then(createdUser => console.log("CREATED USER:", createdUser))
-      })
+              headers: {
+                "cache-control": "no-cache",
+                pragma: "no-cache",
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: userObject,
+            }).then(
+              response =>
+                response.status !== 200 &&
+                console.log("CREATE USER FAILED:".response)
+            )
+          : result.json()
+      )
+      .then(user => updateLocalStoreFromServer(user))
 
-    const updateLocalStoreFromServer = response => {
-      console.log("update", JSON.parse(response))
-      const responseUserArray = JSON.parse(response)
+    // обновление локального стейта из ответа от сервера
+    const updateLocalStoreFromServer = user => {
+      console.log("user from system", user)
       dispatch({
         type: "SCORE",
-        payload: responseUserArray[1],
+        payload: user.progress,
       })
       dispatch({
         type: "COUNT_USER_QUESTIONS",
-        payload: responseUserArray[2],
+        payload: user.current_question,
       })
       dispatch({
         type: "ADD_SUBSCRIPTION",
-        payload: responseUserArray[3],
+        payload: user.payment_ok,
       })
       dispatch({
         type: "LANG",
-        payload: responseUserArray[4],
+        payload: user.localize,
+      })
+      dispatch({
+        type: "STRIPE_ID",
+        payload: user.stripe_id,
       })
     }
 
@@ -103,7 +109,7 @@ const LoginPage = ({ location }) => {
         ? navigate("/continue-page")
         : isSubsribtionOffer
         ? "subsription-offer"
-        : "master-final-page",
+        : "final-page",
     [
       state.isBrowser,
       userQuestions,

@@ -7,6 +7,8 @@ import "../styles/index.scss"
 
 const TimeoutPage = ({ location }) => {
   const { state } = React.useContext(Context)
+
+  console.log("state in timout", location.state)
   if (state.isLoading) {
     return "Loading..."
   }

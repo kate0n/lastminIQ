@@ -8,34 +8,45 @@ import { withErrorBoundary } from "../utils/errorBoundary"
 
 const langs = [
   {
+    icon: "ee",
+    lang: "Eesti",
+    langShort: "EE",
+  },
+  {
     icon: "lv",
     lang: "Latviski",
     langShort: "LV",
   },
   {
-    icon: "ru",
-    lang: "По-русски",
-    langShort: "RU",
-  },
-  {
     icon: "lt",
-    lang: "Lietuva",
+    lang: "Lietuvių",
     langShort: "LT",
   },
   {
-    icon: "ee",
-    lang: "Eesti",
-    langShort: "EE",
+    icon: "ru",
+    lang: "Русский",
+    langShort: "RU",
+  },
+  {
+    icon: "fi",
+    lang: "Soumen",
+    langShort: "SU",
   },
   {
     icon: "gb",
     lang: "English",
     langShort: "EN",
   },
+
   {
-    icon: "fi",
-    lang: "Suomija",
-    langShort: "FI",
+    icon: "de",
+    lang: "Deutcsh",
+    langShort: "DE",
+  },
+  {
+    icon: "es",
+    lang: "Español",
+    langShort: "DE",
   },
 ]
 
@@ -44,7 +55,9 @@ const IndexPage = props => {
   const { state, dispatch } = React.useContext(Context)
 
   const handleLangClick = lang => {
-    navigate("login-page", { state: { isReload: true } })
+    state.isBrowser && localStorage.getItem("isAuthenticated")
+      ? navigate("/home-page")
+      : navigate("login-page", { state: { isReload: true } })
     dispatch({
       type: "LANG",
       payload: lang,

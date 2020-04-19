@@ -46,16 +46,36 @@ const IsUserHaveFreeQuestion = () => {
     )
 
   // дефолтное кол-во free вопросов
-  const intermediatePart = parseInt(state.intermediatePart)
+  const intermediatePart =
+    state.isBrowser &&
+    parseInt(
+      localStorage.getItem("intermediatePart") ||
+        parseInt(state.intermediatePart)
+    )
+  parseInt(state.intermediatePart)
 
   // макс.кол-во вопросов
-  const questionCount = parseInt(state.questionCount)
+  const questionCount =
+    state.isBrowser &&
+    parseInt(
+      localStorage.getItem("questionCount") || parseInt(state.questionCount)
+    )
 
   const subscription =
     state.isBrowser && localStorage.getItem("subscription")
       ? JSON.parse(localStorage.getItem("subscription"))
       : state.subscription
 
+  // console.log(
+  //   "subscription",
+  //   subscription,
+  //   "userQuestions",
+  //   userQuestions,
+  //   "questionCount",
+  //   questionCount,
+  //   "intermediatePart",
+  //   intermediatePart
+  // )
   const isUserHaveFreeQuestions = subscription
     ? !(userQuestions === questionCount)
     : !(userQuestions === intermediatePart) // true когда остались free вопросы

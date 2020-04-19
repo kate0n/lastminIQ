@@ -2,10 +2,12 @@ import React, { useContext } from "react"
 import { navigate } from "gatsby"
 import LasminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
+import { CurrentProgress } from "../utils/isUserHaveFreeQuestions"
 
 const Header = ({ isMenuOpen, handleMenuClick }) => {
   const { state, dispatch } = useContext(Context)
   const [isMobile, setIsMobile] = React.useState(false)
+  const score = CurrentProgress()
 
   React.useEffect(() => {
     state.isBrowser && window.innerWidth <= 700
@@ -14,9 +16,8 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
   }, [])
 
   const logout = () => {
-    dispatch({ type: "MIRAGE", payload: false })
     dispatch({ type: "LOGOUT" })
-    navigate("/login-page", { state: { isReload: true } })
+    navigate("/login-page")
   }
 
   const userInfo =
@@ -62,7 +63,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
           <div>
             {state.dictionary.info.sidebarScoreText.replace(
               "{currentProgress}",
-              (state.isBrowser && localStorage.getItem("score")) || 0
+              score
             )}
             &nbsp; &nbsp;
           </div>

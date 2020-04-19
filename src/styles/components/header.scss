@@ -49,11 +49,12 @@
       color: $gray;
       display: none;
       font-style: italic;
+      white-space: nowrap;
 
       &:after {
         content: url("/arrow-down.svg");
         position: absolute;
-        right: -16px;
+        right: -20px;
         top: 2px;
       }
 

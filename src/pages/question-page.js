@@ -4,53 +4,70 @@ import Layout from "../components/layout"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import "../styles/index.scss"
-
-import { StatusArray } from "../utils/statusArray"
+import { UserObject } from "../utils/userObject"
+import {
+  СountUserQuestions,
+  CurrentProgress,
+} from "../utils/isUserHaveFreeQuestions"
 
 const QuestionPage = () => {
   const { state, dispatch } = React.useContext(Context)
-  const questions = state.questions
-  // const answers = state.answers
-  // console.log("answers in question-page", state.answers)
-  const statusArray = StatusArray()
   let timer
-
-  let currentQuestionNumber = parseInt(
-    (state.isBrowser && localStorage.getItem("countUserQuestions")) ||
-      state.countUserQuestions
-  )
-
+  const userObject = UserObject()
+  const currentQuestionNumber = СountUserQuestions()
+  const score = CurrentProgress()
+  // текущий текст вопроса
   let questionText =
-    questions.questions[currentQuestionNumber] &&
-    questions.questions[currentQuestionNumber].questionText
-
-  let answerOption = questions.questions[currentQuestionNumber]
+    state.questions.questions[currentQuestionNumber] &&
+    state.questions.questions[currentQuestionNumber].questionText
+  // текущий элемент в массиве questions
+  let answerOption = state.questions.questions[currentQuestionNumber]
+  // текущий элемент в массиве ответов
   let correctAnswer = state.answers.answers[currentQuestionNumber]
 
-  // обновление стейта при выборе или истечении таймера
-  const updateLocalState = isCorrect => {
+  // нахождение верного ответа
+  const checkCorrectAnswer = correctAnswer => {
+    if (correctAnswer === 1) return answerOption.answer1Text
+    else if (correctAnswer === 2) return answerOption.answer2Text
+    else if (correctAnswer === 3) return answerOption.answer3Text
+  }
+
+  // обновление стейта при выборе ответа // истечении таймера
+  const updateState = isCorrect => {
     if (isCorrect) {
-      statusArray[1] =
-        (parseInt(localStorage.getItem("score")) || state.score) +
-        state.dictionary.settings.accrualPoints
+      userObject.progress =
+        parseInt(score) + parseInt(state.dictionary.settings.accrualPoints)
     }
+    userObject.current_question = parseInt(currentQuestionNumber) + 1
 
-    //to server
-    statusArray[2] = parseInt(currentQuestionNumber) + 1
-    console.log(JSON.stringify(statusArray))
-    fetch("/api/updateStatusForUser", {
+    const userObjectURI = `username=${encodeURI(
+      userObject.username
+    )}&email=${encodeURI(userObject.email)}&facebook_id=${encodeURI(
+      userObject.facebook_id
+    )}&progress=${encodeURI(userObject.progress)}&current_question=${encodeURI(
+      userObject.current_question
+    )}&stripe_id=${encodeURI(userObject.stripe_id)}&payment_ok=${encodeURI(
+      userObject.payment_ok
+    )}&localize=${userObject.localize}`
+
+    fetch("https://lastmin.makaroff.tech/update_user", {
       method: "POST",
-      body: JSON.stringify(statusArray),
-    }).then(response => response)
-    // .then(updatedUser => console.log("UPDATED USER:", updatedUser))
-
-    // +1  вопрос
-    dispatch({
-      type: "COUNT_USER_QUESTIONS",
-      payload: parseInt(currentQuestionNumber) + 1,
+      headers: {
+        "cache-control": "no-cache",
+        pragma: "no-cache",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: userObjectURI,
     })
+      .then(reponse => console.log("UPDATE RESPONSE", reponse))
+      .then(
+        dispatch({
+          type: "COUNT_USER_QUESTIONS",
+          payload: currentQuestionNumber + 1,
+        })
+      )
 
-    // кол-во очков +5
+    // кол-во очков + 5
     isCorrect &&
       dispatch({
         type: "SCORE",
@@ -60,17 +77,9 @@ const QuestionPage = () => {
       })
   }
 
-  // нахождение верного ответа
-  const checkCorrectAnswer = correctAnswer => {
-    if (correctAnswer === 1) return answerOption.answer1Text
-    else if (correctAnswer === 2) return answerOption.answer2Text
-    else if (correctAnswer === 3) return answerOption.answer3Text
-  }
-
   // клик на кнопку с вариантом ответа
   const checkUserChoice = answerNumber => {
     // добавить: отправка результатов
-    console.log("checkCorrectAnswer", checkCorrectAnswer(correctAnswer.correct))
 
     let isCorrect = parseInt(answerNumber) === parseInt(correctAnswer.correct)
 
@@ -85,10 +94,10 @@ const QuestionPage = () => {
 
     clearTimeout(timer)
 
-    updateLocalState(isCorrect)
+    updateState(isCorrect)
   }
 
-  // запуск таймера
+  // таймер
   const createSetTimeout = () => {
     timer = setTimeout(() => {
       navigate("/timeout-page", {
@@ -97,9 +106,10 @@ const QuestionPage = () => {
           commentText: correctAnswer.commentText,
           imgLink: correctAnswer.imgLink,
           correctAnswer: checkCorrectAnswer(correctAnswer.correct),
+          timesUpAnswerTitleText: true,
         },
       })
-      updateLocalState(false)
+      updateState(false)
     }, parseInt(state.dictionary.settings.timer) * 1000)
   }
 

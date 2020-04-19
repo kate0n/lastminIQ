@@ -1,94 +1,94 @@
 ﻿{
   "questions": [
     {
-      "questionText": "--==01==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "1.What route ran prominent Orient Express?",
+      "answer1Text": "Petersburg-Tashkent",
+      "answer2Text": "Paris - Istanbul",
+      "answer3Text": "Deli-Shanghai"
     },
     {
-      "questionText": "--==02==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "2.Which of these countries is land-locked?",
+      "answer1Text": "Belgium",
+      "answer2Text": "Slovenia",
+      "answer3Text": "Andorra"
     },
     {
-      "questionText": "--==03==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "3.On which Greek island one can find The Butterfly Valley?",
+      "answer1Text": "Rhodes",
+      "answer2Text": "Crete",
+      "answer3Text": "Corfu"
     },
     {
-      "questionText": "--==04==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "4.Which american singer performed a concert in hotel Regnum Carya Golf Belek?",
+      "answer1Text": "Taylor Swift",
+      "answer2Text": "Jennifer Lopez",
+      "answer3Text": "Billie Eilish"
     },
     {
-      "questionText": "--==05==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "5.In what African country some scenes of GAME OF THRONES were flimed?",
+      "answer1Text": "Morocco",
+      "answer2Text": "Tunisia",
+      "answer3Text": "Algeria"
     },
     {
-      "questionText": "--==06==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "6.In what city is the widest street in the world located?",
+      "answer1Text": "Shanghai",
+      "answer2Text": "Buenos-Aires",
+      "answer3Text": "New Delhi"
     },
     {
-      "questionText": "--==07==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "7.In what country the chess werer invented?",
+      "answer1Text": "India",
+      "answer2Text": "China",
+      "answer3Text": "Egypt"
     },
     {
-      "questionText": "--==08==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "8.Where did the  scenes of Shakespear's Romeo and Juliet take place?",
+      "answer1Text": "Venice",
+      "answer2Text": "Verona,",
+      "answer3Text": "Bergamo"
     },
     {
-      "questionText": "--==09==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "9.How many children Queen Elizabeth II has?",
+      "answer1Text": "Six",
+      "answer2Text": "Two",
+      "answer3Text": "Four"
     },
     {
-      "questionText": "--==10==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "10.What plant depicted on the Coat of Arms of Greece?",
+      "answer1Text": "Olive",
+      "answer2Text": "Laurel",
+      "answer3Text": "Plane-tree"
     },
     {
-      "questionText": "--==11==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "11.What contininet is divided by equator into two almast equal parts?",
+      "answer1Text": "South America",
+      "answer2Text": "Africa",
+      "answer3Text": "Australia"
     },
     {
-      "questionText": "--==12==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "12.Apart of renowned vampire what is also named Dracula?",
+      "answer1Text": "Computer virus",
+      "answer2Text": "Order of Ants",
+      "answer3Text": "Genus of orchids"
     },
     {
-      "questionText": "--==13==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "13.From which of London train stations do the Eurostar trains leave to Europe?",
+      "answer1Text": "Paddington",
+      "answer2Text": "King's Cross",
+      "answer3Text": "St.Pancras"
     },
     {
-      "questionText": "--==14==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "14.Whose flag is not a rectangular?",
+      "answer1Text": "Nepal",
+      "answer2Text": "Bhutan",
+      "answer3Text": "Fiji"
     },
     {
-      "questionText": "--==15==--What country is not a member of the European Union?",
-      "answer1Text": "Malta",
-      "answer2Text": "Croatia",
-      "answer3Text": "Switzerland"
+      "questionText": "15.What's the name of the famous resort in Bulgaria?",
+      "answer1Text": "St.Constantine and Helena",
+      "answer2Text": "St.Joseph and Maria",
+      "answer3Text": "St.Cyril and Methodius"
     }
   ]
 }

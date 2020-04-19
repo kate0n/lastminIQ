@@ -15,13 +15,6 @@ const HomePage = () => {
   const isSubsribtionOffer = IsSubsribtionOffer()
   const userQuestions = СountUserQuestions()
 
-  // state.isBrowser &&
-  //   window.addEventListener("resize", () => {
-  //     // We execute the same script as before
-  //     let vh = window.innerHeight * 0.01
-  //     document.documentElement.style.setProperty("--vh", `${vh}px`)
-  //   })
-
   React.useEffect(() => {
     state.isBrowser && document.body.scrollTo(0, 0)
   }, [])
@@ -50,12 +43,12 @@ const HomePage = () => {
             <ButtonWidthExternalLink
               text={state.dictionary.info.videosBtnText}
               className="blue"
-              link="twitter.com"
+              link="https://www.facebook.com/pg/lastmin.tv/videos/?ref=page_internal"
             />
             <ButtonWidthExternalLink
               text={state.dictionary.info.findAtourBtnText}
               className="green"
-              link="twitter.com"
+              link="https://lastmin.ee/en/"
             />
           </div>
         </div>

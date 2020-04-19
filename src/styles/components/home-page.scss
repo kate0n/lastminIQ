@@ -6,13 +6,18 @@
   background-image: url("/home-page-bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
+
   &__button-group {
     width: 100%;
     @include flex-column-center;
     justify-content: space-between;
 
     .button {
+      height: 45px;
       margin-bottom: 40px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+      -webkit-font-smoothing: initial;
+      font-size: 30px;
     }
   }
 }
