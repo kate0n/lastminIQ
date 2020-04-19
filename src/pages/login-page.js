@@ -60,7 +60,7 @@ const LoginPage = () => {
             }).then(
               response =>
                 response.status !== 200 &&
-                console.log("CREATE USER FAILED:".response)
+                console.log("CREATE USER FAILED:", response)
             )
           : result.json()
       )

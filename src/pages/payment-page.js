@@ -41,7 +41,8 @@ const useOptions = () => {
 }
 
 let stripeToken =
-  typeof document !== `undefined` && localStorage.getItem("stripeToken")
+  (typeof document !== `undefined` && localStorage.getItem("stripeToken")) ||
+  "pk_test_QOjrIQfNwuLcE4LpNOPWeU50"
 const stripePromise = loadStripe(stripeToken)
 
 const Form = () => {
@@ -54,7 +55,6 @@ const Form = () => {
   const [isPaymentFailed, setIsPaymentFailed] = React.useState(false)
   const [isPaymentProcessing, setIsPaymentProcessing] = React.useState(false)
   const [resultText, setResultText] = React.useState("Payment failed")
-
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -117,8 +117,8 @@ const Form = () => {
     console.log("[PaymentMethod]", payload)
   }
 
-   /* Shows a success / error message when the payment is complete */
-   const orderComplete = function(clientSecret) {
+  /* Shows a success / error message when the payment is complete */
+  const orderComplete = function(clientSecret) {
     stripe.retrievePaymentIntent(clientSecret).then(function(result) {
       const paymentIntent = result.paymentIntent
       const paymentIntentJson = JSON.stringify(paymentIntent, null, 2)
@@ -160,7 +160,7 @@ const Form = () => {
       .then(navigate("/payment-confirmation-page"))
   }
 
- // Request authentication
+  // Request authentication
   const handleAction = function(clientSecret) {
     stripe.handleCardAction(clientSecret).then(function(data) {
       if (data.error) {
