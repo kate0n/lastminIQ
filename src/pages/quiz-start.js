@@ -32,7 +32,7 @@ const QuizStart = () => {
           link="question-page"
         />
         <div className="quiz-start__agree">
-          <a href="" target="__blank">
+          <a href="/Terms_And_Conditions.pdf" target="__blank">
             <b>Terms and conditions</b>
           </a>
         </div>
