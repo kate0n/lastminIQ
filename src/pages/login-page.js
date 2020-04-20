@@ -66,9 +66,7 @@ const LoginPage = () => {
           : // <=========если юзер есть, возвращаем о нем данные =========
             result.json()
       )
-      .then(user => {
-        return user && updateLocalStoreFromServer(user)
-      })
+      .then(user => user && updateLocalStoreFromServer(user))
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
