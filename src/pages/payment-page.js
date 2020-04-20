@@ -276,7 +276,10 @@ const Form = () => {
         </label>
         <div className="payment-page__agree">
           <input type="checkbox" required />I agree with
-          <a href="/Terms_And_Conditions.pdf" target="__blank">
+          <a
+            href="/IQ_Master_service_Terms_And_Conditions.pdf"
+            target="__blank"
+          >
             <b>Terms and conditions</b>
           </a>
         </div>
