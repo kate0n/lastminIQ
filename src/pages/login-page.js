@@ -66,13 +66,9 @@ const LoginPage = () => {
           : // <=========если юзер есть, возвращаем о нем данные =========
             result.json()
       )
-      .then(
-        user => (
-          // <=========если юзер есть, обновляем localState/storage ========
-          console.log("CREATE USER FAILED:", user),
-          user && updateLocalStoreFromServer(user)
-        )
-      )
+      .then(user => {
+        return user && updateLocalStoreFromServer(user)
+      })
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
