@@ -47,25 +47,25 @@ const LoginPage = () => {
         },
       }
     )
-      .then(result =>
-        // <=========если юзера нет, создаем нового ============
-        result.status === 400
-          ? fetch("https://lastmin.makaroff.tech/create_user", {
-              method: "POST",
-              headers: {
-                "cache-control": "no-cache",
-                pragma: "no-cache",
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-              body: userObject,
-            }).then(
-              response =>
-                response.status !== 200 &&
-                console.log("CREATE USER FAILED:", response)
-            )
-          : // <=========если юзер есть, возвращаем о нем данные =========
-            result.json()
-      )
+      .then(function(response) {
+        if (response.status === 400) {
+          fetch("https://lastmin.makaroff.tech/create_user", {
+            method: "POST",
+            headers: {
+              "cache-control": "no-cache",
+              pragma: "no-cache",
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: userObject,
+          }).then(
+            response =>
+              response.status !== 200 &&
+              console.log("CREATE USER FAILED:", response)
+          )
+        } else {
+          response.json()
+        }
+      })
       .then(user => user && updateLocalStoreFromServer(user))
 
     // обновление локального стейта из ответа от сервера
