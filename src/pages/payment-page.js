@@ -85,7 +85,8 @@ const Form = () => {
         // console.log("createPaymentMethod result", result)
         setIsPaymentProcessing(true)
         if (result.error) {
-          isPaymentFailed(true)
+          setIsPaymentProcessing(false)
+          setIsPaymentFailed(true)
           console.log("result.error", result.error)
         } else {
           orderData.paymentMethodId = result.paymentMethod.id
@@ -104,7 +105,9 @@ const Form = () => {
       .then(function(response) {
         if (response.error) {
           console.log("PAYMENT FAILED", response.error)
-          isPaymentFailed(true)
+          setIsPaymentProcessing(false)
+          setIsPaymentFailed(true)
+          setResultText(response.error)
         } else if (response.requiresAction) {
           // Request authentication
           handleAction(response.clientSecret)
@@ -164,7 +167,8 @@ const Form = () => {
   const handleAction = function(clientSecret) {
     stripe.handleCardAction(clientSecret).then(function(data) {
       if (data.error) {
-        isPaymentFailed(true)
+        setIsPaymentProcessing(false)
+        setIsPaymentFailed(true)
         setResultText("Your card was not authenticated, please try again")
       } else if (data.paymentIntent.status === "requires_confirmation") {
         fetch("https://lastmin.makaroff.tech/pay", {
@@ -181,7 +185,8 @@ const Form = () => {
           })
           .then(function(json) {
             if (json.error) {
-              isPaymentFailed(true)
+              setIsPaymentProcessing(false)
+              setIsPaymentFailed(true)
               setResultText(json.error)
             } else {
               orderComplete(clientSecret)
