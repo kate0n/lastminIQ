@@ -48,6 +48,7 @@ const LoginPage = () => {
       }
     )
       .then(result =>
+        // <=========если юзера нет, создаем нового ============
         result.status === 400
           ? fetch("https://lastmin.makaroff.tech/create_user", {
               method: "POST",
@@ -62,10 +63,12 @@ const LoginPage = () => {
                 response.status !== 200 &&
                 console.log("CREATE USER FAILED:", response)
             )
-          : result.json()
+          : // <=========если юзер есть, возвращаем о нем данные =========
+            result.json()
       )
       .then(
         user => (
+          // <=========если юзер есть, обновляем localState/storage ========
           console.log("CREATE USER FAILED:", user),
           user && updateLocalStoreFromServer(user)
         )

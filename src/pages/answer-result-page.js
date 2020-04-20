@@ -20,7 +20,14 @@ const AnswerResultPage = ({ location }) => {
 
   const { state, dispatch } = React.useContext(Context)
 
+  // тут +1 вопрос (т.к. question-page появляется на миг след.вопрос)
   let currentQuestionNumber = СountUserQuestions()
+  React.useEffect(() => {
+    return dispatch({
+      type: "COUNT_USER_QUESTIONS",
+      payload: currentQuestionNumber + 1,
+    })
+  }, [])
 
   const maxIndex = parseInt(
     state.dictionary.info.correctAnswerTitleText.length - 1

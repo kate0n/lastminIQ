@@ -58,14 +58,13 @@ const QuestionPage = () => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: userObjectURI,
-    })
-      .then(reponse => console.log("UPDATE RESPONSE", reponse))
-      .then(
-        dispatch({
-          type: "COUNT_USER_QUESTIONS",
-          payload: currentQuestionNumber + 1,
-        })
-      )
+    }).then(reponse => console.log("UPDATE RESPONSE", reponse))
+    // .then(
+    //   dispatch({
+    //     type: "COUNT_USER_QUESTIONS",
+    //     payload: currentQuestionNumber + 1,
+    //   })
+    // )
 
     // кол-во очков + 5
     isCorrect &&
