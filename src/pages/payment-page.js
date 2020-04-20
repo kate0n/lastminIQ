@@ -47,7 +47,7 @@ const stripePromise = loadStripe(stripeToken)
 
 const Form = () => {
   const { state, dispatch } = React.useContext(Context)
-
+  console.log("stripeToken", stripeToken)
   const stripe = useStripe()
   const elements = useElements()
   const options = useOptions()
