@@ -66,6 +66,7 @@ const reducer = (state, action) => {
 
     // кол-во верных
     case "SCORE":
+      console.log("SCORE", action.payload)
       localStorage.setItem("score", action.payload)
       return {
         ...state,

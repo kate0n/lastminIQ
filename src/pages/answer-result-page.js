@@ -8,6 +8,7 @@ import IsUserHaveFreeQuestion, {
   СountUserQuestions,
 } from "../utils/isUserHaveFreeQuestions"
 import "../styles/index.scss"
+import { Link } from "gatsby"
 
 const AnswerResultPage = ({ location }) => {
   const {
@@ -83,18 +84,19 @@ const AnswerResultPage = ({ location }) => {
         </div>
 
         <div className="result-page__comment text-sm">{commentText}</div>
-        <Button
+        <Link
+          className="button button--green"
           onClick={handleAnswerTitleChange}
-          text="Continue"
-          className="green"
-          link={
+          to={
             isUserHaveFreeQuestions
               ? "question-page"
               : isSubsribtionOffer
               ? "subsription-offer"
               : "final-page"
           }
-        />
+        >
+          Continue
+        </Link>
       </div>
     </Layout>
   )
