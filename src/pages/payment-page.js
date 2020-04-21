@@ -196,13 +196,6 @@ const Form = () => {
     })
   }
 
-  // React.useEffect(() => {
-  //   const checxbox = document.getElementById("checkbox")
-  //   // checxbox.setCustomValidity("")
-  //   !checxbox.checked &&
-  //     checxbox.setCustomValidity("Required. Select this checkbox to continue")
-  // }, [])
-
   const checxbox = state.isBrowser && document.getElementById("checkbox")
 
   !checxbox.checked &&
