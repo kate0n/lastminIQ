@@ -17,6 +17,12 @@ const SidebarMenu = ({ isMenuOpen }) => {
     navigate("/login-page")
   }
 
+  const subscription =
+    (state.isBrowser &&
+      localStorage.getItem("subscription") &&
+      JSON.parse(localStorage.getItem("subscription"))) ||
+    state.subscription
+
   return (
     <div className={`sidebar-menu ${isMenuOpen ? "sidebar-menu--open" : ""}`}>
       <div className="sidebar-menu__user-wrapper">
@@ -42,7 +48,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
         </div>
 
         {/* subscription info */}
-        {state.subscription ? (
+        {subscription ? (
           <div className="sidebar-menu__item">
             IQ MASTER
             <span

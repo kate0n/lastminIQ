@@ -30,6 +30,12 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
     localStorage.getItem("userInfo") &&
     JSON.parse(localStorage.getItem("userInfo"))
 
+  const subscription =
+    (state.isBrowser &&
+      localStorage.getItem("subscription") &&
+      JSON.parse(localStorage.getItem("subscription"))) ||
+    state.subscription
+
   return (
     <header
       className="header__wrapper"
@@ -74,7 +80,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
           </div>
 
           {/* subscription info   */}
-          {state.subscription ? (
+          {subscription ? (
             <div className="">
               IQ MASTER
               <p onClick={handleUnsubscribe} className="unsubscribe">
