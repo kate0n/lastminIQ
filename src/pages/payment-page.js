@@ -196,13 +196,23 @@ const Form = () => {
     })
   }
 
-  React.useEffect(() => {
-    const checxbox = document.getElementById("checkbox")
-    checxbox.setCustomValidity("")
-    !checxbox.checked &&
-      checxbox.setCustomValidity("Required. Select this checkbox to continue")
-  }, [])
+  // React.useEffect(() => {
+  //   const checxbox = document.getElementById("checkbox")
+  //   // checxbox.setCustomValidity("")
+  //   !checxbox.checked &&
+  //     checxbox.setCustomValidity("Required. Select this checkbox to continue")
+  // }, [])
 
+  const checxbox = document.getElementById("checkbox")
+  // console.log("checxbox.checked", checxbox.checked)
+  // checxbox.setCustomValidity("")
+  !checxbox.checked &&
+    checxbox.setCustomValidity("Required. Select this checkbox to continue")
+  const handleCheckbox = () => {
+    console.log("checxbox.checked", checxbox.checked)
+
+    checxbox.checked && checxbox.setCustomValidity("")
+  }
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -282,7 +292,13 @@ const Form = () => {
           />
         </label>
         <div className="payment-page__agree">
-          <input type="checkbox" required id="checkbox" />I agree with
+          <input
+            type="checkbox"
+            required
+            id="checkbox"
+            onChange={handleCheckbox}
+          />
+          I agree with
           <a
             href="/IQ_Master_service_Terms_And_Conditions.pdf"
             target="__blank"
