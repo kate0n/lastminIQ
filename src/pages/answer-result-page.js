@@ -61,8 +61,8 @@ const AnswerResultPage = ({ location }) => {
         <div
           className={
             isCorrect
-              ? "result-page__title--correct text-sm"
-              : "result-page__title--incorrect text-sm"
+              ? "result-page__title--correct"
+              : "result-page__title--incorrect"
           }
         >
           {isCorrect

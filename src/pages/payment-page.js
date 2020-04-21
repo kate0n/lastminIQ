@@ -196,6 +196,13 @@ const Form = () => {
     })
   }
 
+  React.useEffect(() => {
+    const checxbox = document.getElementById("checkbox")
+    checxbox.setCustomValidity("")
+    !checxbox.checked &&
+      checxbox.setCustomValidity("Required. Select this checkbox to continue")
+  }, [])
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -275,7 +282,7 @@ const Form = () => {
           />
         </label>
         <div className="payment-page__agree">
-          <input type="checkbox" required />I agree with
+          <input type="checkbox" required id="checkbox" />I agree with
           <a
             href="/IQ_Master_service_Terms_And_Conditions.pdf"
             target="__blank"

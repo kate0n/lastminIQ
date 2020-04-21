@@ -23,7 +23,7 @@ const SubsriptionOffer = () => {
       <div className="quiz-start" style={{ justifyContent: "flex-start" }}>
         <div className="quiz-start__wrapper">
           <QuizHeader />
-          <div className="quiz-start__title text-lg">
+          <div className="quiz-start__title text-md">
             {state.dictionary.info.subscribeOfferActionText
               .replace(
                 "{accrualPoints}",

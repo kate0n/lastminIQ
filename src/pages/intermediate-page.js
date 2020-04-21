@@ -25,7 +25,7 @@ const IntermediatePage = () => {
     <Layout>
       <div className="final-page">
         <QuizHeader />
-        <div className="quiz-start__title text-lg">
+        <div className="quiz-start__title text-md">
           {state.dictionary.info.intermediatePageText
             .replace("{accuralPointsToAnswer}", accuralPointsToAnswer)
             .replace(

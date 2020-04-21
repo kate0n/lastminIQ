@@ -7,6 +7,10 @@ const SidebarMenu = ({ isMenuOpen }) => {
   const { state, dispatch } = React.useContext(Context)
   const score = CurrentProgress()
 
+  const handleUnsubscribe = () => {
+    console.log("unsubscribe")
+  }
+
   const logout = () => {
     dispatch({ type: "LOGOUT" })
     navigate("/login-page")
@@ -14,7 +18,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
 
   return (
     <div className={`sidebar-menu ${isMenuOpen ? "sidebar-menu--open" : ""}`}>
-      <div className="sidebar-menu__user-wrapper text-sm">
+      <div className="sidebar-menu__user-wrapper">
         {/* photo + name */}
         <div className="sidebar-menu__user">
           <div className="sidebar-menu__user-photo">
@@ -37,15 +41,33 @@ const SidebarMenu = ({ isMenuOpen }) => {
         </div>
 
         {/* score */}
-        <div className="sidebar-menu__user-score">
+        {state.subscription ? (
+          <div className="sidebar-menu__item">
+            IQ MASTER
+            <span
+              onClick={handleUnsubscribe}
+              className="sidebar-menu__unsubscribe"
+            >
+              unsubscribe
+            </span>
+          </div>
+        ) : (
+          <div className="sidebar-menu__item">FREE</div>
+        )}
+
+        {/* score */}
+        <div className="sidebar-menu__user-score sidebar-menu__item">
           {state.dictionary.info.sidebarScoreText.replace(
             "{currentProgress}",
             score
           )}
         </div>
 
-        {/* score */}
-        <div onClick={logout} className="sidebar-menu__user-logout">
+        {/* log out */}
+        <div
+          onClick={logout}
+          className="sidebar-menu__user-logout sidebar-menu__item"
+        >
           {state.dictionary.info.sidebarLogoutBtnText}
         </div>
       </div>

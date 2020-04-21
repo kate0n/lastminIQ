@@ -1,6 +1,5 @@
 .sidebar-menu {
-  width: 100%;
-  // max-width: 560px;
+  width: 80%;
   background-color: #fff;
   transform: translateX(100%);
   position: fixed;
@@ -10,7 +9,7 @@
   z-index: 1;
   transition: all 0.8s;
   color: $gray;
-  // max-width: 371px;
+
   &__user-wrapper {
     @include flex-column-center;
     padding: 28px 0 0 20px;
@@ -44,19 +43,33 @@
       position: absolute;
       bottom: 0;
       right: 0;
-      width: 92%;
+      width: 87%;
+      height: 1px;
+      background-color: $gray;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    padding: 8px;
+    padding-left: 40px;
+    position: relative;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 87%;
       height: 1px;
       background-color: $gray;
     }
   }
 
   &__user-score {
-    width: 100%;
-    padding: 8px;
-    padding-left: 40px;
-    position: relative;
-    padding-bottom: 10px;
-
     &:before {
       content: url("/score.svg");
       position: absolute;
@@ -65,34 +78,10 @@
       width: 20px;
       height: 20px;
     }
-
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 92%;
-      height: 1px;
-      background-color: $gray;
-    }
   }
 
   &__user-logout {
-    width: 100%;
-    padding: 8px;
-    padding-left: 40px;
-    position: relative;
-    padding-bottom: 10px;
     cursor: pointer;
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 92%;
-      height: 1px;
-      background-color: $gray;
-    }
 
     &:before {
       content: url("/close.svg");
@@ -103,8 +92,14 @@
       height: 18px;
     }
   }
+
+  &__unsubscribe {
+    color: $blue;
+    margin-right: 10px;
+    cursor: pointer;
+  }
 }
 
 .sidebar-menu--open {
-  transform: translateX(20%);
+  transform: translateX(0%);
 }

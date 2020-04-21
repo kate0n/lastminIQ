@@ -17,7 +17,7 @@ const PaymentConfirmationPage = () => {
         <div className="quiz-start__wrapper">
           <QuizHeader />
           <div
-            className="quiz-start__title text-lg"
+            className="quiz-start__title text-md"
             dangerouslySetInnerHTML={{
               __html: state.dictionary.info.paymentSuccessActionText.replace(
                 "{additionalPartCount}",

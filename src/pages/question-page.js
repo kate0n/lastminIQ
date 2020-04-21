@@ -124,7 +124,7 @@ const QuestionPage = () => {
     <Layout>
       <QuizHeader />
       <div className="inner-container question-page">
-        <div className="question-page__question text-sm">{questionText}</div>
+        <div className="question-page__question">{questionText}</div>
         <div className="question-page__btn-group">
           <button
             onClick={() =>

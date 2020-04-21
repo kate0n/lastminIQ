@@ -15,7 +15,7 @@ const QuizStart = () => {
       <div className="quiz-start">
         <div className="quiz-start__wrapper">
           <QuizHeader />
-          <div className="quiz-start__title text-lg">
+          <div className="quiz-start__title text-md">
             {state.dictionary.info.startActionText}
           </div>
 

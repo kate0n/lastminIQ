@@ -14,18 +14,19 @@
       text-align: center;
       padding: 16px;
       color: $green;
+      font-size: 20px;
     }
 
     &--incorrect {
       text-align: center;
       padding: 16px;
       color: $pink;
+      font-size: 20px;
     }
   }
 
   &__img-wrapper {
     width: 100%;
-    // min-height: 363px;
     margin-bottom: 32px;
     img {
       display: inline-block;
