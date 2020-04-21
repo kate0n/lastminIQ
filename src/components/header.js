@@ -82,7 +82,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
           {/* subscription info   */}
           {subscription ? (
             <div className="">
-              IQ MASTER
+              IQ MASTER &nbsp; &nbsp;
               <p onClick={handleUnsubscribe} className="unsubscribe">
                 unsubscribe &nbsp; &nbsp;
               </p>
