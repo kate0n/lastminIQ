@@ -88,7 +88,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
               </p>
             </div>
           ) : (
-            <div className="">FREE &nbsp; &nbsp;</div>
+            <div className="">IQ BASIC &nbsp; &nbsp;</div>
           )}
 
           <div onClick={logout} className="header__user-info__logout ">

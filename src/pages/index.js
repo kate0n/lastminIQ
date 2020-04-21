@@ -47,6 +47,7 @@ const langs = [
     lang: "Español",
     langShort: "DE",
   },
+  //
 ]
 
 const IndexPage = props => {

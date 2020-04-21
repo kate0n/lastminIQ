@@ -97,9 +97,28 @@
     color: $blue;
     margin-right: 10px;
     cursor: pointer;
+    font-size: 12px;
   }
 }
 
 .sidebar-menu--open {
   transform: translateX(0%);
+}
+
+.iq_master:before {
+  content: url("/IQ_Master_icon.svg");
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 26px;
+  height: 26px;
+}
+
+.iq_basic:before {
+  content: url("/IQ_Basic_icon.svg");
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 26px;
+  height: 26px;
 }
