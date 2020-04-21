@@ -203,9 +203,8 @@ const Form = () => {
   //     checxbox.setCustomValidity("Required. Select this checkbox to continue")
   // }, [])
 
-  const checxbox = document.getElementById("checkbox")
-  // console.log("checxbox.checked", checxbox.checked)
-  // checxbox.setCustomValidity("")
+  const checxbox = state.isBrowser && document.getElementById("checkbox")
+
   !checxbox.checked &&
     checxbox.setCustomValidity("Required. Select this checkbox to continue")
   const handleCheckbox = () => {
