@@ -40,7 +40,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
           </div>
         </div>
 
-        {/* score */}
+        {/* subscription info */}
         {state.subscription ? (
           <div className="sidebar-menu__item">
             IQ MASTER

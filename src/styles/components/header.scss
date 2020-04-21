@@ -74,5 +74,11 @@
         display: none;
       }
     }
+
+    .unsubscribe {
+      color: $blue;
+      cursor: pointer;
+      margin-top: 4px;
+    }
   }
 }

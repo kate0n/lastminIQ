@@ -20,6 +20,10 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
     navigate("/login-page")
   }
 
+  const handleUnsubscribe = () => {
+    console.log("handleUnsubscribe")
+  }
+
   const userInfo =
     state.isBrowser &&
     localStorage.getItem("userInfo") &&
@@ -47,7 +51,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
             alt="User photo"
           />
         </div>
-        {/* user info mobile < 700px */}
+        {/* user-name with arrow-down mobile < 700px */}
         <div
           onClick={handleMenuClick}
           className="header__user__dropdown text_sm"
@@ -67,6 +71,19 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
             )}
             &nbsp; &nbsp;
           </div>
+
+          {/* subscription info   */}
+          {state.subscription ? (
+            <div className="">
+              IQ MASTER
+              <p onClick={handleUnsubscribe} className="unsubscribe">
+                unsubscribe &nbsp; &nbsp;
+              </p>
+            </div>
+          ) : (
+            <div className="">FREE &nbsp; &nbsp;</div>
+          )}
+
           <div onClick={logout} className="header__user-info__logout ">
             {state.dictionary.info.sidebarLogoutBtnText}
           </div>
