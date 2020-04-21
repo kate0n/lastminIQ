@@ -198,12 +198,15 @@ const Form = () => {
 
   const checxbox = state.isBrowser && document.getElementById("checkbox")
 
-  !checxbox.checked &&
-    checxbox.setCustomValidity("Required. Select this checkbox to continue")
-  const handleCheckbox = () => {
-    console.log("checxbox.checked", checxbox.checked)
+  React.useEffect(() => {
+    console.log("checxbox!!!!!", checxbox)
+    checxbox &&
+      checxbox.setCustomValidity("Required. Select this checkbox to continue")
+  }, [state.isBrowser, checxbox])
 
-    checxbox.checked && checxbox.setCustomValidity("")
+  const handleCheckbox = () => {
+    console.log("checxbox.checked", state.isBrowser && checxbox.checked)
+    state.isBrowser && checxbox.checked && checxbox.setCustomValidity("")
   }
   return (
     <>

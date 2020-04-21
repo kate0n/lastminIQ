@@ -152,7 +152,7 @@ const ContextProvider = ({ children }) => {
         return response.text()
       })
       .then(data => {
-        console.log("DICTIONARY  fetch", data)
+        // console.log("DICTIONARY  fetch", data)
         dispatch({ type: "DICTIONARY", payload: JSON.parse(data) })
         dispatch({ type: "IS_LOADING", payload: false })
       })
@@ -165,7 +165,7 @@ const ContextProvider = ({ children }) => {
         return response.text()
       })
       .then(data => {
-        console.log("QUESTIONS  fetch", data)
+        // console.log("QUESTIONS  fetch", data)
         dispatch({ type: "QUESTIONS", payload: JSON.parse(data) })
         dispatch({ type: "IS_LOADING", payload: false })
       })
@@ -180,7 +180,7 @@ const ContextProvider = ({ children }) => {
       .then(data => {
         dispatch({ type: "ANSWERS", payload: JSON.parse(data) })
         dispatch({ type: "IS_LOADING", payload: false })
-        console.log("ANSWERS  fetch", data)
+        // console.log("ANSWERS  fetch", data)
       })
       .catch(err => console.log("Error Reading data ", +err))
 
