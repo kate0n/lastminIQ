@@ -1,0 +1,94 @@
+{
+  "questions": [
+    {
+      "questionText": "1.По какому маршруту ходил знаменитый Восточный Экспресс?",
+      "answer1Text": "Петербург-Ташкент",
+      "answer2Text": "Париж-Стамбул",
+      "answer3Text": "Дели-Шанхай"
+    },
+    {
+      "questionText": "2.Какая из этих стран не имеет выхода к морю?",
+      "answer1Text": "Бельгия",
+      "answer2Text": "Словения",
+      "answer3Text": "Андорра"
+    },
+    {
+      "questionText": "3. На каком греческом острове расположена уникальная Долину Бабочек?",
+      "answer1Text": "Родос",
+      "answer2Text": "Крит",
+      "answer3Text": "Корфу"
+    },
+    {
+      "questionText": "4.Какая американская суперзвезда провела свой концерт в отеле Regnum Carya Golf Belek?",
+      "answer1Text": "Taylor Swift",
+      "answer2Text": "Jennifer Lopez",
+      "answer3Text": "Billie Eilish"
+    },
+    {
+      "questionText": "5.В какой африканской стране снимали Игру Престолов?",
+      "answer1Text": "Марокко",
+      "answer2Text": "Тунис",
+      "answer3Text": "Алжир"
+    },
+    {
+      "questionText": "6.В каком городе находится самая широкая улица в мире?",
+      "answer1Text": "Шанхай",
+      "answer2Text": "Буэнос-Айэрес",
+      "answer3Text": "Нью-Дели"
+    },
+    {
+      "questionText": "7.В какой стране были изобретены шахматы?",
+      "answer1Text": "Индия",
+      "answer2Text": "Китай",
+      "answer3Text": "Египет"
+    },
+    {
+      "questionText": "8.В каком городе разворачиваются события трагедии Ромео и Джульетта?",
+      "answer1Text": "Венеция",
+      "answer2Text": "Верона",
+      "answer3Text": "Бергамо"
+    },
+    {
+      "questionText": "9.Сколько детей у королевы Англии?",
+      "answer1Text": "Шесть",
+      "answer2Text": "Два",
+      "answer3Text": "Четыре"
+    },
+    {
+      "questionText": "10.Какое растение изображено на гербе Греции?",
+      "answer1Text": "Лавр",
+      "answer2Text": "Олива",
+      "answer3Text": "Платан"
+    },
+    {
+      "questionText": "11.Какой материк экватор пересекает почти посередине?",
+      "answer1Text": "Южная Америка",
+      "answer2Text": "Африка",
+      "answer3Text": "Австралия"
+    },
+    {
+      "questionText": "12.Помимо знаментого вампира, что носит имя Дракула?",
+      "answer1Text": "Компьютерный вирус",
+      "answer2Text": "Отряд муравьев",
+      "answer3Text": "Род орхидей"
+    },
+    {
+      "questionText": "13.С какого лондонского вокзала уходят в Париж поезда Eurostar??",
+      "answer1Text": "Paddington",
+      "answer2Text": "Liverpool st.",
+      "answer3Text": "St.Pancras"
+    },
+    {
+      "questionText": "14.Флаг какой из этих стран не является прямоугольником?",
+      "answer1Text": "Непал",
+      "answer2Text": "Бутан",
+      "answer3Text": "Фиджи"
+    },
+    {
+      "questionText": "15.Как называется один из известнейших курортов Болгарии?",
+      "answer1Text": "Св. Константин и Елена",
+      "answer2Text": "Св. Иосиф и Мария",
+      "answer3Text": "Св.Кирилл и Мефодий"
+    }
+  ]
+}

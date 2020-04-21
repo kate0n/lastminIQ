@@ -9,6 +9,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
 
   const handleUnsubscribe = () => {
     console.log("unsubscribe")
+    dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
   }
 
   const logout = () => {

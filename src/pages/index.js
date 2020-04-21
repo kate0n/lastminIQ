@@ -4,7 +4,6 @@ import Head from "../components/head"
 import "../styles/index.scss"
 import LastminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
-import { withErrorBoundary } from "../utils/errorBoundary"
 
 const langs = [
   {
@@ -51,7 +50,6 @@ const langs = [
 ]
 
 const IndexPage = props => {
-  console.log("PROPS", props)
   const { state, dispatch } = React.useContext(Context)
 
   const handleLangClick = lang => {
@@ -85,7 +83,8 @@ const IndexPage = props => {
               >
                 <img
                   src={`https://hatscripts.github.io/circle-flags/flags/${lang.icon}.svg`}
-                  width="25"
+                  width="25px"
+                  height="25px"
                 />
                 <div className="lang">{lang.lang}</div>
               </div>
@@ -97,4 +96,4 @@ const IndexPage = props => {
   )
 }
 
-export default withErrorBoundary(IndexPage)
+export default IndexPage

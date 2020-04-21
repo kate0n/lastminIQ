@@ -95,7 +95,7 @@ const AnswerResultPage = ({ location }) => {
               : "final-page"
           }
         >
-          Continue
+          {state.dictionary.info.continueBtnText}
         </Link>
       </div>
     </Layout>

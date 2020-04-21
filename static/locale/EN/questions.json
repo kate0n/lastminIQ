@@ -1,4 +1,4 @@
-﻿{
+{
   "questions": [
     {
       "questionText": "1.What route ran prominent Orient Express?",
@@ -45,7 +45,7 @@
     {
       "questionText": "8.Where did the  scenes of Shakespear's Romeo and Juliet take place?",
       "answer1Text": "Venice",
-      "answer2Text": "Verona,",
+      "answer2Text": "Verona",
       "answer3Text": "Bergamo"
     },
     {

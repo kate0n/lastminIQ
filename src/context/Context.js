@@ -2,7 +2,6 @@ import React, { useEffect, useReducer } from "react"
 import * as questions from "../questions.json"
 import * as answers from "../answers.json"
 import * as config from "../config.json"
-import { withErrorBoundary } from "../utils/errorBoundary"
 
 const Context = React.createContext()
 
@@ -145,36 +144,35 @@ const ContextProvider = ({ children }) => {
 
   // <=========== DICTIONARY, QUESTIONS, ANSWERS ========>
   const lang = (state.isBrowser && localStorage.getItem("lang")) || state.lang
-
-  React.useEffect(() => {
-    // console.log(`/locale/${lang}.json`)
+  //${lang}
+  useEffect(() => {
     fetch(`/locale/EN/config.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
         return response.text()
       })
       .then(data => {
-        console.log("DICTIONARY  fetch")
+        console.log("DICTIONARY  fetch", data)
         dispatch({ type: "DICTIONARY", payload: JSON.parse(data) })
         dispatch({ type: "IS_LOADING", payload: false })
       })
       .catch(err => console.log("Error Reading data ", +err))
 
     // QUESTIONS
-    fetch("/questions.json")
+    fetch(`/locale/EN/questions.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
         return response.text()
       })
       .then(data => {
-        console.log("QUESTIONS  fetch")
+        console.log("QUESTIONS  fetch", data)
         dispatch({ type: "QUESTIONS", payload: JSON.parse(data) })
         dispatch({ type: "IS_LOADING", payload: false })
       })
       .catch(err => console.log("Error Reading data ", +err))
 
     // ANSWERS
-    fetch("/answers.json")
+    fetch(`/locale/EN/answers.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
         return response.text()
@@ -182,10 +180,11 @@ const ContextProvider = ({ children }) => {
       .then(data => {
         dispatch({ type: "ANSWERS", payload: JSON.parse(data) })
         dispatch({ type: "IS_LOADING", payload: false })
-        // console.log("ANSWERS  fetch", JSON.parse(data))
+        console.log("ANSWERS  fetch", data)
       })
       .catch(err => console.log("Error Reading data ", +err))
 
+    // STRIPE_KEY
     fetch("https://lastmin.makaroff.tech/stripe-key")
       .then(result => {
         return result.json()

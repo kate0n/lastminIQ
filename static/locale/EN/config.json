@@ -1,14 +1,14 @@
 ﻿{
   "settings": {
-    "stipeToken": "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
-    "facebookToken": "630697047779114",
+    "stipeToken": "",
+    "facebookToken": "",
     "timer": 60,
     "accrualPoints": 5,
     "intermediatePart": 5,
-    "awardDate": "10th of May (sunday)" 
+    "awardDate": "10th of May (sunday)"
   },
   "info": {
-     "titleText": "Travel Quiz",
+    "titleText": "Travel Quiz",
     "timerText": "Time's Up",
     "facebookBtnText": "Log in with Facebook",
     "quizBtnText": "Quiz",
@@ -17,7 +17,7 @@
     "startActionText": "Answer the questions and win the prize if you're lucky!",
     "startHintText": "Every correct answer gives you {accrualPoints} points. Press the button to start!",
     "startBtnText": "Start Quiz",
-    "continueActionText": "Hello again! <br /> You have not finished the quiz yet",
+    "continueActionText": "Hello again! You have not finished the quiz yet",
     "continueBtnText": "Continue",
     "correctAnswerTitleText": ["That's right!!!", "Yes!!!", "Super!!"],
     "incorrectAnswerTitleText": ["No, it's not. Correct answer - {correctAnswer}", "Nope( Correct answer - {correctAnswer}", "Oops! Correct answer - {correctAnswer}"],
@@ -25,7 +25,7 @@
     "intermediatePageText": "Correct answers: {accuralPointsToAnswer} out of {intermediatePart}, Your score is {currentProgress}. Every point gives you one vote lottery for the prize.",
     "intermediatePageBtnText": "Tap to continue",
     "finalIntermediatePageText": "Your score is: {currentProgress}. You've got {currentProgress} votes to participate the lottery. The winner will be announced on {awardDate}. Cross your fingers and good luck",
-    "finalPageText": "You have {accuralPointsToAnswer} correct answers out of {questionCount}, you have {accrualPoints} points for every correct answer so your score is {currentProgress}. Every point gives you one vote in the lottery for the prize. The winnner will be announced on {awardDate}. <br /> <br /> Cross your fingers and good luck",
+    "finalPageText": "You have {accuralPointsToAnswer} correct answers out of {questionCount}, you have {accrualPoints} points for every correct answer so your score is {currentProgress}. Every point gives you one vote in the lottery for the prize. The winnner will be announced on {awardDate}. Cross your fingers and good luck",
     "finalPageBtnText": "Go to homepage",
     "subscribeOfferActionText": "You can boost your chance to win answering more questions. Subscribe for IQ MASTER level and open {additionalPartCount} more questions to get more points. Every correct answer gives {accrualPoints} points extra!",
     "subscribeOfferYesBtnText": "Subscribe",

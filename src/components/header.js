@@ -21,6 +21,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
   }
 
   const handleUnsubscribe = () => {
+    dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
     console.log("handleUnsubscribe")
   }
 
