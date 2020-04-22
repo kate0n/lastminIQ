@@ -11,7 +11,7 @@
   &__agree {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     input {
       margin: 0;
       margin-right: 16px;
@@ -41,6 +41,11 @@
 
   &__failed-msg--show {
     color: red;
+  }
+
+  .eror-msg {
+    color: $pink;
+    margin-bottom: 8px;
   }
 }
 

@@ -48,6 +48,48 @@ const langs = [
     langShort: "DE",
   },
   //
+
+  {
+    icon: "ru",
+    lang: "Русский",
+    langShort: "RU",
+  },
+  {
+    icon: "fi",
+    lang: "Soumen",
+    langShort: "SU",
+  },
+  {
+    icon: "gb",
+    lang: "English",
+    langShort: "EN",
+  },
+  {
+    icon: "de",
+    lang: "Deutcsh",
+    langShort: "DE",
+  },
+  {
+    icon: "es",
+    lang: "Español",
+    langShort: "DE",
+  },
+  {
+    icon: "gb",
+    lang: "English",
+    langShort: "EN",
+  },
+
+  {
+    icon: "de",
+    lang: "Deutcsh",
+    langShort: "DE",
+  },
+  {
+    icon: "es",
+    lang: "Español",
+    langShort: "DE",
+  },
 ]
 
 const IndexPage = props => {

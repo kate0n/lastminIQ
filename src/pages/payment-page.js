@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useMemo, useState } from "react"
 import {
   useStripe,
   useElements,
@@ -56,10 +56,23 @@ const Form = () => {
   const [isPaymentProcessing, setIsPaymentProcessing] = React.useState(false)
   const [resultText, setResultText] = React.useState("Payment failed")
 
+  const [isChecked, setIsChecked] = useState({
+    default: false,
+    showMsg: false,
+  })
+
   const handleSubmit = async event => {
     event.preventDefault()
 
     if (!stripe || !elements) {
+      return
+    }
+
+    if (!isChecked.default) {
+      setIsChecked({
+        default: false,
+        showMsg: true,
+      })
       return
     }
 
@@ -198,15 +211,14 @@ const Form = () => {
 
   const checxbox = state.isBrowser && document.getElementById("checkbox")
 
-  React.useEffect(() => {
-    console.log("checxbox!!!!!", checxbox)
-    checxbox &&
-      checxbox.setCustomValidity("Required. Select this checkbox to continue")
-  }, [state.isBrowser, checxbox])
-
   const handleCheckbox = () => {
     console.log("checxbox.checked", state.isBrowser && checxbox.checked)
-    state.isBrowser && checxbox.checked && checxbox.setCustomValidity("")
+    state.isBrowser &&
+      checxbox.checked &&
+      setIsChecked({
+        default: true,
+        showMsg: false,
+      })
   }
   return (
     <>
@@ -286,20 +298,25 @@ const Form = () => {
             }}
           />
         </label>
-        <div className="payment-page__agree">
-          <input
-            type="checkbox"
-            required
-            id="checkbox"
-            onChange={handleCheckbox}
-          />
-          I agree with
-          <a
-            href="/IQ_Master_service_Terms_And_Conditions.pdf"
-            target="__blank"
-          >
-            <b>Terms and conditions</b>
-          </a>
+        <div>
+          <div className="payment-page__agree">
+            <input
+              type="checkbox"
+              // required
+              id="checkbox"
+              onChange={handleCheckbox}
+            />
+            I agree with
+            <a
+              href="/IQ_Master_service_Terms_And_Conditions.pdf"
+              target="__blank"
+            >
+              <b>Terms and conditions</b>
+            </a>
+          </div>
+          {isChecked.showMsg && (
+            <p className="eror-msg">Confirmation required to continue</p>
+          )}
         </div>
         <button
           type="submit"
