@@ -5,13 +5,14 @@ import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import "../styles/index.scss"
 import { UserObject } from "../utils/userObject"
-import {
+import IsUserHaveFreeQuestion, {
   СountUserQuestions,
   CurrentProgress,
 } from "../utils/isUserHaveFreeQuestions"
 
 const QuestionPage = () => {
   const { state, dispatch } = React.useContext(Context)
+  const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
   let timer
   const userObject = UserObject()
   const currentQuestionNumber = СountUserQuestions()
@@ -59,12 +60,6 @@ const QuestionPage = () => {
       },
       body: userObjectURI,
     }).then(reponse => console.log("UPDATE RESPONSE", reponse))
-    // .then(
-    //   dispatch({
-    //     type: "COUNT_USER_QUESTIONS",
-    //     payload: currentQuestionNumber + 1,
-    //   })
-    // )
 
     // кол-во очков + 5
     isCorrect &&
@@ -113,6 +108,7 @@ const QuestionPage = () => {
   }
 
   React.useEffect(() => {
+    !isUserHaveFreeQuestions && navigate("final-page")
     !state.isLoading && createSetTimeout()
   }, [])
 
