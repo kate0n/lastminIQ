@@ -3,6 +3,7 @@ import { navigate } from "gatsby"
 import LasminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
 import { CurrentProgress } from "../utils/isUserHaveFreeQuestions"
+import logout from "../images/logout.png"
 
 const Header = ({ isMenuOpen, handleMenuClick }) => {
   const { state, dispatch } = useContext(Context)
@@ -58,41 +59,41 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
             alt="User photo"
           />
         </div>
-        {/* user-name with arrow-down mobile < 700px */}
-        <div
-          onClick={handleMenuClick}
-          className="header__user__dropdown text_sm"
-        >
+        {/* <===== user-name with arrow-down mobile < 700px */}
+        <div onClick={handleMenuClick} className="header__user__dropdown">
           {userInfo && userInfo.name}&nbsp;
         </div>
+        {/* ==========> */}
+
         {/* user  info desktop  */}
         <div
           onClick={isMobile ? handleMenuClick : null}
-          className="header__user-info text_sm"
+          className="header__user-info"
         >
-          <div>{(userInfo && userInfo.name) || ""}&nbsp; &nbsp;</div>
+          <div className="header__user-info__name">
+            {(userInfo && userInfo.name) || ""}
+            <img src="/logout.svg" onClick={logout} alt="logout" />
+          </div>
+
+          {/* subscription info   */}
+          {subscription ? (
+            <div className="unsubscribe">
+              IQ Master
+              <img
+                src="/unsubscribeBtn.svg"
+                onClick={handleUnsubscribe}
+                alt="unsubscribe"
+              />
+            </div>
+          ) : (
+            <div className="">IQ Basic</div>
+          )}
+
           <div>
             {state.dictionary.info.sidebarScoreText.replace(
               "{currentProgress}",
               score
             )}
-            &nbsp; &nbsp;
-          </div>
-
-          {/* subscription info   */}
-          {subscription ? (
-            <div className="">
-              IQ MASTER &nbsp; &nbsp;
-              <p onClick={handleUnsubscribe} className="unsubscribe">
-                unsubscribe &nbsp; &nbsp;
-              </p>
-            </div>
-          ) : (
-            <div className="">IQ BASIC &nbsp; &nbsp;</div>
-          )}
-
-          <div onClick={logout} className="header__user-info__logout ">
-            {state.dictionary.info.sidebarLogoutBtnText}
           </div>
         </div>
       </div>

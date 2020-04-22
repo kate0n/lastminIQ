@@ -50,7 +50,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
         {/* subscription info */}
         {subscription ? (
           <div className="sidebar-menu__item iq_master">
-            IQ MASTER
+            IQ Master
             <span
               onClick={handleUnsubscribe}
               className="sidebar-menu__unsubscribe"
@@ -59,7 +59,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
             </span>
           </div>
         ) : (
-          <div className="sidebar-menu__item iq_basic">IQ BASIC</div>
+          <div className="sidebar-menu__item iq_basic">IQ Basic</div>
         )}
 
         {/* score */}

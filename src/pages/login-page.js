@@ -133,7 +133,7 @@ const LoginPage = () => {
           </div>
           <FacebookLogin
             appId="630697047779114"
-            //appId={state.dictionary.settings.facebookToken}
+            // appId={state.dictionary.settings.facebookToken}
             // appId="226488818440629" // for localhost
             fields="name,email,picture"
             onClick={console.log("")}

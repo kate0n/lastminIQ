@@ -14,7 +14,7 @@ const initialState = {
     userID: "",
   },
   score: 0, // текущий счет
-  subscription: false, // есть ли подписка
+  subscription: true, // есть ли подписка
   countUserQuestions: 0, // кол-во вопросов, на которые юзер ответил
   intermediatePart: "", // кол-во free вопросов (оставить 0)
   questionCount: "", // (длина массива в questions)
@@ -185,7 +185,7 @@ const ContextProvider = ({ children }) => {
       .catch(err => console.log("Error Reading data ", +err))
 
     // STRIPE_KEY
-    fetch("https://lastmin.makaroff.tech/stripe-key")
+    fetch("/stripe-key")
       .then(result => {
         return result.json()
       })
