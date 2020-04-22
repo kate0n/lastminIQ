@@ -8,11 +8,14 @@ import { UserObject } from "../utils/userObject"
 import IsUserHaveFreeQuestion, {
   СountUserQuestions,
   CurrentProgress,
+  IsSubsribtionOffer,
 } from "../utils/isUserHaveFreeQuestions"
 
 const QuestionPage = () => {
   const { state, dispatch } = React.useContext(Context)
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
+  const isSubsribtionOffer = IsSubsribtionOffer()
+
   let timer
   const userObject = UserObject()
   const currentQuestionNumber = СountUserQuestions()
@@ -108,7 +111,9 @@ const QuestionPage = () => {
   }
 
   React.useEffect(() => {
-    !isUserHaveFreeQuestions && navigate("final-page")
+    !isUserHaveFreeQuestions && isSubsribtionOffer
+      ? navigate("subsription-offer")
+      : navigate("final-page")
     !state.isLoading && createSetTimeout()
   }, [])
 
