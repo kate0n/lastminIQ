@@ -4,11 +4,22 @@ import Layout from "../components/layout"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import "../styles/index.scss"
+import { navigate } from "gatsby"
+import IsUserHaveFreeQuestion, {
+  IsSubsribtionOffer,
+} from "../utils/isUserHaveFreeQuestions"
 
 const TimeoutPage = ({ location }) => {
   const { state } = React.useContext(Context)
+  const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
+  const isSubsribtionOffer = IsSubsribtionOffer()
 
-  console.log("state in timout", location.state)
+  React.useEffect(() => {
+    !isUserHaveFreeQuestions && isSubsribtionOffer
+      ? navigate("subsription-offer")
+      : navigate("final-page")
+  }, [])
+
   if (state.isLoading) {
     return "Loading..."
   }

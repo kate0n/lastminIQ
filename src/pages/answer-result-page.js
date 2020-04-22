@@ -1,6 +1,7 @@
 import React from "react"
 import Layout from "../components/layout"
-import Button from "../components/button"
+import { navigate } from "gatsby"
+
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import IsUserHaveFreeQuestion, {
@@ -24,6 +25,10 @@ const AnswerResultPage = ({ location }) => {
   // тут +1 вопрос (т.к. question-page появляется на миг след.вопрос)
   let currentQuestionNumber = СountUserQuestions()
   React.useEffect(() => {
+    !isUserHaveFreeQuestions && isSubsribtionOffer
+      ? navigate("subsription-offer")
+      : navigate("final-page")
+
     return dispatch({
       type: "COUNT_USER_QUESTIONS",
       payload: currentQuestionNumber + 1,
