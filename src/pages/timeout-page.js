@@ -15,9 +15,11 @@ const TimeoutPage = ({ location }) => {
   const isSubsribtionOffer = IsSubsribtionOffer()
 
   React.useEffect(() => {
-    !isUserHaveFreeQuestions && isSubsribtionOffer
-      ? navigate("subsription-offer")
-      : navigate("final-page")
+    if (!isUserHaveFreeQuestions && isSubsribtionOffer) {
+      navigate("subsription-offer")
+    } else if (!isUserHaveFreeQuestions && !isSubsribtionOffer) {
+      navigate("final-page")
+    }
   }, [])
 
   if (state.isLoading) {

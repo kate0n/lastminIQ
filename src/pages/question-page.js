@@ -111,9 +111,12 @@ const QuestionPage = () => {
   }
 
   React.useEffect(() => {
-    !isUserHaveFreeQuestions && isSubsribtionOffer
-      ? navigate("subsription-offer")
-      : navigate("final-page")
+    if (!isUserHaveFreeQuestions && isSubsribtionOffer) {
+      navigate("subsription-offer")
+    } else if (!isUserHaveFreeQuestions && !isSubsribtionOffer) {
+      navigate("final-page")
+    }
+
     !state.isLoading && createSetTimeout()
   }, [])
 

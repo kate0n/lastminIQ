@@ -25,9 +25,11 @@ const AnswerResultPage = ({ location }) => {
   // тут +1 вопрос (т.к. question-page появляется на миг след.вопрос)
   let currentQuestionNumber = СountUserQuestions()
   React.useEffect(() => {
-    !isUserHaveFreeQuestions && isSubsribtionOffer
-      ? navigate("subsription-offer")
-      : navigate("final-page")
+    if (!isUserHaveFreeQuestions && isSubsribtionOffer) {
+      navigate("subsription-offer")
+    } else if (!isUserHaveFreeQuestions && !isSubsribtionOffer) {
+      navigate("final-page")
+    }
 
     return dispatch({
       type: "COUNT_USER_QUESTIONS",
