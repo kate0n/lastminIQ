@@ -86,7 +86,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
               />
             </div>
           ) : (
-            <div className="">IQ Basic</div>
+            <div className="unsubscribe">IQ Basic</div>
           )}
 
           <div>
