@@ -14,7 +14,7 @@ const initialState = {
     userID: "",
   },
   score: 0, // текущий счет
-  subscription: true, // есть ли подписка
+  subscription: false, // есть ли подписка
   countUserQuestions: 0, // кол-во вопросов, на которые юзер ответил
   intermediatePart: "", // кол-во free вопросов (оставить 0)
   questionCount: "", // (длина массива в questions)
