@@ -15,6 +15,7 @@ const HomePage = () => {
   const isSubsribtionOffer = IsSubsribtionOffer()
   const userQuestions = СountUserQuestions()
 
+  console.log("HOME_PAGE", state.dictionary.info)
   React.useEffect(() => {
     state.isBrowser && document.body.scrollTo(0, 0)
   }, [])

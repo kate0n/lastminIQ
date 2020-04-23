@@ -8,6 +8,8 @@ import "../styles/index.scss"
 
 const PaymentConfirmationPage = () => {
   const { state } = React.useContext(Context)
+  console.log("!!!", state.dictionary.info.paymentSuccessActionText)
+
   if (state.isLoading) {
     return "Loading..."
   }

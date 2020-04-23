@@ -27,6 +27,7 @@ const initialState = {
   answerTitleIndex: 0,
   stripeToken: "",
   stripeID: "",
+  url: "https://lastmin.makaroff.tech",
 }
 
 const reducer = (state, action) => {
@@ -80,6 +81,8 @@ const reducer = (state, action) => {
       }
 
     case "DICTIONARY":
+      console.log("dispatch dictipnary!!!!!!!!", action.payload)
+
       localStorage.setItem(
         "intermediatePart",
         action.payload.settings.intermediatePart
@@ -144,48 +147,49 @@ const ContextProvider = ({ children }) => {
 
   // <=========== DICTIONARY, QUESTIONS, ANSWERS ========>
   const lang = (state.isBrowser && localStorage.getItem("lang")) || state.lang
+
   //${lang}
   useEffect(() => {
-    fetch(`/locale/EN/config.json`)
+    fetch(`https://lastmin.makaroff.tech/localize/${lang}/config.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
-        return response.text()
+        return response.json()
       })
       .then(data => {
-        // console.log("DICTIONARY  fetch", data)
-        dispatch({ type: "DICTIONARY", payload: JSON.parse(data) })
+        console.log("DICTIONARY  fetch", data)
+        dispatch({ type: "DICTIONARY", payload: data })
         dispatch({ type: "IS_LOADING", payload: false })
       })
       .catch(err => console.log("Error Reading data ", +err))
 
     // QUESTIONS
-    fetch(`/locale/EN/questions.json`)
+    fetch(`https://lastmin.makaroff.tech/localize/${lang}/questions.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
-        return response.text()
+        return response.json()
       })
       .then(data => {
-        // console.log("QUESTIONS  fetch", data)
-        dispatch({ type: "QUESTIONS", payload: JSON.parse(data) })
+        console.log("QUESTIONS  fetch", data)
+        dispatch({ type: "QUESTIONS", payload: data })
         dispatch({ type: "IS_LOADING", payload: false })
       })
       .catch(err => console.log("Error Reading data ", +err))
 
     // ANSWERS
-    fetch(`/locale/EN/answers.json`)
+    fetch(`https://lastmin.makaroff.tech/localize/${lang}/answers.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
-        return response.text()
+        return response.json()
       })
       .then(data => {
-        dispatch({ type: "ANSWERS", payload: JSON.parse(data) })
+        dispatch({ type: "ANSWERS", payload: data })
         dispatch({ type: "IS_LOADING", payload: false })
-        // console.log("ANSWERS  fetch", data)
+        console.log("ANSWERS  fetch", data)
       })
       .catch(err => console.log("Error Reading data ", +err))
 
     // STRIPE_KEY
-    fetch("/stripe-key")
+    fetch("https://fa737220.ngrok.io/stripe-key")
       .then(result => {
         return result.json()
       })

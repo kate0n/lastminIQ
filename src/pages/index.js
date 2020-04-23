@@ -5,95 +5,16 @@ import "../styles/index.scss"
 import LastminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
 
-const langs = [
-  {
-    icon: "ee",
-    lang: "Eesti",
-    langShort: "EE",
-  },
-  {
-    icon: "lv",
-    lang: "Latviski",
-    langShort: "LV",
-  },
-  {
-    icon: "lt",
-    lang: "Lietuvių",
-    langShort: "LT",
-  },
-  {
-    icon: "ru",
-    lang: "Русский",
-    langShort: "RU",
-  },
-  {
-    icon: "fi",
-    lang: "Soumen",
-    langShort: "SU",
-  },
-  {
-    icon: "gb",
-    lang: "English",
-    langShort: "EN",
-  },
-
-  {
-    icon: "de",
-    lang: "Deutcsh",
-    langShort: "DE",
-  },
-  {
-    icon: "es",
-    lang: "Español",
-    langShort: "DE",
-  },
-  //
-
-  {
-    icon: "ru",
-    lang: "Русский",
-    langShort: "RU",
-  },
-  {
-    icon: "fi",
-    lang: "Soumen",
-    langShort: "SU",
-  },
-  {
-    icon: "gb",
-    lang: "English",
-    langShort: "EN",
-  },
-  {
-    icon: "de",
-    lang: "Deutcsh",
-    langShort: "DE",
-  },
-  {
-    icon: "es",
-    lang: "Español",
-    langShort: "DE",
-  },
-  {
-    icon: "gb",
-    lang: "English",
-    langShort: "EN",
-  },
-
-  {
-    icon: "de",
-    lang: "Deutcsh",
-    langShort: "DE",
-  },
-  {
-    icon: "es",
-    lang: "Español",
-    langShort: "DE",
-  },
-]
-
 const IndexPage = props => {
   const { state, dispatch } = React.useContext(Context)
+  const [langsList, setLangsList] = React.useState()
+
+  React.useEffect(() => {
+    fetch("https://lastmin.makaroff.tech/localize/main.json")
+      .then(response => response.json())
+      .then(mainJson => mainJson)
+      .then(a => setLangsList(a))
+  }, [])
 
   const handleLangClick = lang => {
     state.isBrowser && localStorage.getItem("isAuthenticated")
@@ -118,20 +39,21 @@ const IndexPage = props => {
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
           <div className="langs">
-            {langs.map((lang, i) => (
-              <div
-                onClick={() => handleLangClick(lang.langShort)}
-                className="lang-wrapper"
-                key={i}
-              >
-                <img
-                  src={`https://hatscripts.github.io/circle-flags/flags/${lang.icon}.svg`}
-                  width="25px"
-                  height="25px"
-                />
-                <div className="lang">{lang.lang}</div>
-              </div>
-            ))}
+            {langsList &&
+              langsList.map((lang, i) => (
+                <div
+                  onClick={() => handleLangClick(lang.langShort)}
+                  className="lang-wrapper"
+                  key={i}
+                >
+                  <img
+                    src={`https://lastmin.makaroff.tech/localize/icons/${lang.icon}`}
+                    width="25px"
+                    height="25px"
+                  />
+                  <div className="lang">{lang.lang}</div>
+                </div>
+              ))}
           </div>
         </main>
       </div>

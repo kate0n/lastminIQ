@@ -79,10 +79,12 @@ const Form = () => {
     const name = event.target.name.value
     const email = event.target.email.value
 
-    const orderData = {
-      items: [{ id: "subscription" }],
-      currency: "eur",
-    }
+    // const orderData = {
+    //   items: [{ id: "subscription" }],
+    //   currency: "eur",
+    //   name: name,
+    //   email: email,
+    // }
 
     // <========== СОЗДАНИЕ ПЛАТЕЖНОГО МЕТОДА ============
     const payload = await stripe
@@ -94,57 +96,75 @@ const Form = () => {
           name: name,
         },
       })
+      // CREATE CUSTOMER and SUBSCRIPTION (server-side)
       .then(result => {
-        // console.log("createPaymentMethod result", result)
         setIsPaymentProcessing(true)
         if (result.error) {
           setIsPaymentProcessing(false)
           setIsPaymentFailed(true)
-          console.log("result.error", result.error)
+          console.error("result.error", result.error)
         } else {
-          orderData.paymentMethodId = result.paymentMethod.id
-          return fetch("https://lastmin.makaroff.tech/pay", {
-            method: "POST",
+          return fetch(`https://fa737220.ngrok.io/create-customer`, {
+            method: "post",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(orderData),
+            body: JSON.stringify({
+              email: email,
+              payment_method: result.paymentMethod.id,
+            }),
           })
         }
       })
-      .then(function(result) {
+      .then(result => {
         return result.json()
       })
-      .then(function(response) {
-        if (response.error) {
-          console.log("PAYMENT FAILED", response.error)
+      // HANDLE SUBSCRIPTION object from server
+      .then(subscription => {
+        if (subscription.error) {
+          console.error("subscription.error", subscription.error)
           setIsPaymentProcessing(false)
           setIsPaymentFailed(true)
-          setResultText(response.error)
-        } else if (response.requiresAction) {
-          // Request authentication
-          handleAction(response.clientSecret)
+          setResultText(subscription.error)
+          // ТРЕБУЕТСЯ ПОДТВЕРЖДЕНИЕ
         } else {
-          orderComplete(response.clientSecret)
-          sendUpdatedUserToServer(name, email)
+          handleSubsciption(subscription, name, email)
         }
+        console.log("[PaymentMethod]", payload)
       })
-
-    console.log("[PaymentMethod]", payload)
   }
 
-  /* Shows a success / error message when the payment is complete */
-  const orderComplete = function(clientSecret) {
-    stripe.retrievePaymentIntent(clientSecret).then(function(result) {
-      const paymentIntent = result.paymentIntent
-      const paymentIntentJson = JSON.stringify(paymentIntent, null, 2)
-      console.log("paymentIntentJson", paymentIntentJson)
-    })
+  const handleSubsciption = (subscription, name, email) => {
+    const { latest_invoice } = subscription
+    const { payment_intent } = latest_invoice
+
+    if (payment_intent) {
+      const { client_secret, status } = payment_intent
+
+      if (status === "requires_action") {
+        stripe.confirmCardPayment(client_secret).then(result => {
+          if (result.error) {
+            setIsPaymentProcessing(false)
+            setIsPaymentFailed(true)
+            setResultText(result.error)
+          } else {
+            // Show a success message to your customer
+            confirmPayment(subscription.id, name, email)
+          }
+        })
+      } else {
+        // success
+        sendUpdatedUserToServer(name, email)
+      }
+    } else {
+      sendUpdatedUserToServer(name, email)
+    }
   }
 
   // name, email, payment_ok to servevr
   const sendUpdatedUserToServer = (name, email) => {
     // обновляем локальный стейт
+    console.log("sendUpdatedUserToServer inside")
     dispatch({ type: "ADD_SUBSCRIPTION", payload: true })
     // отправлем на север
     userObject.username = name
@@ -163,7 +183,7 @@ const Form = () => {
       userObject.payment_ok
     )}&localize=${userObject.localize}`
 
-    fetch("https://lastmin.makaroff.tech/update_user", {
+    fetch(`${state.url}/update_user`, {
       method: "POST",
       headers: {
         "cache-control": "no-cache",
@@ -176,15 +196,18 @@ const Form = () => {
       .then(navigate("/payment-confirmation-page"))
   }
 
-  // Request authentication
-  const handleAction = function(clientSecret) {
-    stripe.handleCardAction(clientSecret).then(function(data) {
+  // НУЖНА ПРОВЕРКА (status === 'require_action')
+  const confirmPayment = function(clientSecret, name, email) {
+    // stripe.confirmCardPayment
+    stripe.handleCardAction(clientSecret).then(data => {
       if (data.error) {
         setIsPaymentProcessing(false)
         setIsPaymentFailed(true)
         setResultText("Your card was not authenticated, please try again")
-      } else if (data.paymentIntent.status === "requires_confirmation") {
-        fetch("https://lastmin.makaroff.tech/pay", {
+      }
+      // CONFIRM SUBSCRIBTION to server
+      else if (data.paymentIntent.status === "requires_confirmation") {
+        fetch(`https://fa737220.ngrok.io/subscription`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -193,16 +216,16 @@ const Form = () => {
             paymentIntentId: data.paymentIntent.id,
           }),
         })
-          .then(function(result) {
+          .then(result => {
             return result.json()
           })
-          .then(function(json) {
+          .then(json => {
             if (json.error) {
               setIsPaymentProcessing(false)
               setIsPaymentFailed(true)
               setResultText(json.error)
             } else {
-              orderComplete(clientSecret)
+              sendUpdatedUserToServer(name, email)
             }
           })
       }
@@ -220,9 +243,10 @@ const Form = () => {
         showMsg: false,
       })
   }
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <label>
           Email
           <input

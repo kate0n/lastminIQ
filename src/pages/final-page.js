@@ -18,6 +18,7 @@ const FinalPage = () => {
   if (state.isLoading) {
     return "Loading..."
   }
+
   return (
     <Layout>
       <div className="quiz-start">
@@ -33,6 +34,7 @@ const FinalPage = () => {
                   "{accrualPoints}",
                   state.dictionary.settings.accrualPoints
                 )
+                .replace("{currentProgress}", currentProgress)
                 .replace("{currentProgress}", currentProgress)
                 .replace("{awardDate}", state.dictionary.settings.awardDate),
             }}
