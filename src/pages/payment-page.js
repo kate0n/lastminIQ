@@ -79,13 +79,6 @@ const Form = () => {
     const name = event.target.name.value
     const email = event.target.email.value
 
-    // const orderData = {
-    //   items: [{ id: "subscription" }],
-    //   currency: "eur",
-    //   name: name,
-    //   email: email,
-    // }
-
     // <========== СОЗДАНИЕ ПЛАТЕЖНОГО МЕТОДА ============
     const payload = await stripe
       .createPaymentMethod({
@@ -102,7 +95,7 @@ const Form = () => {
         if (result.error) {
           setIsPaymentProcessing(false)
           setIsPaymentFailed(true)
-          console.error("result.error", result.error)
+          console.error("createPaymentMethod error", result.error)
         } else {
           return fetch(`https://fa737220.ngrok.io/create-customer`, {
             method: "post",
@@ -122,19 +115,22 @@ const Form = () => {
       // HANDLE SUBSCRIPTION object from server
       .then(subscription => {
         if (subscription.error) {
-          console.error("subscription.error", subscription.error)
+          console.error("CREATE CUSTOMER server error", subscription.error)
           setIsPaymentProcessing(false)
           setIsPaymentFailed(true)
           setResultText(subscription.error)
           // ТРЕБУЕТСЯ ПОДТВЕРЖДЕНИЕ
         } else {
-          handleSubsciption(subscription, name, email)
+          userObject.stripe_id = subscription.id
+          userObject.username = name
+          userObject.email = email
+          handleSubsciption(subscription)
         }
         console.log("[PaymentMethod]", payload)
       })
   }
 
-  const handleSubsciption = (subscription, name, email) => {
+  const handleSubsciption = subscription => {
     const { latest_invoice } = subscription
     const { payment_intent } = latest_invoice
 
@@ -142,36 +138,20 @@ const Form = () => {
       const { client_secret, status } = payment_intent
 
       if (status === "requires_action") {
-        stripe.confirmCardPayment(client_secret).then(result => {
-          if (result.error) {
-            setIsPaymentProcessing(false)
-            setIsPaymentFailed(true)
-            setResultText(result.error)
-          } else {
-            // Show a success message to your customer
-            confirmPayment(subscription.id, name, email)
-          }
-        })
+        confirmPayment(client_secret, subscription.id)
       } else {
-        // success
-        sendUpdatedUserToServer(name, email)
+        sendUpdatedUserToServer()
       }
     } else {
-      sendUpdatedUserToServer(name, email)
+      sendUpdatedUserToServer()
     }
   }
 
   // name, email, payment_ok to servevr
-  const sendUpdatedUserToServer = (name, email) => {
+  const sendUpdatedUserToServer = () => {
     // обновляем локальный стейт
-    console.log("sendUpdatedUserToServer inside")
+    console.log("sendUpdatedUserToServer userObject", userObject)
     dispatch({ type: "ADD_SUBSCRIPTION", payload: true })
-    // отправлем на север
-    userObject.username = name
-    userObject.email = email
-    userObject.payment_ok = true
-
-    console.log("userObject", userObject)
 
     const userObjectURI = `username=${encodeURI(
       userObject.username
@@ -197,10 +177,10 @@ const Form = () => {
   }
 
   // НУЖНА ПРОВЕРКА (status === 'require_action')
-  const confirmPayment = function(clientSecret, name, email) {
-    // stripe.confirmCardPayment
-    stripe.handleCardAction(clientSecret).then(data => {
+  const confirmPayment = function(client_secret, subscription_id) {
+    stripe.confirmCardPayment(client_secret).then(data => {
       if (data.error) {
+        console.error('error stripe confirming payment', data.error)
         setIsPaymentProcessing(false)
         setIsPaymentFailed(true)
         setResultText("Your card was not authenticated, please try again")
@@ -208,12 +188,12 @@ const Form = () => {
       // CONFIRM SUBSCRIBTION to server
       else if (data.paymentIntent.status === "requires_confirmation") {
         fetch(`https://fa737220.ngrok.io/subscription`, {
-          method: "POST",
+          method: "post",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            paymentIntentId: data.paymentIntent.id,
+            paymentIntentId: subscription_id,
           }),
         })
           .then(result => {
@@ -221,11 +201,12 @@ const Form = () => {
           })
           .then(json => {
             if (json.error) {
+              console.error('error server confirming payment', json.error)
               setIsPaymentProcessing(false)
               setIsPaymentFailed(true)
               setResultText(json.error)
             } else {
-              sendUpdatedUserToServer(name, email)
+              sendUpdatedUserToServer()
             }
           })
       }

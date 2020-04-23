@@ -132,8 +132,8 @@ const LoginPage = () => {
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
           <FacebookLogin
-            appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
-            // appId="226488818440629" // for localhost
+            // appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
+            appId="226488818440629" // for localhost
             fields="name,email,picture"
             onClick={console.log("")}
             callback={responseFacebook}
