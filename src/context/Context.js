@@ -26,7 +26,7 @@ const initialState = {
   isBrowser: typeof document !== `undefined`,
   answerTitleIndex: 0,
   stripeToken: "",
-  stripeID: "",
+  stripe_id: "",
   url: "https://lastmin.makaroff.tech",
 }
 
@@ -81,8 +81,6 @@ const reducer = (state, action) => {
       }
 
     case "DICTIONARY":
-      console.log("dispatch dictipnary!!!!!!!!", action.payload)
-
       localStorage.setItem(
         "intermediatePart",
         action.payload.settings.intermediatePart
@@ -113,14 +111,12 @@ const reducer = (state, action) => {
         questionCount: action.payload.questions.length,
       }
     case "ANSWERS":
-      // console.log("action.payload", action.payload)
       return {
         ...state,
         answers: action.payload,
       }
 
     case "ANSWER_TITLE_INDEX":
-      console.log("ANSWER_TITLE_INDEX", action.payload)
       return {
         ...state,
         answerTitleIndex: action.payload,
@@ -133,9 +129,10 @@ const reducer = (state, action) => {
       }
 
     case "STRIPE_ID":
+      localStorage.setItem("stripe_id", action.payload)
       return {
         ...state,
-        stripeID: action.payload,
+        stripe_id: action.payload,
       }
     default:
       return state
@@ -150,7 +147,7 @@ const ContextProvider = ({ children }) => {
 
   //${lang}
   useEffect(() => {
-    fetch(`https://lastmin.makaroff.tech/localize/${lang}/config.json`)
+    fetch(`${state.url}/localize/${lang}/config.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
         return response.json()
@@ -163,7 +160,7 @@ const ContextProvider = ({ children }) => {
       .catch(err => console.log("Error Reading data ", +err))
 
     // QUESTIONS
-    fetch(`https://lastmin.makaroff.tech/localize/${lang}/questions.json`)
+    fetch(`${state.url}/localize/${lang}/questions.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
         return response.json()
@@ -176,7 +173,7 @@ const ContextProvider = ({ children }) => {
       .catch(err => console.log("Error Reading data ", +err))
 
     // ANSWERS
-    fetch(`https://lastmin.makaroff.tech/localize/${lang}/answers.json`)
+    fetch(`${state.url}/localize/${lang}/answers.json`)
       .then(response => {
         dispatch({ type: "IS_LOADING", payload: true })
         return response.json()
@@ -189,7 +186,7 @@ const ContextProvider = ({ children }) => {
       .catch(err => console.log("Error Reading data ", +err))
 
     // STRIPE_KEY
-    fetch("https://fa737220.ngrok.io/stripe-key")
+    fetch(`${state.url}/stripe-key`)
       .then(result => {
         return result.json()
       })

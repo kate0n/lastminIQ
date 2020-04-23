@@ -7,9 +7,27 @@ const SidebarMenu = ({ isMenuOpen }) => {
   const { state, dispatch } = React.useContext(Context)
   const score = CurrentProgress()
 
+  const userInfo =
+    state.isBrowser &&
+    localStorage.getItem("userInfo") &&
+    JSON.parse(localStorage.getItem("userInfo"))
+
   const handleUnsubscribe = () => {
-    console.log("unsubscribe")
-    dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
+    fetch(`${state.url}/unsubscription`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `facebook_id=${encodeURI(userInfo.userID)}`,
+    })
+      .then(result => {
+        console.log("unsubscribe result", result)
+        return result.json()
+      })
+      .then(data => {
+        data.status === "canceled" &&
+          dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
+      })
   }
 
   const logout = () => {
@@ -29,22 +47,9 @@ const SidebarMenu = ({ isMenuOpen }) => {
         {/* photo + name */}
         <div className="sidebar-menu__user">
           <div className="sidebar-menu__user-photo">
-            <img
-              src={
-                (state.isBrowser &&
-                  localStorage.getItem("userInfo") &&
-                  JSON.parse(localStorage.getItem("userInfo")).photo) ||
-                state.userInfo.photo
-              }
-              alt="User photo"
-            />
+            <img src={userInfo && userInfo.photo} alt="User photo" />
           </div>
-          <div>
-            {(state.isBrowser &&
-              localStorage.getItem("userInfo") &&
-              JSON.parse(localStorage.getItem("userInfo")).name) ||
-              ""}
-          </div>
+          <div>{userInfo && userInfo.name}</div>
         </div>
 
         {/* subscription info */}

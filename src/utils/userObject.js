@@ -26,13 +26,16 @@ export const UserObject = () => {
     (state.isBrowser && JSON.parse(localStorage.getItem("userInfo"))) ||
     state.userInfo
 
+  const stripe_id =
+    (state.isBrowser && localStorage.getItem("stripe_id")) || state.stripe_id
+
   const userObject = {
     username: userInfo.name,
     email: userInfo.email,
     facebook_id: userInfo.userID,
     progress: score,
     current_question: userQuestions,
-    stripe_id: "",
+    stripe_id: stripe_id,
     payment_ok: subscription,
     localize: lang,
   }

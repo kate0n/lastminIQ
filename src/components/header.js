@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 import LasminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
 import { CurrentProgress } from "../utils/isUserHaveFreeQuestions"
-import logout from "../images/logout.png"
+import Unsubscribe from "../utils/unsubscribe"
 
 const Header = ({ isMenuOpen, handleMenuClick }) => {
   const { state, dispatch } = useContext(Context)
@@ -21,15 +21,28 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
     navigate("/login-page")
   }
 
-  const handleUnsubscribe = () => {
-    dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
-    console.log("handleUnsubscribe")
-  }
-
   const userInfo =
     state.isBrowser &&
     localStorage.getItem("userInfo") &&
     JSON.parse(localStorage.getItem("userInfo"))
+
+  const handleUnsubscribe = () => {
+    fetch(`${state.url}/unsubscription`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `facebook_id=${encodeURI(userInfo.userID)}`,
+    })
+      .then(result => {
+        console.log("unsubscribe result", result)
+        return result.json()
+      })
+      .then(data => {
+        data.status === "canceled" &&
+          dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
+      })
+  }
 
   const subscription =
     (state.isBrowser &&

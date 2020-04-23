@@ -97,7 +97,7 @@ const Form = () => {
           setIsPaymentFailed(true)
           console.error("createPaymentMethod error", result.error)
         } else {
-          return fetch(`https://fa737220.ngrok.io/create-customer`, {
+          return fetch(`${state.url}/create-customer`, {
             method: "post",
             headers: {
               "Content-Type": "application/json",
@@ -152,6 +152,7 @@ const Form = () => {
     // обновляем локальный стейт
     console.log("sendUpdatedUserToServer userObject", userObject)
     dispatch({ type: "ADD_SUBSCRIPTION", payload: true })
+    dispatch({ type: "STRIPE_ID", payload: userObject.stripe_id })
 
     const userObjectURI = `username=${encodeURI(
       userObject.username
@@ -180,14 +181,14 @@ const Form = () => {
   const confirmPayment = function(client_secret, subscription_id) {
     stripe.confirmCardPayment(client_secret).then(data => {
       if (data.error) {
-        console.error('error stripe confirming payment', data.error)
+        console.error("error stripe confirming payment", data.error)
         setIsPaymentProcessing(false)
         setIsPaymentFailed(true)
         setResultText("Your card was not authenticated, please try again")
       }
       // CONFIRM SUBSCRIBTION to server
       else if (data.paymentIntent.status === "requires_confirmation") {
-        fetch(`https://fa737220.ngrok.io/subscription`, {
+        fetch(`${state.url}/subscription`, {
           method: "post",
           headers: {
             "Content-Type": "application/json",
@@ -201,7 +202,7 @@ const Form = () => {
           })
           .then(json => {
             if (json.error) {
-              console.error('error server confirming payment', json.error)
+              console.error("error server confirming payment", json.error)
               setIsPaymentProcessing(false)
               setIsPaymentFailed(true)
               setResultText(json.error)

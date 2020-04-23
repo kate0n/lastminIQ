@@ -1,17 +1,25 @@
 import React from "react"
 import Context from "../context/Context"
 
-const Unsubscribe = () => {
-  const { state, dispatch } = useContext(Context)
+const Unsubscribe = facebook_id => {
+  const { state, dispatch } = React.useContext(Context)
 
   const handleUnsubscribe = () => {
-    console.log("handleUnsubscribe")
-    // fetch("https://lastmin.makaroff.tech/unsubscribe", {
-    //   method: "POST",
-    // }).then(reponse => console.log("UNSUBSCRIBE reponse:", reponse))
-    dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
+    fetch(`${state.url}/unsubscription`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: facebook_id,
+    })
+      .then(result => {
+        return result.json()
+      })
+      .then(data => {
+        data.status === "canceled" &&
+          dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
+      })
   }
-
   return handleUnsubscribe
 }
 

@@ -38,34 +38,38 @@ const LoginPage = () => {
     )}&payment_ok=${encodeURI(false)}&localize=${lang}`
 
     // <=========  наличие в системе или создание юзера ==============
-    fetch(
-      `https://lastmin.makaroff.tech/get_user?facebook_id=${response.userID}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then(function(response) {
-      if (response.status === 400) {
-        fetch("https://lastmin.makaroff.tech/create_user", {
-          method: "POST",
-          headers: {
-            "cache-control": "no-cache",
-            pragma: "no-cache",
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: userObject,
-        }).then(
-          response =>
-            response.status !== 200 &&
-            console.log("CREATE USER FAILED:", response)
-        )
-      } else {
-        response.json()
-      }
+    fetch(`${state.url}/get_user?facebook_id=${response.userID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    // .then(user => user && updateLocalStoreFromServer(user))
+      .then(response => {
+        console.log("get_user response", response)
+        if (response.status === 400) {
+          fetch(`${state.url}/create_user`, {
+            method: "POST",
+            headers: {
+              "cache-control": "no-cache",
+              pragma: "no-cache",
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: userObject,
+          }).then(
+            response =>
+              response.status !== 200 &&
+              console.log("CREATE USER FAILED:", response)
+          )
+        } else {
+          return response.json()
+        }
+      })
+      .then(
+        user => (
+          console.log("get_user response", user),
+          user && updateLocalStoreFromServer(user)
+        )
+      )
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
@@ -132,8 +136,8 @@ const LoginPage = () => {
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
           <FacebookLogin
-            // appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
-            appId="226488818440629" // for localhost
+            appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
+            // appId="226488818440629" // for localhost
             fields="name,email,picture"
             onClick={console.log("")}
             callback={responseFacebook}

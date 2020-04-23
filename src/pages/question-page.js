@@ -54,7 +54,7 @@ const QuestionPage = () => {
       userObject.payment_ok
     )}&localize=${userObject.localize}`
 
-    fetch("https://lastmin.makaroff.tech/update_user", {
+    fetch(`${state.url}/update_user`, {
       method: "POST",
       headers: {
         "cache-control": "no-cache",
@@ -73,10 +73,13 @@ const QuestionPage = () => {
           state.dictionary.settings.accrualPoints,
       })
   }
-
+  const clearTimer = timer => {
+    clearTimeout(timer)
+  }
   // клик на кнопку с вариантом ответа
   const checkUserChoice = answerNumber => {
     // добавить: отправка результатов
+    clearTimer(timer)
 
     let isCorrect = parseInt(answerNumber) === parseInt(correctAnswer.correct)
 
@@ -88,8 +91,6 @@ const QuestionPage = () => {
         correctAnswer: checkCorrectAnswer(correctAnswer.correct),
       },
     })
-
-    clearTimeout(timer)
 
     updateState(isCorrect)
   }
@@ -107,6 +108,7 @@ const QuestionPage = () => {
         },
       })
       updateState(false)
+      clearTimer(timer)
     }, parseInt(state.dictionary.settings.timer) * 1000)
   }
 
