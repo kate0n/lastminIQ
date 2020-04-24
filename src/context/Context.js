@@ -27,7 +27,7 @@ const initialState = {
   answerTitleIndex: 0,
   stripeToken: "",
   stripe_id: "",
-  url: "https://lastmin.makaroff.tech",
+  url: "",
 }
 
 const reducer = (state, action) => {
@@ -139,6 +139,7 @@ const reducer = (state, action) => {
   }
 }
 
+console.log("url!!!!!!!!", url)
 const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 

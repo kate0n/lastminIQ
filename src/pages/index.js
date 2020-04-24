@@ -10,7 +10,7 @@ const IndexPage = props => {
   const [langsList, setLangsList] = React.useState()
 
   React.useEffect(() => {
-    fetch("https://lastmin.makaroff.tech/localize/main.json")
+    fetch(`${state.url}/localize/main.json`)
       .then(response => response.json())
       .then(mainJson => mainJson)
       .then(a => setLangsList(a))
@@ -47,7 +47,7 @@ const IndexPage = props => {
                   key={i}
                 >
                   <img
-                    src={`https://lastmin.makaroff.tech/localize/icons/${lang.icon}`}
+                    src={`${state.url}/localize/icons/${lang.icon}`}
                     width="25px"
                     height="25px"
                   />
