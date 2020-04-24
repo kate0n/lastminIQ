@@ -139,7 +139,6 @@ const reducer = (state, action) => {
   }
 }
 
-console.log("url!!!!!!!!", url)
 const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
