@@ -139,6 +139,11 @@ const Form = () => {
 
       if (status === "requires_action") {
         confirmPayment(client_secret, subscription.id)
+      } else if (status === "requires_payment_method") {
+        console.error("requires_payment_method", subscription)
+        setIsPaymentProcessing(false)
+        setIsPaymentFailed(true)
+        setResultText("Payment failed")
       } else {
         sendUpdatedUserToServer()
       }
