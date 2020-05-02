@@ -64,13 +64,12 @@ const LoginPage = () => {
           return response.json()
         }
       })
-      .then(
-        user =>
-          //  (
-          console.log("get_user response", user)
-        // user && updateLocalStoreFromServer(user)
-        // )
-      )
+      .then(user => user && updateLocalStoreFromServer(user))
+    //  (
+    // console.log("get_user response", user)
+    // user && updateLocalStoreFromServer(user)
+    // )
+    // )
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
