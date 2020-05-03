@@ -1,4 +1,5 @@
 import React from "react"
+import { navigate } from "gatsby"
 import Layout from "../components/layout"
 import Button, { ButtonWidthExternalLink } from "../components/button"
 import Context from "../context/Context"
@@ -8,14 +9,21 @@ import IsUserHaveFreeQuestion, {
 } from "../utils/isUserHaveFreeQuestions"
 import "../styles/index.scss"
 
-const HomePage = () => {
+const HomePage = ({ location }) => {
   const { state } = React.useContext(Context)
+
+  const { isReload = false } = location.state || ""
+  if (isReload) {
+    console.log("REALOAD before", location.state.isReload)
+    navigate("/home-page", { state: { isReload: false } })
+    window.location.reload()
+    console.log("REALOAD after", location.state.isReload)
+  }
 
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
   const isSubsribtionOffer = IsSubsribtionOffer()
   const userQuestions = СountUserQuestions()
 
-  console.log("HOME_PAGE", state.dictionary.info)
   React.useEffect(() => {
     state.isBrowser && document.body.scrollTo(0, 0)
   }, [])

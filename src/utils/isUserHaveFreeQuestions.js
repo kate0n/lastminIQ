@@ -34,6 +34,7 @@ export const СountUserQuestions = () => {
   return userQuestions
 }
 
+// есть ли у юзера неотвеченные вопросы (беспалтные или по подписке)
 const IsUserHaveFreeQuestion = () => {
   const { state } = React.useContext(Context)
 
@@ -72,6 +73,7 @@ const IsUserHaveFreeQuestion = () => {
   return isUserHaveFreeQuestions
 }
 
+// кол-во отчков
 export const CurrentProgress = () => {
   const { state } = React.useContext(Context)
   const currentProgress =
@@ -79,6 +81,7 @@ export const CurrentProgress = () => {
   return currentProgress
 }
 
+// кол-во правильно отвеченных
 export const AccuralPointsToAnswer = () => {
   const { state } = React.useContext(Context)
   const currentProgress =
@@ -115,14 +118,14 @@ export const Replace = str => {
   const replacedStr = str
     .replace("{accuralPointsToAnswer}", accuralPointsToAnswer)
     .replace("{questionCount}", state.questionCount)
-    .replace("{accrualPoints}", state.dictionary.settings.accrualPoints)
+    .replace("{accrualPoints}", state.dictionary.settings.accrualPoints) // кол-во очков за 1 вопрос
     .replace("{currentProgress}", currentProgress)
     .replace("{currentProgress}", currentProgress)
     .replace("{awardDate}", state.dictionary.settings.awardDate)
-    .replace("{intermediatePart}", state.dictionary.settings.intermediatePart)
+    .replace("{intermediatePart}", state.dictionary.settings.intermediatePart) // кол-во бесплатных вопросов
     .replace(
       "{additionalPartCount}",
-      state.questionCount - state.intermediatePart
+      state.questionCount - state.intermediatePart // кол-во платных вопросов
     )
   return replacedStr
 }

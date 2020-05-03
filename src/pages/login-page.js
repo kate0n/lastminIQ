@@ -95,8 +95,7 @@ const LoginPage = () => {
         payload: user.stripe_id,
       })
     }
-
-    navigate("/home-page")
+    navigate("/home-page", { state: { isReload: true } })
     response.status === "unkown" && navigate("/login-page")
   } // ====================================================>
 
