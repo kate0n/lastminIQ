@@ -2,9 +2,9 @@ import React from "react"
 import Layout from "../components/layout"
 import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
-import TextOverlay from "../components/text-overlay"
 import Context from "../context/Context"
 import "../styles/index.scss"
+import { Replace } from "../utils/isUserHaveFreeQuestions"
 
 const PaymentConfirmationPage = () => {
   const { state } = React.useContext(Context)
@@ -20,18 +20,15 @@ const PaymentConfirmationPage = () => {
           <div
             className="quiz-start__title text-md"
             dangerouslySetInnerHTML={{
-              __html: state.dictionary.info.paymentSuccessActionText.replace(
-                "{additionalPartCount}",
-                state.questionCount - state.intermediatePart
-              ),
+              __html: Replace(state.dictionary.info.paymentSuccessActionText),
             }}
           />
-          <div className="quiz-start__desc text-sm">
-            {state.dictionary.info.paymentSuccessHintText.replace(
-              "{accrualPoints}",
-              state.dictionary.settings.accrualPoints
-            )}
-          </div>
+          <div
+            className="quiz-start__desc text-sm"
+            dangerouslySetInnerHTML={{
+              __html: Replace(state.dictionary.info.paymentSuccessHintText),
+            }}
+          />
         </div>
         <Button
           text={state.dictionary.info.continueBtnText}

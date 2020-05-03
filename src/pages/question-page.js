@@ -26,7 +26,7 @@ const QuestionPage = () => {
     state.questions.questions[currentQuestionNumber].questionText
   // текущий элемент в массиве questions
   let answerOption = state.questions.questions[currentQuestionNumber]
-  // текущий элемент в массиве ответов
+  // текущий ответ в answers.json
   let correctAnswer = state.answers.answers[currentQuestionNumber]
 
   // нахождение верного ответа

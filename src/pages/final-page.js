@@ -3,17 +3,13 @@ import Layout from "../components/layout"
 import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
-import { CurrentProgress } from "../utils/isUserHaveFreeQuestions"
+import { Replace } from "../utils/isUserHaveFreeQuestions"
 import "../styles/index.scss"
+
+// MASTER FINAL PAGE после исчерпания всех вопросов
 
 const FinalPage = () => {
   const { state } = React.useContext(Context)
-
-  const currentProgress = CurrentProgress()
-
-  // кол-во верных ответов
-  const accuralPointsToAnswer =
-    currentProgress / state.dictionary.settings.accrualPoints
 
   if (state.isLoading) {
     return "Loading..."
@@ -27,16 +23,7 @@ const FinalPage = () => {
           <div
             className="quiz-start__title text-md"
             dangerouslySetInnerHTML={{
-              __html: state.dictionary.info.finalPageText
-                .replace("{accuralPointsToAnswer}", accuralPointsToAnswer)
-                .replace("{questionCount}", state.questionCount)
-                .replace(
-                  "{accrualPoints}",
-                  state.dictionary.settings.accrualPoints
-                )
-                .replace("{currentProgress}", currentProgress)
-                .replace("{currentProgress}", currentProgress)
-                .replace("{awardDate}", state.dictionary.settings.awardDate),
+              __html: Replace(state.dictionary.info.finalPageText),
             }}
           />
         </div>

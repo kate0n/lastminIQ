@@ -90,7 +90,12 @@ const AnswerResultPage = ({ location }) => {
           <img src={imgLink} alt="correct answer img" />
         </div>
 
-        <div className="result-page__comment text-sm">{commentText}</div>
+        <div
+          className="result-page__comment text-sm"
+          dangerouslySetInnerHTML={{
+            __html: commentText,
+          }}
+        />
         <Link
           className="button button--green"
           onClick={handleAnswerTitleChange}

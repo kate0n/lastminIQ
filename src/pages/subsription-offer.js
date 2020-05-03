@@ -4,12 +4,12 @@ import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import "../styles/index.scss"
+import { Replace } from "../utils/isUserHaveFreeQuestions"
+
+//  intermediate-page + subscribe-page
 
 const SubsriptionOffer = () => {
   const { state } = React.useContext(Context)
-
-  // const currentProgress =
-  //   (state.isBrowser && localStorage.getItem("score")) || state.score
 
   useEffect(() => {
     state.isBrowser && document.body.scrollTo(0, 0)
@@ -23,17 +23,14 @@ const SubsriptionOffer = () => {
       <div className="quiz-start" style={{ justifyContent: "flex-start" }}>
         <div className="quiz-start__wrapper">
           <QuizHeader />
-          <div className="quiz-start__title text-md">
-            {state.dictionary.info.subscribeOfferActionText
-              .replace(
-                "{accrualPoints}",
-                state.dictionary.settings.accrualPoints
-              )
-              .replace(
-                "{additionalPartCount}",
-                state.questionCount - state.intermediatePart
-              )}
-          </div>
+          <div
+            className="quiz-start__title text-md"
+            dangerouslySetInnerHTML={{
+              __html:
+                Replace(state.dictionary.info.intermediatePageText) +
+                Replace(state.dictionary.info.subscribeOfferActionText),
+            }}
+          />
         </div>
         <div className="subcription">
           <Button
@@ -44,7 +41,7 @@ const SubsriptionOffer = () => {
           <Button
             text={state.dictionary.info.subscribeOfferNoBtnText}
             className="gray"
-            link="/intermediate-page"
+            link="/final-intermediate-page"
             locationState={{ isFinalPage: true }}
           />
         </div>

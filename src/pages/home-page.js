@@ -37,7 +37,7 @@ const HomePage = () => {
                   : isUserHaveFreeQuestions
                   ? "continue-page"
                   : isSubsribtionOffer
-                  ? "subsription-offer"
+                  ? "subsription-offer" //intermediateFinalPageText
                   : "final-page "
               }
             />

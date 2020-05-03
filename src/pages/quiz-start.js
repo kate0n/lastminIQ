@@ -4,9 +4,11 @@ import Button from "../components/button"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import "../styles/index.scss"
+import { Replace } from "../utils/isUserHaveFreeQuestions"
 
 const QuizStart = () => {
   const { state } = React.useContext(Context)
+
   if (state.isLoading) {
     return "Loading..."
   }
@@ -15,16 +17,18 @@ const QuizStart = () => {
       <div className="quiz-start">
         <div className="quiz-start__wrapper">
           <QuizHeader />
-          <div className="quiz-start__title text-md">
-            {state.dictionary.info.startActionText}
-          </div>
-
-          <div className="quiz-start__desc text-sm">
-            {state.dictionary.info.startHintText.replace(
-              "{accrualPoints}",
-              state.dictionary.settings.accrualPoints
-            )}
-          </div>
+          <div
+            className="quiz-start__title text-md"
+            dangerouslySetInnerHTML={{
+              __html: Replace(state.dictionary.info.startActionText),
+            }}
+          />
+          <div
+            className="quiz-start__desc text-sm"
+            dangerouslySetInnerHTML={{
+              __html: Replace(state.dictionary.info.startHintText),
+            }}
+          />
         </div>
         <Button
           text={state.dictionary.info.startBtnText}
