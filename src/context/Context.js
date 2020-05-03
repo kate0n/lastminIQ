@@ -27,7 +27,7 @@ const initialState = {
   answerTitleIndex: 0,
   stripeToken: "",
   stripe_id: "",
-  url: "",
+  url: "https://iq.lastmin.tv",
 }
 
 const reducer = (state, action) => {
