@@ -16,7 +16,7 @@ const HomePage = ({ location }) => {
   if (isReload) {
     console.log("REALOAD before", location.state.isReload)
     navigate("/home-page", { state: { isReload: false } })
-    window.location.reload()
+    state.isBrowser && window.location.reload()
     console.log("REALOAD after", location.state.isReload)
   }
 
