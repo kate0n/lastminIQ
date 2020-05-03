@@ -13,10 +13,25 @@ export const IsSubsribtionOffer = () => {
         parseInt(state.countUserQuestions)
     )
 
+  // макс.кол-во вопросов
+  const questionCount =
+    state.isBrowser &&
+    parseInt(
+      localStorage.getItem("questionCount") || parseInt(state.questionCount)
+    )
+
+  const subscription =
+    state.isBrowser && localStorage.getItem("subscription")
+      ? JSON.parse(localStorage.getItem("subscription"))
+      : state.subscription
+
   // дефолтное кол-во free вопросов
   const countFreeAnswers = parseInt(state.intermediatePart)
 
   const isSubsribtionOffer = userQuestions === countFreeAnswers
+  const isSubsribtionOffer2 =
+    userQuestions === countFreeAnswers ||
+    (!subscription && userQuestions < questionCount) // если у юзера 12 вопросов, отменил подписку то подписку можно предложить вновь
 
   return isSubsribtionOffer
 }
@@ -68,8 +83,8 @@ const IsUserHaveFreeQuestion = () => {
       : state.subscription
 
   const isUserHaveFreeQuestions = subscription
-    ? !(userQuestions === questionCount)
-    : !(userQuestions === intermediatePart) // true когда остались free вопросы
+    ? userQuestions < questionCount // 14 < 15 есть фри вопросы, 15 < 15 нет фри вопросов
+    : userQuestions < intermediatePart // 4 < 5 есть фри вопросы, 12 < 5 нет фри вопросов
   return isUserHaveFreeQuestions
 }
 
@@ -98,22 +113,22 @@ export const Replace = str => {
   const accuralPointsToAnswer = AccuralPointsToAnswer()
   const currentProgress = CurrentProgress()
 
-  const currentQuestionNumber = СountUserQuestions()
-  let answerOption = state.questions.questions[currentQuestionNumber]
-  // текущий ответ в answers.json
-  let correctAnswer = state.answers.answers[currentQuestionNumber]
-  // нахождение верного ответа
-  const checkCorrectAnswer = correctAnswer => {
-    if (correctAnswer === 1) return answerOption.answer1Text
-    else if (correctAnswer === 2) return answerOption.answer2Text
-    else if (correctAnswer === 3) return answerOption.answer3Text
-  }
-  console.log(
-    "correctAnswer",
-    checkCorrectAnswer(correctAnswer.correct),
-    "currentQuestionNumber",
-    currentQuestionNumber
-  )
+  // const currentQuestionNumber = СountUserQuestions()
+  // let answerOption = state.questions.questions[currentQuestionNumber]
+  // // текущий ответ в answers.json
+  // let correctAnswer = state.answers.answers[currentQuestionNumber]
+  // // нахождение верного ответа
+  // const checkCorrectAnswer = correctAnswer => {
+  //   if (correctAnswer === 1) return answerOption.answer1Text
+  //   else if (correctAnswer === 2) return answerOption.answer2Text
+  //   else if (correctAnswer === 3) return answerOption.answer3Text
+  // }
+  // console.log(
+  //   "correctAnswer",
+  //   checkCorrectAnswer(correctAnswer.correct),
+  //   "currentQuestionNumber",
+  //   currentQuestionNumber
+  // )
 
   const replacedStr = str
     .replace("{accuralPointsToAnswer}", accuralPointsToAnswer)

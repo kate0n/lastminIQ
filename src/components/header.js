@@ -3,7 +3,6 @@ import { navigate } from "gatsby"
 import LasminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
 import { CurrentProgress } from "../utils/isUserHaveFreeQuestions"
-import Unsubscribe from "../utils/unsubscribe"
 
 const Header = ({ isMenuOpen, handleMenuClick }) => {
   const { state, dispatch } = useContext(Context)
@@ -41,6 +40,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
       .then(data => {
         data.status === "canceled" &&
           dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
+        navigate("/final-intermediate-page")
       })
   }
 
