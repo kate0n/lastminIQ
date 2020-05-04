@@ -10,8 +10,8 @@ const Head = () => {
       <meta charSet="utf-8" />
       <base href="/" />
       <title>LastminIQ</title>
-      <meta name="description" content="Lastmin IQ - play and win!" />
-      <meta property="og:title" content="Lastmin IQ - play and win!" />
+      {/* <meta name="description" content="Lastmin IQ - play and win!" /> */}
+      {/* <meta property="og:title" content="Lastmin IQ - play and win!" />
       <meta property="og:description" content="Lastmin IQ - play and win!" />
       <meta
         property="og:image"
@@ -20,10 +20,8 @@ const Head = () => {
       <meta property="og:image:type" content="image/png" />
       <meta property="og:url" content="https://iq.lastmin.tv/" />
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="iq.lastmin.tv" />
+      <meta property="og:site_name" content="iq.lastmin.tv" /> */}
       {/* <meta property="fb:app_id" content="133123123123" /> */}
-      {/* <meta property="og:image:width" content="968">
-      <meta property="og:image:height" content="504"> */}
       <link
         rel="apple-touch-icon"
         sizes="57x57"
