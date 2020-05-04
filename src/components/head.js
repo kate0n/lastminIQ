@@ -15,7 +15,7 @@ const Head = () => {
       <link rel="canonical" href={currentUrl} />
       <meta property="og:url" content={currentUrl} />
       {/* <meta property="og:url" content="https://iq.lastmin.tv" />  */}
-      <meta property="og:type" content="website" />
+      {/* <meta property="og:type" content="website" />
       <meta property="og:site_name" content="iq.lastmin.tv" />
       <meta
         property="og:image"
@@ -27,7 +27,7 @@ const Head = () => {
       <meta property="og:image:height" content="246" />
       <meta name="description" content={title} />
       <meta property="og:title" content={title} />
-      <meta property="og:description" content={title} />
+      <meta property="og:description" content={title} /> */}
       {/* <meta property="fb:app_id" content="133123123123" /> */}
       <link
         rel="apple-touch-icon"

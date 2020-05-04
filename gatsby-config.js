@@ -35,8 +35,8 @@ module.exports = {
       options: {
         openGraph: {
           type: "website",
-          // locale: "en_IE",
-          url: "https://iq.lastmin.tv/",
+          locale: "en_IE",
+          // url: "https://iq.lastmin.tv/",
           site_name: "iq.lastmin.tv",
           title: "Lastmin IQ - play and win!",
           description: "Lastmin IQ - play and win!",

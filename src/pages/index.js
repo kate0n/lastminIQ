@@ -34,6 +34,7 @@ const IndexPage = props => {
   return (
     <>
       <Head />
+      <OpenGraph />
       <div className="outer-container">
         <main className="inner-container main">
           <div className="logo__wrapper">
