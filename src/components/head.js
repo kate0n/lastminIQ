@@ -11,12 +11,12 @@ const Head = () => {
       <base href="/" />
       <title>LastminIQ</title>
       <meta name="description" content="Lastmin IQ - play and win!" />
-      <meta name="author" content="https://iq.lastmin.tv/" />
+      {/* <meta name="author" content="https://iq.lastmin.tv/" /> */}
       <meta property="og:title" content="LastminIQ" />
       <meta property="og:description" content="Lastmin IQ - play and win!" />
       <meta
         property="og:image"
-        content={`${state.url}/LastminIQ_sharing.png`}
+        content="https://iq.lastmin.tv/LastminIQ_sharing.png"
       />
       <meta property="og:image:type" content="image/png" />
       <meta property="og:url" content="https://iq.lastmin.tv/" />
