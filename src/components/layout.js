@@ -20,7 +20,6 @@ const Layout = ({ children }) => {
   return (
     <>
       <Head />
-      <OpenGraph />
       <SidebarMenu isMenuOpen={isMenuOpen} />
       <div className={`${isMenuOpen ? "app-wrapper--open" : "app-wrapper"}`}>
         <main

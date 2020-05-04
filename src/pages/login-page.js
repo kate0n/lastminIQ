@@ -130,7 +130,6 @@ const LoginPage = () => {
   return (
     <>
       <Head />
-      <OpenGraph />
       <div className="outer-container login-page">
         <main className="inner-container">
           <div className="logo__wrapper">

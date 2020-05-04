@@ -17,24 +17,6 @@ const OpenGraph = () => (
           height: 246,
           alt: "Og Image Alt",
         },
-        {
-          url: "https://iq.lastmin.tv/LastminIQ_sharing.png",
-          width: 470,
-          height: 246,
-          alt: "Og Image Alt",
-        },
-        {
-          url: "https://iq.lastmin.tv/LastminIQ_sharing.png",
-          width: 470,
-          height: 246,
-          alt: "Og Image Alt",
-        },
-        {
-          url: "https://iq.lastmin.tv/LastminIQ_sharing.png",
-          width: 470,
-          height: 246,
-          alt: "Og Image Alt",
-        },
       ],
       site_name: "iq.lastmin.tv",
     }}

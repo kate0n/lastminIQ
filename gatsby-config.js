@@ -1,8 +1,10 @@
 module.exports = {
   siteMetadata: {
     title: `LastminIQ`,
-    description: ``,
-    author: `@gatsbyjs`,
+    titleTemplate: `Lastmin IQ - play and win!`,
+    description: `Lastmin IQ - play and win!`,
+    url: `https://iq.lastmin.tv`,
+    image: `https://iq.lastmin.tv/LastminIQ_sharing.png`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
