@@ -60,6 +60,10 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
     })
   }
 
+  const handleLogoClick = () => {
+    navigate("/home-page")
+  }
+
   const subscription =
     (state.isBrowser &&
       localStorage.getItem("subscription") &&
@@ -72,7 +76,7 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
       onClick={isMenuOpen ? handleMenuClick : null}
     >
       {/* logo */}
-      <div className="header__logo">
+      <div className="header__logo" onClick={handleLogoClick}>
         <img
           className="header__logo-img"
           src={LasminLogo}

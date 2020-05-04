@@ -47,6 +47,10 @@ const SidebarMenu = ({ isMenuOpen }) => {
     })
   }
 
+  const handleLogoClick = () => {
+    navigate("/home-page")
+  }
+
   const logout = () => {
     dispatch({ type: "LOGOUT" })
     navigate("/login-page")
