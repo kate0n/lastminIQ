@@ -35,7 +35,7 @@ const SidebarMenu = ({ isMenuOpen }) => {
               .then(data => {
                 data.status === "canceled" &&
                   dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
-                navigate("/final-intermediate-page")
+                navigate("/final-page")
               })
           },
         },
