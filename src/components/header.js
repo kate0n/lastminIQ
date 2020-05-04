@@ -3,6 +3,8 @@ import { navigate } from "gatsby"
 import LasminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
 import { CurrentProgress } from "../utils/isUserHaveFreeQuestions"
+import { confirmAlert } from "react-confirm-alert" // Import
+import "react-confirm-alert/src/react-confirm-alert.css" // Import css
 
 const Header = ({ isMenuOpen, handleMenuClick }) => {
   const { state, dispatch } = useContext(Context)
@@ -26,22 +28,36 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
     JSON.parse(localStorage.getItem("userInfo"))
 
   const handleUnsubscribe = () => {
-    fetch(`${state.url}/unsubscription`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `facebook_id=${encodeURI(userInfo.userID)}`,
+    confirmAlert({
+      message: "Unsubscribe IQ MASTER level?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            fetch(`${state.url}/unsubscription`, {
+              method: "post",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: `facebook_id=${encodeURI(userInfo.userID)}`,
+            })
+              .then(result => {
+                console.log("unsubscribe result", result)
+                return result.json()
+              })
+              .then(data => {
+                data.status === "canceled" &&
+                  dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
+                navigate("/final-intermediate-page")
+              })
+          },
+        },
+        {
+          label: "No",
+          onClick: () => console.log("Click No"),
+        },
+      ],
     })
-      .then(result => {
-        console.log("unsubscribe result", result)
-        return result.json()
-      })
-      .then(data => {
-        data.status === "canceled" &&
-          dispatch({ type: "ADD_SUBSCRIPTION", payload: false })
-        navigate("/final-intermediate-page")
-      })
   }
 
   const subscription =

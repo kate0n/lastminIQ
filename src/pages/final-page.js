@@ -11,6 +11,9 @@ import "../styles/index.scss"
 const FinalPage = () => {
   const { state } = React.useContext(Context)
 
+  const text =
+    "OK. You have {currentProgress} votes for the lottery. The drawing will take place on {awardDate}. We'll announce the winner on our Facebook page, good reason to <a href=‘https://www.facebook.com/lastmin.tv/’ target=‘_blank’> Facebook</a>"
+
   if (state.isLoading) {
     return "Loading..."
   }
@@ -21,9 +24,11 @@ const FinalPage = () => {
         <div className="quiz-start__wrapper">
           <QuizHeader />
           <div
-            className="quiz-start__title text-md"
+            className="quiz-start__title text-md link"
             dangerouslySetInnerHTML={{
-              __html: Replace(state.dictionary.info.finalPageText),
+              __html: `<p>${Replace(
+                Replace(state.dictionary.info.finalPageText)
+              )}</p>`,
             }}
           />
         </div>
