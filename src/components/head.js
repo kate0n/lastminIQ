@@ -1,21 +1,27 @@
 import React from "react"
 import { Helmet } from "react-helmet"
+import Context from "../context/Context"
 
 const Head = () => {
+  const { state } = React.useContext(Context)
+
   return (
     <Helmet>
       <meta charSet="utf-8" />
       <base href="/" />
       <title>LastminIQ</title>
-      <meta name="description" content="LastminIQ" />
+      <meta name="description" content="Lastmin IQ - play and win!" />
       <meta name="author" content="https://iq.lastmin.tv/" />
       <meta property="og:title" content="LastminIQ" />
-      <meta property="og:description" content="LastminIQ" />
-      <meta property="og:image" content="/start-quiz-bg.png" />
+      <meta property="og:description" content="Lastmin IQ - play and win!" />
+      <meta
+        property="og:image"
+        content={`${state.url}/LastminIQ_sharing.png`}
+      />
       <meta property="og:image:type" content="image/png" />
       <meta property="og:url" content="https://iq.lastmin.tv/" />
       <meta property="og:type" content="article" />
-      <meta property="og:site_name" content="iq.lastmin.tv/" />
+      <meta property="og:site_name" content="iq.lastmin.tv" />
       {/* <meta property="fb:app_id" content="133123123123" /> */}
       {/* <meta property="og:image:width" content="968">
       <meta property="og:image:height" content="504"> */}
