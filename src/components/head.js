@@ -12,6 +12,7 @@ const Head = () => {
       <meta charSet="utf-8" />
       <base href="/" />
       <title>LastminIQ</title>
+      <link rel="canonical" href={currentUrl} />
       <meta property="og:url" content={currentUrl} />
       {/* <meta property="og:url" content="https://iq.lastmin.tv" />  */}
       <meta property="og:type" content="website" />
