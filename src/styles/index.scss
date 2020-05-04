@@ -216,6 +216,12 @@ html {
   background-color: #808080;
 }
 
+.react-confirm-alert-body {
+  @media (max-width: 432px) {
+    width: 343px !important;
+  }
+}
+
 @import "components/direct-url";
 @import "components/home-page";
 @import "components/quiz-start";
