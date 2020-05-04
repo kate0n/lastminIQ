@@ -11,8 +11,7 @@ const Head = () => {
       <base href="/" />
       <title>LastminIQ</title>
       <meta name="description" content="Lastmin IQ - play and win!" />
-      {/* <meta name="author" content="https://iq.lastmin.tv/" /> */}
-      <meta property="og:title" content="LastminIQ" />
+      <meta property="og:title" content="Lastmin IQ - play and win!" />
       <meta property="og:description" content="Lastmin IQ - play and win!" />
       <meta
         property="og:image"
@@ -20,7 +19,7 @@ const Head = () => {
       />
       <meta property="og:image:type" content="image/png" />
       <meta property="og:url" content="https://iq.lastmin.tv/" />
-      <meta property="og:type" content="article" />
+      <meta property="og:type" content="website" />
       <meta property="og:site_name" content="iq.lastmin.tv" />
       {/* <meta property="fb:app_id" content="133123123123" /> */}
       {/* <meta property="og:image:width" content="968">

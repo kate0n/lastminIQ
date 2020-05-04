@@ -9,6 +9,7 @@ import IsUserHaveFreeQuestion, {
   IsSubsribtionOffer,
   СountUserQuestions,
 } from "../utils/isUserHaveFreeQuestions"
+import OpenGraph from "../components/openGraph"
 
 const LoginPage = () => {
   const { state, dispatch } = React.useContext(Context)
@@ -129,6 +130,7 @@ const LoginPage = () => {
   return (
     <>
       <Head />
+      <OpenGraph />
       <div className="outer-container login-page">
         <main className="inner-container">
           <div className="logo__wrapper">

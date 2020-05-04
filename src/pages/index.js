@@ -1,6 +1,7 @@
 import React from "react"
 import { navigate } from "gatsby"
 import Head from "../components/head"
+import OpenGraph from "../components/openGraph"
 import "../styles/index.scss"
 import LastminLogo from "../images/lastmin-logo.svg"
 import Context from "../context/Context"
@@ -33,6 +34,7 @@ const IndexPage = props => {
   return (
     <>
       <Head />
+      <OpenGraph />
       <div className="outer-container">
         <main className="inner-container main">
           <div className="logo__wrapper">

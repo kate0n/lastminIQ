@@ -28,18 +28,16 @@ module.exports = {
       },
     },
     `gatsby-plugin-sass`,
-    // {
-    //   resolve: `gatsby-plugin-intl`,
-    //   options: {
-    //     // language JSON resource path
-    //     path: `${__dirname}/locale`,
-    //     // supported language
-    //     languages: [`LV`, `RU`, `LT`, `EE`, `EN`, `FI`],
-    //     // language file path
-    //     defaultLanguage: `EN`,
-    //     // option to redirect to `/EN` when connecting `/`
-    //     redirect: true,
-    //   },
-    // },
+    {
+      resolve: "gatsby-plugin-next-seo",
+      options: {
+        openGraph: {
+          type: "website",
+          locale: "en_IE",
+          url: "https://iq.lastmin.tv/",
+          site_name: "iq.lastmin.tv",
+        },
+      },
+    },
   ],
 }
