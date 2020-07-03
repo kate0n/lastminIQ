@@ -1,5 +1,6 @@
 import React from "react"
 import { navigate } from "gatsby"
+// import { useQueryParam, NumberParam, StringParam } from "use-query-params"
 import Head from "../components/head"
 import "../styles/index.scss"
 import LastminLogo from "../images/lastmin-logo.svg"
@@ -66,11 +67,6 @@ const LoginPage = () => {
         }
       })
       .then(user => user && updateLocalStoreFromServer(user))
-    //  (
-    // console.log("get_user response", user)
-    // user && updateLocalStoreFromServer(user)
-    // )
-    // )
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {

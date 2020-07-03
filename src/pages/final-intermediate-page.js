@@ -13,9 +13,6 @@ const IntermediatePage = () => {
     state.isBrowser && document.body.scrollTo(0, 0)
   }, [])
 
-  // const text =
-  //   "OK. You have {currentProgress} votes for the lottery. The drawing will take place on {awardDate}. We'll announce the winner on our Facebook page, good reason to <a href=‘https://www.facebook.com/lastmin.tv/’ target=‘_blank’> Facebook</a>"
-
   if (state.isLoading) {
     return "Loading..."
   }

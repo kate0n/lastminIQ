@@ -1,5 +1,6 @@
 import React from "react"
 import { navigate } from "gatsby"
+import { useQueryParam, NumberParam, StringParam } from "use-query-params"
 import Head from "../components/head"
 import OpenGraph from "../components/openGraph"
 import "../styles/index.scss"
@@ -10,11 +11,66 @@ const IndexPage = props => {
   const { state, dispatch } = React.useContext(Context)
   const [langsList, setLangsList] = React.useState()
 
+  const [facebookID, setFacebookID] = useQueryParam("id", NumberParam)
+  console.log("QUERY PARAMETER", facebookID)
+
   React.useEffect(() => {
     fetch(`${state.url}/localize/main.json`)
       .then(response => response.json())
       .then(mainJson => mainJson)
       .then(a => setLangsList(a))
+
+    // <=========  наличие в системе или создание юзера ==============
+    fetch(`${state.url}/get_user?facebook_id=${facebookID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => {
+        console.log("QUERY PARAMETER response", response)
+        if (response.status === 400) {
+          console.log("no USER")
+        } else {
+          return response.json()
+        }
+      })
+      .then(user => user && updateLocalStoreFromServer(user))
+
+    // обновление локального стейта из ответа от сервера
+    const updateLocalStoreFromServer = user => {
+      console.log("user from system", facebookID, user)
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          name: user.name,
+          photo: `http://graph.facebook.com/${facebookID}/picture?type=square`,
+          email: user.email,
+          userID: user.facebook_id,
+        },
+      })
+      dispatch({
+        type: "SCORE",
+        payload: user.progress,
+      })
+      dispatch({
+        type: "COUNT_USER_QUESTIONS",
+        payload: user.current_question,
+      })
+      dispatch({
+        type: "ADD_SUBSCRIPTION",
+        payload: user.payment_ok,
+      })
+      dispatch({
+        type: "LANG",
+        payload: user.localize,
+      })
+      dispatch({
+        type: "STRIPE_ID",
+        payload: user.stripe_id,
+      })
+      navigate("/home-page", { state: { isReload: false } })
+    }
   }, [])
 
   const handleLangClick = lang => {
@@ -25,7 +81,6 @@ const IndexPage = props => {
       type: "LANG",
       payload: lang,
     })
-    // lang to server
   }
 
   if (state.isLoading) {

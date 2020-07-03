@@ -29,7 +29,7 @@ const QuestionPage = () => {
   // текущий ответ в answers.json
   let correctAnswer = state.answers.answers[currentQuestionNumber]
 
-  // нахождение верного ответа
+  // нахождение верного ответа текстом
   const checkCorrectAnswer = correctAnswer => {
     if (correctAnswer === 1) return answerOption.answer1Text
     else if (correctAnswer === 2) return answerOption.answer2Text
@@ -73,6 +73,7 @@ const QuestionPage = () => {
           state.dictionary.settings.accrualPoints,
       })
   }
+
   const clearTimer = timer => {
     clearTimeout(timer)
   }

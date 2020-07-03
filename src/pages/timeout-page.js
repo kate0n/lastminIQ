@@ -25,6 +25,7 @@ const TimeoutPage = ({ location }) => {
   if (state.isLoading) {
     return "Loading..."
   }
+
   return (
     <Layout>
       <QuizHeader />

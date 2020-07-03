@@ -7,6 +7,7 @@ module.exports = {
     image: `https://iq.lastmin.tv/LastminIQ_sharing.png`,
   },
   plugins: [
+    "gatsby-plugin-use-query-params",
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,

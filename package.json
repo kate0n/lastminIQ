@@ -15,6 +15,7 @@
     "gatsby-plugin-react-helmet": "^3.2.1",
     "gatsby-plugin-sass": "^2.2.1",
     "gatsby-plugin-sharp": "^2.5.3",
+    "gatsby-plugin-use-query-params": "^1.0.1",
     "gatsby-source-filesystem": "^2.2.2",
     "gatsby-transformer-sharp": "^2.4.3",
     "node-sass": "^4.13.1",
@@ -26,7 +27,8 @@
     "react-facebook-login": "^4.1.1",
     "react-helmet": "^5.2.1",
     "react-helmet-async": "^1.0.6",
-    "react-stripe-checkout": "^2.6.3"
+    "react-stripe-checkout": "^2.6.3",
+    "use-query-params": "^1.1.4"
   },
   "devDependencies": {
     "miragejs": "^0.1.37",

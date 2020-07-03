@@ -14,16 +14,37 @@ import { Link } from "gatsby"
 const AnswerResultPage = ({ location }) => {
   const {
     isCorrect,
-    correctAnswer,
-    commentText,
-    imgLink,
-    timesUpAnswerTitleText,
+    correctAnswer, // del
+    commentText, // del
+    imgLink, // del
+    timesUpAnswerTitleText = false,
   } = location.state || ""
 
   const { state, dispatch } = React.useContext(Context)
-
-  // тут +1 вопрос (т.к. question-page появляется на миг след.вопрос)
   let currentQuestionNumber = СountUserQuestions()
+
+  // ------------------------------------------------------------------
+  // текущий ответ в answers.json
+  // let answer =
+  //   state.answers.answers[
+  //     currentQuestionNumber === 0 ? 0 : currentQuestionNumber - 1
+  //   ]
+  // // текущий элемент в массиве questions
+  // let answerOption =
+  //   state.questions.questions[
+  //     currentQuestionNumber === 0 ? 0 : currentQuestionNumber - 1
+  //   ]
+  // // нахождение верного ответа текстом
+  // const checkCorrectAnswer = correctAnswer => {
+  //   if (correctAnswer === 1) return answerOption.answer1Text
+  //   else if (correctAnswer === 2) return answerOption.answer2Text
+  //   else if (correctAnswer === 3) return answerOption.answer3Text
+  // }
+  // console.log("ANSWER PAGE current Question", currentQuestionNumber)
+  // console.log("ANSWER PAGE answer", answer)
+  // console.log("ANSWER PAGE correct", checkCorrectAnswer(answer.correct))
+  // ------------------------------------------------------------------
+
   React.useEffect(() => {
     if (!isUserHaveFreeQuestions && isSubsribtionOffer) {
       navigate("subsription-offer")
@@ -41,6 +62,7 @@ const AnswerResultPage = ({ location }) => {
     state.dictionary.info.correctAnswerTitleText.length - 1
   )
 
+  // тут +1 вопрос (т.к. question-page появляется на миг след.вопрос)
   const handleAnswerTitleChange = () => {
     if (parseInt(state.answerTitleIndex) === maxIndex) {
       dispatch({

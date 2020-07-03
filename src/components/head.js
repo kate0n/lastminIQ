@@ -6,7 +6,6 @@ const Head = () => {
   const { state } = React.useContext(Context)
   const title = "Lastmin IQ - play and win!"
   const currentUrl = state.isBrowser && window.location.href
-  console.log("LOCATION HEAD", currentUrl)
   return (
     <Helmet>
       <meta charSet="utf-8" />
