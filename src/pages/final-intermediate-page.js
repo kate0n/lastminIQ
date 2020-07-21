@@ -1,7 +1,7 @@
 import React from "react"
 import Layout from "../components/layout"
 import QuizHeader from "../components/quiz-header"
-import Button from "../components/button"
+import Button, { ButtonWidthExternalLink } from "../components/button"
 import Context from "../context/Context"
 import "../styles/index.scss"
 import { Replace } from "../utils/isUserHaveFreeQuestions"
@@ -28,10 +28,10 @@ const IntermediatePage = () => {
             )}</p>`,
           }}
         />
-        <Button
+        <ButtonWidthExternalLink
           text={state.dictionary.info.finalPageBtnText}
           className="green"
-          link="home-page"
+          link="https://m.me/lastmin.tv?ref=w11889107"
         />
       </div>
     </Layout>

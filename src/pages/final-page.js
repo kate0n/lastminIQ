@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "../components/layout"
-import Button from "../components/button"
+import Button, { ButtonWidthExternalLink } from "../components/button"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import { Replace } from "../utils/isUserHaveFreeQuestions"
@@ -32,10 +32,10 @@ const FinalPage = () => {
             }}
           />
         </div>
-        <Button
+        <ButtonWidthExternalLink
           text={state.dictionary.info.finalPageBtnText}
           className="green"
-          link="/home-page"
+          link="https://m.me/lastmin.tv?ref=w11889107"
         />
       </div>
     </Layout>
