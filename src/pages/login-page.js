@@ -11,9 +11,12 @@ import IsUserHaveFreeQuestion, {
   СountUserQuestions,
 } from "../utils/isUserHaveFreeQuestions"
 import OpenGraph from "../components/openGraph"
+import FbMessengerLogo from "../images/fb-msng-logo.svg"
 
-const LoginPage = () => {
+const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
+  const { forceAuthorize = false } = location.state || "" // autoLoad for FB auth from link with query-parameter
+  const fbRef = React.useRef(null)
 
   const responseFacebook = response => {
     response.status !== "unkown" &&
@@ -100,24 +103,22 @@ const LoginPage = () => {
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
   const isSubsribtionOffer = IsSubsribtionOffer()
   const userQuestions = СountUserQuestions()
-  React.useEffect(
-    () =>
-      state.isBrowser && !localStorage.getItem("isAuthenticated")
-        ? navigate("/login-page")
-        : userQuestions === 0
-        ? navigate("/quiz-start")
-        : isUserHaveFreeQuestions
-        ? navigate("/continue-page")
-        : isSubsribtionOffer
-        ? "subsription-offer"
-        : "final-page",
-    [
-      state.isBrowser,
-      userQuestions,
-      isUserHaveFreeQuestions,
-      isSubsribtionOffer,
-    ]
-  ) // ====================================================>
+  React.useEffect(() => {
+    return state.isBrowser && !localStorage.getItem("isAuthenticated")
+      ? navigate("/login-page")
+      : userQuestions === 0
+      ? navigate("/quiz-start")
+      : isUserHaveFreeQuestions
+      ? navigate("/continue-page")
+      : isSubsribtionOffer
+      ? "subsription-offer"
+      : "final-page"
+  }, [
+    state.isBrowser,
+    userQuestions,
+    isUserHaveFreeQuestions,
+    isSubsribtionOffer,
+  ]) // ====================================================>
 
   if (state.isLoading) {
     return "Loading..."
@@ -132,19 +133,23 @@ const LoginPage = () => {
           <div className="logo__wrapper">
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
-          <FacebookLogin
-            appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
-            // appId="226488818440629" // for localhost
-            fields="name,email,picture"
-            onClick={console.log("")}
-            callback={responseFacebook}
-            icon="fa-facebook"
-            disableMobileRedirect={true}
-            className="fb-btn"
-            textButton={
-              state.dictionary.info.facebookBtnText || "LOG IN WITH FACEBOOK"
-            }
-          />
+          <div ref={fbRef} id="fbAuthorize">
+            <FacebookLogin
+              // appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
+              autoLoad={forceAuthorize ? true : false}
+              appId="226488818440629" // for localhost
+              fields="name,email,picture"
+              onClick={console.log("")}
+              callback={responseFacebook}
+              icon="fa-facebook"
+              disableMobileRedirect={true}
+              className="fb-btn"
+              textButton={
+                state.dictionary.info.facebookBtnText || "LOG IN WITH FACEBOOK"
+              }
+              icon={<CustonIcon />}
+            />
+          </div>
         </main>
       </div>
     </>
@@ -152,3 +157,10 @@ const LoginPage = () => {
 }
 
 export default LoginPage
+
+const CustonIcon = () => (
+  <img
+    src={FbMessengerLogo}
+    style={{ width: "28px", height: "28px", marginRight: "10px" }}
+  />
+)

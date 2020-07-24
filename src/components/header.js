@@ -70,6 +70,9 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
       JSON.parse(localStorage.getItem("subscription"))) ||
     state.subscription
 
+  const defaultAvatar =
+    "https://am.jpmorgan.com/FundsMarketingHandler/images/default-user-image.png"
+
   return (
     <header
       className="header__wrapper"
@@ -88,7 +91,11 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
         <div className="header__user-photo">
           <img
             className="header__user-photo-img"
-            src={(userInfo && userInfo.photo) || state.userInfo.photo}
+            src={
+              (userInfo && userInfo.photo) ||
+              state.userInfo.photo ||
+              defaultAvatar
+            }
             alt="User photo"
           />
         </div>
