@@ -67,9 +67,10 @@ const IndexPage = props => {
     })
   }
 
-  if (state.isLoading) {
+  if (state.isLoading || facebookID) {
     return "Loading..."
   }
+
   return (
     <>
       <Head />

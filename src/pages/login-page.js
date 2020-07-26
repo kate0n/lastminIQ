@@ -15,7 +15,8 @@ import FbMessengerLogo from "../images/fb-msng-logo.svg"
 
 const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
-  const { forceAuthorize = false } = location.state || "" // autoLoad for FB auth from link with query-parameter
+  const forceAuthorize =
+    state.isBrowser && JSON.parse(localStorage.getItem("fromExternalLink")) // autoLoad for FB auth from link with query-parameter
 
   const responseFacebook = response => {
     response.status !== "unkown" &&
@@ -94,7 +95,6 @@ const LoginPage = ({ location }) => {
         payload: user.stripe_id,
       })
     }
-    console.log("FORCE AUTHORIZE?", forceAuthorize)
     navigate("/home-page", {
       state: { isReload: true, forceAuthorize: forceAuthorize ? true : false },
     })
@@ -105,7 +105,9 @@ const LoginPage = ({ location }) => {
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
   const isSubsribtionOffer = IsSubsribtionOffer()
   const userQuestions = СountUserQuestions()
+
   React.useEffect(() => {
+    console.log("login page  FORCE AUTHORIZE!!!!!!", forceAuthorize)
     return state.isBrowser && !localStorage.getItem("isAuthenticated")
       ? navigate("/login-page")
       : userQuestions === 0
@@ -130,7 +132,13 @@ const LoginPage = ({ location }) => {
     <>
       <Head />
       <OpenGraph />
-      <div className="outer-container login-page">
+      <div
+        className={
+          forceAuthorize
+            ? "outer-container login-page hide-login-page"
+            : "outer-container login-page"
+        }
+      >
         <main className="inner-container">
           <div className="logo__wrapper">
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />

@@ -9,10 +9,14 @@ import { Replace } from "../utils/isUserHaveFreeQuestions"
 //  intermediate-page + subscribe-page
 
 const SubsriptionOffer = () => {
-  const { state } = React.useContext(Context)
+  const { state, dispatch } = React.useContext(Context)
 
   useEffect(() => {
     state.isBrowser && document.body.scrollTo(0, 0)
+    dispatch({
+      type: "EXTERNAL_LINK",
+      payload: false,
+    })
   }, [])
 
   if (state.isLoading) {

@@ -7,11 +7,19 @@ import "../styles/index.scss"
 import { Replace } from "../utils/isUserHaveFreeQuestions"
 
 const QuizStart = () => {
-  const { state } = React.useContext(Context)
+  const { state, dispatch } = React.useContext(Context)
+
+  React.useEffect(() => {
+    dispatch({
+      type: "EXTERNAL_LINK",
+      payload: false,
+    })
+  }, [])
 
   if (state.isLoading) {
     return "Loading..."
   }
+
   return (
     <Layout>
       <div className="quiz-start">

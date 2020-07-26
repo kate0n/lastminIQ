@@ -7,7 +7,14 @@ import "../styles/index.scss"
 import { Replace } from "../utils/isUserHaveFreeQuestions"
 
 const ContinuePage = () => {
-  const { state } = React.useContext(Context)
+  const { state, dispatch } = React.useContext(Context)
+
+  React.useEffect(() => {
+    dispatch({
+      type: "EXTERNAL_LINK",
+      payload: false,
+    })
+  }, [])
 
   if (state.isLoading) {
     return "Loading..."

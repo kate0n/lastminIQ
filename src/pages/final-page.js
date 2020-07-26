@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "../components/layout"
-import Button, { ButtonWidthExternalLink } from "../components/button"
+import { ButtonWidthExternalLink } from "../components/button"
 import QuizHeader from "../components/quiz-header"
 import Context from "../context/Context"
 import { Replace } from "../utils/isUserHaveFreeQuestions"
@@ -9,10 +9,14 @@ import "../styles/index.scss"
 // MASTER FINAL PAGE после исчерпания всех вопросов
 
 const FinalPage = () => {
-  const { state } = React.useContext(Context)
+  const { state, dispatch } = React.useContext(Context)
 
-  const text =
-    "OK. You have {currentProgress} votes for the lottery. The drawing will take place on {awardDate}. We'll announce the winner on our Facebook page, good reason to <a href=‘https://www.facebook.com/lastmin.tv/’ target=‘_blank’> Facebook</a>"
+  React.useEffect(() => {
+    dispatch({
+      type: "EXTERNAL_LINK",
+      payload: false,
+    })
+  }, [])
 
   if (state.isLoading) {
     return "Loading..."

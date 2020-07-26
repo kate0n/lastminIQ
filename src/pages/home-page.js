@@ -10,7 +10,7 @@ import IsUserHaveFreeQuestion, {
 import "../styles/index.scss"
 
 const HomePage = ({ location }) => {
-  const { state } = React.useContext(Context)
+  const { state, dispatch } = React.useContext(Context)
   const forceAuthorize =
     state.isBrowser && JSON.parse(localStorage.getItem("fromExternalLink"))
   const { isReload = false } = location.state || ""
