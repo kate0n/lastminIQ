@@ -7,7 +7,6 @@ const OpenGraph = () => {
 
   const currentUrl = state.isBrowser && window.location.href
   const url = currentUrl || "https://iq.lastmin.tv/"
-  console.log("OpenGraph current URL", url)
   return (
     <GatsbySeo
       title="Lastmin IQ - play and win!"

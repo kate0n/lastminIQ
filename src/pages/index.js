@@ -39,28 +39,6 @@ const IndexPage = props => {
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
-      console.log("user from system", facebookID, user)
-      // dispatch({
-      //   type: "LOGIN",
-      //   payload: {
-      //     name: user.name,
-      //     photo: `http://graph.facebook.com/${facebookID}/picture?type=square`,
-      //     email: user.email,
-      //     userID: user.facebook_id,
-      //   },
-      // })
-      // dispatch({
-      //   type: "SCORE",
-      //   payload: user.progress,
-      // })
-      // dispatch({
-      //   type: "COUNT_USER_QUESTIONS",
-      //   payload: user.current_question,
-      // })
-      // dispatch({
-      //   type: "ADD_SUBSCRIPTION",
-      //   payload: user.payment_ok,
-      // })
       dispatch({
         type: "LANG",
         payload: user.localize,
@@ -68,6 +46,10 @@ const IndexPage = props => {
       dispatch({
         type: "STRIPE_ID",
         payload: user.stripe_id,
+      })
+      dispatch({
+        type: "EXTERNAL_LINK",
+        payload: true,
       })
       navigate("/login-page", {
         state: { isReload: true, forceAuthorize: true },

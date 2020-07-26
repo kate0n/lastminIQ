@@ -28,11 +28,19 @@ const initialState = {
   stripeToken: "",
   stripe_id: "",
   url: "https://iq.lastmin.tv",
+  fromExternalLink: false,
   // url: "", // for localhost
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "EXTERNAL_LINK":
+      localStorage.setItem("fromExternalLink", action.payload)
+      return {
+        ...state,
+        fromExternalLink: action.payload,
+      }
+
     case "LOGIN":
       localStorage.setItem("userInfo", JSON.stringify(action.payload))
       localStorage.setItem("isAuthenticated", true)

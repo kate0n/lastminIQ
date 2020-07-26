@@ -11,13 +11,14 @@ import "../styles/index.scss"
 
 const HomePage = ({ location }) => {
   const { state } = React.useContext(Context)
-
+  const forceAuthorize =
+    state.isBrowser && JSON.parse(localStorage.getItem("fromExternalLink"))
   const { isReload = false } = location.state || ""
+
   if (isReload) {
-    console.log("REALOAD before", location.state.isReload)
+    console.log("isReload", isReload, "forceAuthorize", forceAuthorize)
     navigate("/home-page", { state: { isReload: false } })
     state.isBrowser && window.location.reload()
-    console.log("REALOAD after", location.state.isReload)
   }
 
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()
@@ -26,6 +27,18 @@ const HomePage = ({ location }) => {
 
   React.useEffect(() => {
     state.isBrowser && document.body.scrollTo(0, 0)
+
+    // if from link with query-parameter (from many-chat) force redirect
+    if (forceAuthorize) {
+      console.log("FORCE REDIRCET FROM HOME_PAGE!!!")
+      userQuestions === 0
+        ? navigate("quiz-start")
+        : isUserHaveFreeQuestions
+        ? navigate("continue-page")
+        : isSubsribtionOffer
+        ? navigate("subsription-offer") //intermediateFinalPageText
+        : navigate("final-page")
+    }
   }, [])
 
   if (state.isLoading) {

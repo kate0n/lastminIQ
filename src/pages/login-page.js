@@ -16,7 +16,6 @@ import FbMessengerLogo from "../images/fb-msng-logo.svg"
 const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
   const { forceAuthorize = false } = location.state || "" // autoLoad for FB auth from link with query-parameter
-  const fbRef = React.useRef(null)
 
   const responseFacebook = response => {
     response.status !== "unkown" &&
@@ -95,7 +94,10 @@ const LoginPage = ({ location }) => {
         payload: user.stripe_id,
       })
     }
-    navigate("/home-page", { state: { isReload: true } })
+    console.log("FORCE AUTHORIZE?", forceAuthorize)
+    navigate("/home-page", {
+      state: { isReload: true, forceAuthorize: forceAuthorize ? true : false },
+    })
     response.status === "unkown" && navigate("/login-page")
   } // ====================================================>
 
@@ -133,11 +135,11 @@ const LoginPage = ({ location }) => {
           <div className="logo__wrapper">
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
-          <div ref={fbRef} id="fbAuthorize">
+          <div id="fbAuthorize">
             <FacebookLogin
-              appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
+              // appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
               autoLoad={forceAuthorize ? true : false}
-              // appId="226488818440629" // for localhost
+              appId="226488818440629" // for localhost
               fields="name,email,picture"
               onClick={console.log("")}
               callback={responseFacebook}
