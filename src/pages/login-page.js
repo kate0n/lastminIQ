@@ -137,9 +137,9 @@ const LoginPage = ({ location }) => {
           </div>
           <div id="fbAuthorize">
             <FacebookLogin
-              // appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
+              appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
               autoLoad={forceAuthorize ? true : false}
-              appId="226488818440629" // for localhost
+              // appId="226488818440629" // for localhost
               fields="name,email,picture"
               onClick={console.log("")}
               callback={responseFacebook}
