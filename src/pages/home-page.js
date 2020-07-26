@@ -41,7 +41,7 @@ const HomePage = ({ location }) => {
     }
   }, [])
 
-  if (state.isLoading) {
+  if (state.isLoading || forceAuthorize) {
     return "Loading..."
   }
   return (
