@@ -15,7 +15,7 @@ export const ButtonWidthExternalLink = ({
   text,
   className,
   link,
-  notBlank,
+  notBlank = false,
 }) => {
   return (
     <button className={`button button--${className}`}>
