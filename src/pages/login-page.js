@@ -155,11 +155,11 @@ const LoginPage = ({ location }) => {
               className="fb-btn"
               textButton={
                 forceAuthorize
-                  ? "SIGN UP"
+                  ? state.dictionary.info.startBtnText || "Start Quiz"
                   : state.dictionary.info.facebookBtnText ||
                     "LOG IN WITH FACEBOOK"
               }
-              icon={<CustonIcon />}
+              icon={forceAuthorize ? null : <CustonIcon />}
               // isMobile={false}
               // redirectUri="https://iq.lastmin.tv"
             />
