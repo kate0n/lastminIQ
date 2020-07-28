@@ -40,6 +40,7 @@ const FinalPage = () => {
           text={state.dictionary.info.finalPageBtnText}
           className="green"
           link="https://m.me/lastmin.tv?ref=w11889107"
+          notBlank={true}
         />
       </div>
     </Layout>

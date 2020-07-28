@@ -11,10 +11,15 @@ const Button = ({ text, className, link, locationState, onClick }) => {
   )
 }
 
-export const ButtonWidthExternalLink = ({ text, className, link }) => {
+export const ButtonWidthExternalLink = ({
+  text,
+  className,
+  link,
+  notBlank,
+}) => {
   return (
     <button className={`button button--${className}`}>
-      <a href={link} target="__blank">
+      <a href={link} target={notBlank ? "_self" : "__blank"}>
         {text}
       </a>
     </button>

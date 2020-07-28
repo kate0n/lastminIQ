@@ -107,7 +107,7 @@ const LoginPage = ({ location }) => {
   const userQuestions = СountUserQuestions()
 
   React.useEffect(() => {
-    console.log("login page  FORCE AUTHORIZE!!!!!!", forceAuthorize)
+    console.log("login page  FORCE AUTHORIZE", forceAuthorize)
     return state.isBrowser && !localStorage.getItem("isAuthenticated")
       ? navigate("/login-page")
       : userQuestions === 0
@@ -146,7 +146,6 @@ const LoginPage = ({ location }) => {
           <div id="fbAuthorize">
             <FacebookLogin
               appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
-              autoLoad={forceAuthorize ? true : false}
               // appId="226488818440629" // for localhost
               fields="name,email,picture"
               onClick={console.log("")}
@@ -155,9 +154,14 @@ const LoginPage = ({ location }) => {
               disableMobileRedirect={true}
               className="fb-btn"
               textButton={
-                state.dictionary.info.facebookBtnText || "LOG IN WITH FACEBOOK"
+                forceAuthorize
+                  ? "SIGN UP"
+                  : state.dictionary.info.facebookBtnText ||
+                    "LOG IN WITH FACEBOOK"
               }
               icon={<CustonIcon />}
+              // isMobile={false}
+              // redirectUri="https://iq.lastmin.tv"
             />
           </div>
         </main>

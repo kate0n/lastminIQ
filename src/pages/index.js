@@ -40,6 +40,18 @@ const IndexPage = props => {
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
       dispatch({
+        type: "SCORE",
+        payload: user.progress,
+      })
+      dispatch({
+        type: "COUNT_USER_QUESTIONS",
+        payload: user.current_question,
+      })
+      dispatch({
+        type: "ADD_SUBSCRIPTION",
+        payload: user.payment_ok,
+      })
+      dispatch({
         type: "LANG",
         payload: user.localize,
       })

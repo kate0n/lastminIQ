@@ -30,7 +30,7 @@ const HomePage = ({ location }) => {
 
     // if from link with query-parameter (from many-chat) force redirect
     if (forceAuthorize) {
-      console.log("FORCE REDIRCET FROM HOME_PAGE!!!")
+      console.log("FORCE REDIRCET FROM HOME_PAGE")
       userQuestions === 0
         ? navigate("quiz-start")
         : isUserHaveFreeQuestions
