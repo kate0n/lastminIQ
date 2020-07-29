@@ -15,9 +15,10 @@ import FbMessengerLogo from "../images/fb-msng-logo.svg"
 
 const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
-  const forceAuthorize =
-    state.isBrowser && JSON.parse(localStorage.getItem("fromExternalLink")) // autoLoad for FB auth from link with query-parameter
+  const fromMessenger =
+    state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
 
+  console.log("LOGIN PAGE ID", state.userInfo.userID)
   const responseFacebook = response => {
     response.status !== "unkown" &&
       dispatch({
@@ -26,7 +27,7 @@ const LoginPage = ({ location }) => {
           name: response.name,
           photo: response.picture.data.url,
           email: response.email,
-          userID: response.userID,
+          userID: fromMessenger ? state.userInfo.userID : response.userID, // оставлять id из месседжера (index.js), если fromMessenger
         },
       })
 
@@ -43,12 +44,18 @@ const LoginPage = ({ location }) => {
     )}&payment_ok=${encodeURI(false)}&localize=${lang}`
 
     // <=========  наличие в системе или создание юзера ==============
-    fetch(`${state.url}/get_user?facebook_id=${response.userID}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    // не проверять, если fromMessenger (get_user был на index.js)
+    fetch(
+      `${state.url}/get_user?facebook_id=${
+        fromMessenger ? state.userInfo.userID : response.userID
+      }`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then(response => {
         console.log("get_user response", response)
         if (response.status === 400) {
@@ -76,27 +83,27 @@ const LoginPage = ({ location }) => {
       console.log("user from system", user)
       dispatch({
         type: "SCORE",
-        payload: user.progress,
+        payload: user.progress || 0,
       })
       dispatch({
         type: "COUNT_USER_QUESTIONS",
-        payload: user.current_question,
+        payload: user.current_question || 0,
       })
       dispatch({
         type: "ADD_SUBSCRIPTION",
-        payload: user.payment_ok,
+        payload: user.payment_ok || false,
       })
       dispatch({
         type: "LANG",
-        payload: user.localize,
+        payload: user.localize || "EN",
       })
       dispatch({
         type: "STRIPE_ID",
-        payload: user.stripe_id,
+        payload: user.stripe_id || "",
       })
     }
     navigate("/home-page", {
-      state: { isReload: true, forceAuthorize: forceAuthorize ? true : false },
+      state: { isReload: true, forceAuthorize: fromMessenger ? true : false },
     })
     response.status === "unkown" && navigate("/login-page")
   } // ====================================================>
@@ -107,7 +114,7 @@ const LoginPage = ({ location }) => {
   const userQuestions = СountUserQuestions()
 
   React.useEffect(() => {
-    console.log("login page  FORCE AUTHORIZE", forceAuthorize)
+    console.log("login page  FROM MESSENGER", fromMessenger)
     return state.isBrowser && !localStorage.getItem("isAuthenticated")
       ? navigate("/login-page")
       : userQuestions === 0
@@ -132,13 +139,7 @@ const LoginPage = ({ location }) => {
     <>
       <Head />
       <OpenGraph />
-      <div
-        className={
-          forceAuthorize
-            ? "outer-container login-page hide-login-page"
-            : "outer-container login-page"
-        }
-      >
+      <div className="outer-container">
         <main className="inner-container">
           <div className="logo__wrapper">
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
@@ -154,12 +155,12 @@ const LoginPage = ({ location }) => {
               disableMobileRedirect={true}
               className="fb-btn"
               textButton={
-                forceAuthorize
+                fromMessenger
                   ? state.dictionary.info.startBtnText || "Start Quiz"
                   : state.dictionary.info.facebookBtnText ||
                     "LOG IN WITH FACEBOOK"
               }
-              icon={forceAuthorize ? null : <CustonIcon />}
+              icon={fromMessenger ? null : <CustonIcon />}
               // isMobile={false}
               // redirectUri="https://iq.lastmin.tv"
             />

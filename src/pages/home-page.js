@@ -12,7 +12,7 @@ import "../styles/index.scss"
 const HomePage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
   const forceAuthorize =
-    state.isBrowser && JSON.parse(localStorage.getItem("fromExternalLink"))
+    state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
   const { isReload = false } = location.state || ""
 
   if (isReload) {

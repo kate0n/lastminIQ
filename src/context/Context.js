@@ -28,17 +28,17 @@ const initialState = {
   stripeToken: "",
   stripe_id: "",
   url: "https://iq.lastmin.tv",
-  fromExternalLink: false,
+  fromMessenger: false,
   // url: "", // for localhost
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "EXTERNAL_LINK":
-      localStorage.setItem("fromExternalLink", action.payload)
+      localStorage.setItem("fromMessenger", action.payload)
       return {
         ...state,
-        fromExternalLink: action.payload,
+        fromMessenger: action.payload,
       }
 
     case "LOGIN":
@@ -48,6 +48,17 @@ const reducer = (state, action) => {
         ...state,
         isAuthenticated: true,
         userInfo: action.payload,
+      }
+
+    case "SET_USERID":
+      const userInfoWithID = {
+        ...state.userInfo,
+        userID: action.payload,
+      }
+      localStorage.setItem("userInfo", JSON.stringify(userInfoWithID))
+      return {
+        ...state,
+        userInfo: userInfoWithID,
       }
 
     case "LOGOUT":

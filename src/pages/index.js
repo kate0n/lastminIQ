@@ -39,6 +39,11 @@ const IndexPage = props => {
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
+      // add only userID, rest fields in login-page.js (name, lastname, email, photo)
+      dispatch({
+        type: "SET_USERID",
+        payload: user.facebook_id,
+      })
       dispatch({
         type: "SCORE",
         payload: user.progress,
