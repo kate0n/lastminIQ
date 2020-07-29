@@ -175,7 +175,6 @@ const LoginPage = ({ location }) => {
               // isMobile={false}
               // redirectUri="https://iq.lastmin.tv"
             />
-            FBResponse: {FBResponse}
           </div>
         </main>
       </div>
