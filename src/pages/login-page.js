@@ -15,13 +15,16 @@ import FbMessengerLogo from "../images/fb-msng-logo.svg"
 
 const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
+  const [FBResponse, setFBResponse] = React.useState("")
+
   const fromMessenger =
     state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
 
   console.log("LOGIN PAGE ID____", state.userInfo.userID)
 
   const responseFacebook = response => {
-    console.log("FACEBOOK AUTH RESPONSE____", response)
+    setFBResponse(response)
+    console.log("FACEBOOK AUTH RESPONSE__", response)
 
     response.status !== "unkown" &&
       dispatch({
@@ -172,6 +175,7 @@ const LoginPage = ({ location }) => {
               // isMobile={false}
               // redirectUri="https://iq.lastmin.tv"
             />
+            FBResponse: {FBResponse}
           </div>
         </main>
       </div>
