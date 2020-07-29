@@ -12,20 +12,19 @@ import IsUserHaveFreeQuestion, {
 } from "../utils/isUserHaveFreeQuestions"
 import OpenGraph from "../components/openGraph"
 import FbMessengerLogo from "../images/fb-msng-logo.svg"
+import withErrorBoundary from "../components/errorHOC"
 
 const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
-  const [FBResponse, setFBResponse] = React.useState("")
-
+  const [FBAnswer, setFBAnswer] = React.useState("")
   const fromMessenger =
     state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
 
   console.log("LOGIN PAGE ID____", state.userInfo.userID)
 
   const responseFacebook = response => {
-    setFBResponse(response)
     console.log("FACEBOOK AUTH RESPONSE__", response)
-
+    setFBAnswer(response)
     response.status !== "unkown" &&
       dispatch({
         type: "LOGIN",
@@ -120,12 +119,7 @@ const LoginPage = ({ location }) => {
   const userQuestions = СountUserQuestions()
 
   React.useEffect(() => {
-    console.log(
-      "login page  FROM MESSENGER",
-      fromMessenger,
-      "isAuthenticated",
-      state.isBrowser && !localStorage.getItem("isAuthenticated")
-    )
+    console.log("login page  FROM MESSENGER", fromMessenger)
     return state.isBrowser && !localStorage.getItem("isAuthenticated")
       ? navigate("/login-page")
       : userQuestions === 0
@@ -156,6 +150,8 @@ const LoginPage = ({ location }) => {
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
           <div id="fbAuthorize">
+            {JSON.stringify(FBAnswer)}
+
             <FacebookLogin
               appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
               // appId="226488818440629" // for localhost
