@@ -18,8 +18,11 @@ const LoginPage = ({ location }) => {
   const fromMessenger =
     state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
 
-  console.log("LOGIN PAGE ID", state.userInfo.userID)
+  console.log("LOGIN PAGE ID____", state.userInfo.userID)
+
   const responseFacebook = response => {
+    console.log("FACEBOOK AUTH RESPONSE____", response)
+
     response.status !== "unkown" &&
       dispatch({
         type: "LOGIN",
@@ -114,7 +117,12 @@ const LoginPage = ({ location }) => {
   const userQuestions = СountUserQuestions()
 
   React.useEffect(() => {
-    console.log("login page  FROM MESSENGER", fromMessenger)
+    console.log(
+      "login page  FROM MESSENGER",
+      fromMessenger,
+      "isAuthenticated",
+      state.isBrowser && !localStorage.getItem("isAuthenticated")
+    )
     return state.isBrowser && !localStorage.getItem("isAuthenticated")
       ? navigate("/login-page")
       : userQuestions === 0
@@ -146,8 +154,8 @@ const LoginPage = ({ location }) => {
           </div>
           <div id="fbAuthorize">
             <FacebookLogin
-              appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
-              // appId="226488818440629" // for localhost
+              // appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
+              appId="226488818440629" // for localhost
               fields="name,email,picture"
               onClick={console.log("")}
               callback={responseFacebook}

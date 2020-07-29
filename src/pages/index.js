@@ -12,7 +12,7 @@ const IndexPage = props => {
   const [langsList, setLangsList] = React.useState()
 
   const [facebookID, setFacebookID] = useQueryParam("id", NumberParam)
-  console.log("QUERY PARAMETER", facebookID)
+  // console.log("QUERY PARAMETER", facebookID)
 
   React.useEffect(() => {
     fetch(`${state.url}/localize/main.json`)
@@ -69,7 +69,7 @@ const IndexPage = props => {
         payload: true,
       })
       navigate("/login-page", {
-        state: { isReload: true, forceAuthorize: true },
+        state: { isReload: true },
       })
     }
   }, [])

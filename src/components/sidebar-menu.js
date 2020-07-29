@@ -62,13 +62,19 @@ const SidebarMenu = ({ isMenuOpen }) => {
       JSON.parse(localStorage.getItem("subscription"))) ||
     state.subscription
 
+  const defaultAvatar =
+    "https://am.jpmorgan.com/FundsMarketingHandler/images/default-user-image.png"
+
   return (
     <div className={`sidebar-menu ${isMenuOpen ? "sidebar-menu--open" : ""}`}>
       <div className="sidebar-menu__user-wrapper">
         {/* photo + name */}
         <div className="sidebar-menu__user">
           <div className="sidebar-menu__user-photo">
-            <img src={userInfo && userInfo.photo} alt="User photo" />
+            <img
+              src={(userInfo && userInfo.photo) || defaultAvatar}
+              alt="User photo"
+            />
           </div>
           <div>{userInfo && userInfo.name}</div>
         </div>
