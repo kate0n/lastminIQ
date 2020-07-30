@@ -16,7 +16,6 @@ import withErrorBoundary from "../components/errorHOC"
 
 const LoginPage = ({ location }) => {
   const { state, dispatch } = React.useContext(Context)
-  const [FBAnswer, setFBAnswer] = React.useState("")
   const fromMessenger =
     state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
 
@@ -24,7 +23,6 @@ const LoginPage = ({ location }) => {
 
   const responseFacebook = response => {
     console.log("FACEBOOK AUTH RESPONSE__", response)
-    setFBAnswer(response)
     response.status !== "unkown" &&
       dispatch({
         type: "LOGIN",
@@ -32,7 +30,7 @@ const LoginPage = ({ location }) => {
           name: response.name,
           photo: response.picture.data.url,
           email: response.email,
-          userID: fromMessenger ? state.userInfo.userID : response.userID, // оставлять id из месседжера (index.js), если fromMessenger
+          userID: response.userID, // fromMessenger ? state.userInfo.userID
         },
       })
 
@@ -51,9 +49,7 @@ const LoginPage = ({ location }) => {
     // <=========  наличие в системе или создание юзера ==============
     // не проверять, если fromMessenger (get_user был на index.js)
     fetch(
-      `${state.url}/get_user?facebook_id=${
-        fromMessenger ? state.userInfo.userID : response.userID
-      }`,
+      `${state.url}/get_user?facebook_id=${response.userID}`, //fromMessenger ? state.userInfo.userID
       {
         method: "GET",
         headers: {
@@ -108,7 +104,7 @@ const LoginPage = ({ location }) => {
       })
     }
     navigate("/home-page", {
-      state: { isReload: true, forceAuthorize: fromMessenger ? true : false },
+      state: { isReload: true, forceAuthorize: false }, // fromMessenger ? true :
     })
     response.status === "unkown" && navigate("/login-page")
   } // ====================================================>

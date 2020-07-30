@@ -10,13 +10,13 @@ import IsUserHaveFreeQuestion, {
 import "../styles/index.scss"
 
 const HomePage = ({ location }) => {
-  const { state, dispatch } = React.useContext(Context)
-  const forceAuthorize =
+  const { state } = React.useContext(Context)
+  const fromMessenger =
     state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
   const { isReload = false } = location.state || ""
 
   if (isReload) {
-    console.log("isReload", isReload, "forceAuthorize", forceAuthorize)
+    console.log("isReload", isReload, "home-page fromMessenger", fromMessenger)
     navigate("/home-page", { state: { isReload: false } })
     state.isBrowser && window.location.reload()
   }
@@ -29,7 +29,7 @@ const HomePage = ({ location }) => {
     state.isBrowser && document.body.scrollTo(0, 0)
 
     // if from link with query-parameter (from many-chat) force redirect
-    if (forceAuthorize) {
+    if (fromMessenger) {
       console.log("FORCE REDIRCET FROM HOME_PAGE")
       userQuestions === 0
         ? navigate("quiz-start")
@@ -41,7 +41,7 @@ const HomePage = ({ location }) => {
     }
   }, [])
 
-  if (state.isLoading || forceAuthorize) {
+  if (state.isLoading || fromMessenger) {
     return "Loading..."
   }
   return (

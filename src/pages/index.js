@@ -14,31 +14,7 @@ const IndexPage = props => {
   const [facebookID, setFacebookID] = useQueryParam("id", NumberParam)
   // console.log("QUERY PARAMETER", facebookID)
 
-  function openInBrowser(target, browserScheme) {
-    var ifc = document.createElement("div")
-    ifc.innerHTML = `<iframe src='${browserScheme}${target}' style='width:0;height:0;border:0; border:none;visibility: hidden;'></iframe>`
-    document.body.appendChild(ifc)
-  }
-
-  function isInApp(appSpecificUserAgents) {
-    var userAgent = navigator.userAgent || navigator.vendor || window.opera
-    for (i = 0; i <= appSpecificUserAgents.length; i++) {
-      if (userAgent.indexOf(appSpecificUserAgents[i]) > -1) return true
-    }
-  }
-
   React.useEffect(() => {
-    ;(function tryOpenBrowser() {
-      if (document.body) {
-        if (isInApp(["FBAN", "FBAV"])) {
-          //https://iq.lastmin.tv/id?=facebookID
-          openInBrowser(window.location.href, "googlechrome://navigate?url=")
-        }
-      } else {
-        window.requestAnimationFrame(tryOpenBrowser)
-      }
-    })()
-
     fetch(`${state.url}/localize/main.json`)
       .then(response => response.json())
       .then(mainJson => mainJson)
@@ -63,36 +39,40 @@ const IndexPage = props => {
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
-      // add only userID, rest fields in login-page.js (name, lastname, email, photo)
       dispatch({
-        type: "SET_USERID",
-        payload: user.facebook_id,
+        type: "LOGIN",
+        payload: {
+          name: user.name,
+          photo: `https://graph.facebook.com/${facebookID}/picture?type=normal`,
+          email: response.email || "",
+          userID: facebookID,
+        },
       })
       dispatch({
         type: "SCORE",
-        payload: user.progress,
+        payload: user.progress || 0,
       })
       dispatch({
         type: "COUNT_USER_QUESTIONS",
-        payload: user.current_question,
+        payload: user.current_question || 0,
       })
       dispatch({
         type: "ADD_SUBSCRIPTION",
-        payload: user.payment_ok,
+        payload: user.payment_ok || false,
       })
       dispatch({
         type: "LANG",
-        payload: user.localize,
+        payload: user.localize || "EN",
       })
       dispatch({
         type: "STRIPE_ID",
-        payload: user.stripe_id,
+        payload: user.stripe_id || "",
       })
       dispatch({
         type: "EXTERNAL_LINK",
         payload: true,
       })
-      navigate("/login-page", {
+      navigate("/home-page", {
         state: { isReload: true },
       })
     }
