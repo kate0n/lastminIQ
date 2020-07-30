@@ -91,11 +91,12 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
         <div className="header__user-photo">
           <img
             className="header__user-photo-img"
-            src={
+            src={defaultAvatar}
+            /* src={
               (userInfo && userInfo.photo) ||
-              state.userInfo.photo ||
-              defaultAvatar
-            }
+             state.userInfo.photo ||
+               defaultAvatar
+             } */
             alt="User photo"
           />
         </div>

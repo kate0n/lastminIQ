@@ -72,7 +72,8 @@ const SidebarMenu = ({ isMenuOpen }) => {
         <div className="sidebar-menu__user">
           <div className="sidebar-menu__user-photo">
             <img
-              src={(userInfo && userInfo.photo) || defaultAvatar}
+              /* src={(userInfo && userInfo.photo) || defaultAvatar} */
+              src={defaultAvatar}
               alt="User photo"
             />
           </div>
