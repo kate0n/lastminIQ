@@ -44,7 +44,7 @@ const IndexPage = props => {
         payload: {
           name: user.name,
           photo: `https://graph.facebook.com/${facebookID}/picture?type=normal`,
-          email: response.email || "",
+          email: user.email || "",
           userID: facebookID,
         },
       })
