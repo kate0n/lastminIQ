@@ -30,6 +30,7 @@ const initialState = {
   url: "https://iq.lastmin.tv",
   fromMessenger: false,
   // url: "", // for localhost
+  userFromServer: "",
 }
 
 const reducer = (state, action) => {
@@ -50,15 +51,11 @@ const reducer = (state, action) => {
         userInfo: action.payload,
       }
 
-    case "SET_USERID":
-      const userInfoWithID = {
-        ...state.userInfo,
-        userID: action.payload,
-      }
-      localStorage.setItem("userInfo", JSON.stringify(userInfoWithID))
+    case "USER_FROM_SERVER":
+      localStorage.setItem("userFromServer", JSON.stringify(action.payload))
       return {
         ...state,
-        userInfo: userInfoWithID,
+        userFromServer: action.payload,
       }
 
     case "LOGOUT":

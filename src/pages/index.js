@@ -43,11 +43,15 @@ const IndexPage = props => {
       dispatch({
         type: "LOGIN",
         payload: {
-          name: user.username || "",
+          name: user.username,
           photo: `https://graph.facebook.com/${facebookID}/picture?type=normal`,
           email: user.email || "",
           userID: facebookID,
         },
+      })
+      dispatch({
+        type: "USER_FROM_SERVER",
+        payload: user,
       })
       dispatch({
         type: "SCORE",
