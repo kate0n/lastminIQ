@@ -39,6 +39,7 @@ const IndexPage = props => {
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
+      debugger
       dispatch({
         type: "LOGIN",
         payload: {
