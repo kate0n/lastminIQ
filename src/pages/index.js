@@ -42,7 +42,7 @@ const IndexPage = props => {
       dispatch({
         type: "LOGIN",
         payload: {
-          name: user.name,
+          name: user.username || "",
           photo: `https://graph.facebook.com/${facebookID}/picture?type=normal`,
           email: user.email || "",
           userID: facebookID,
