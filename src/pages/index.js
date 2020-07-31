@@ -40,6 +40,7 @@ const IndexPage = props => {
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
       // debugger
+      console.log("USER FROM MANY_CHAT", user)
       dispatch({
         type: "LOGIN",
         payload: {
