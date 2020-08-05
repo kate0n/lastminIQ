@@ -39,7 +39,7 @@ const IndexPage = props => {
 
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
-      // debugger
+      debugger
       console.log("USER FROM MANY_CHAT", user)
       dispatch({
         type: "LOGIN",
@@ -49,10 +49,6 @@ const IndexPage = props => {
           email: user.email || "",
           userID: facebookID,
         },
-      })
-      dispatch({
-        type: "USER_FROM_SERVER",
-        payload: user,
       })
       dispatch({
         type: "SCORE",

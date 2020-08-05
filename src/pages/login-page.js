@@ -58,6 +58,7 @@ const LoginPage = ({ location }) => {
       }
     )
       .then(response => {
+        debugger
         console.log("get_user response", response)
         if (response.status === 400) {
           fetch(`${state.url}/create_user`, {
@@ -68,11 +69,18 @@ const LoginPage = ({ location }) => {
               "Content-Type": "application/x-www-form-urlencoded",
             },
             body: userObject,
-          }).then(
-            response =>
-              response.status !== 200 &&
+          }).then(response => {
+            if (response.status !== 200) {
               console.log("CREATE USER FAILED:", response)
-          )
+              return false
+            } else {
+              dispatch({
+                type: "SET_AUTHENTICATED",
+                payload: true,
+              })
+              return response.json()
+            }
+          })
         } else {
           return response.json()
         }
@@ -82,6 +90,10 @@ const LoginPage = ({ location }) => {
     // обновление локального стейта из ответа от сервера
     const updateLocalStoreFromServer = user => {
       console.log("user from system", user)
+      dispatch({
+        type: "SET_AUTHENTICATED",
+        payload: true,
+      })
       dispatch({
         type: "SCORE",
         payload: user.progress || 0,

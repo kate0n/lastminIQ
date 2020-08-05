@@ -44,18 +44,18 @@ const reducer = (state, action) => {
 
     case "LOGIN":
       localStorage.setItem("userInfo", JSON.stringify(action.payload))
+      // localStorage.setItem("isAuthenticated", true)
+      return {
+        ...state,
+        // isAuthenticated: true,
+        userInfo: action.payload,
+      }
+
+    case "SET_AUTHENTICATED":
       localStorage.setItem("isAuthenticated", true)
       return {
         ...state,
         isAuthenticated: true,
-        userInfo: action.payload,
-      }
-
-    case "USER_FROM_SERVER":
-      localStorage.setItem("userFromServer", JSON.stringify(action.payload))
-      return {
-        ...state,
-        userFromServer: action.payload,
       }
 
     case "LOGOUT":

@@ -18,7 +18,7 @@ const HomePage = ({ location }) => {
   if (isReload) {
     console.log("isReload", isReload, "home-page fromMessenger", fromMessenger)
     navigate("/home-page", { state: { isReload: false } })
-    state.isBrowser && window.location.reload()
+    // state.isBrowser && window.location.reload()
   }
 
   const isUserHaveFreeQuestions = IsUserHaveFreeQuestion()

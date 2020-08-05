@@ -11,6 +11,9 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
   const [isMobile, setIsMobile] = React.useState(false)
   const score = CurrentProgress()
 
+  const fromMessenger =
+    state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
+
   React.useEffect(() => {
     state.isBrowser && window.innerWidth <= 700
       ? setIsMobile(true)
@@ -91,7 +94,13 @@ const Header = ({ isMenuOpen, handleMenuClick }) => {
         <div className="header__user-photo">
           <img
             className="header__user-photo-img"
-            src={defaultAvatar}
+            src={
+              fromMessenger
+                ? defaultAvatar
+                : (userInfo && userInfo.photo) ||
+                  state.userInfo.photo ||
+                  defaultAvatar
+            }
             /* src={
               (userInfo && userInfo.photo) ||
              state.userInfo.photo ||

@@ -9,6 +9,9 @@ const SidebarMenu = ({ isMenuOpen }) => {
   const { state, dispatch } = React.useContext(Context)
   const score = CurrentProgress()
 
+  const fromMessenger =
+    state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
+
   const userInfo =
     state.isBrowser &&
     localStorage.getItem("userInfo") &&
@@ -72,8 +75,13 @@ const SidebarMenu = ({ isMenuOpen }) => {
         <div className="sidebar-menu__user">
           <div className="sidebar-menu__user-photo">
             <img
-              /* src={(userInfo && userInfo.photo) || defaultAvatar} */
-              src={defaultAvatar}
+              src={
+                fromMessenger
+                  ? defaultAvatar
+                  : (userInfo && userInfo.photo) ||
+                    state.userInfo.photo ||
+                    defaultAvatar
+              }
               alt="User photo"
             />
           </div>
