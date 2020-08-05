@@ -58,7 +58,6 @@ const LoginPage = ({ location }) => {
       }
     )
       .then(response => {
-        debugger
         console.log("get_user response", response)
         if (response.status === 400) {
           fetch(`${state.url}/create_user`, {
