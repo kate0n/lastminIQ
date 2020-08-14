@@ -64,3 +64,17 @@
 // .hide-login-page {
 //   visibility: hidden;
 // }
+
+.link-to-chat {
+  width: 311px;
+  height: 70px;
+  background-color: #0260eb;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 70px;
+}

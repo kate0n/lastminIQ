@@ -19,8 +19,6 @@ const LoginPage = ({ location }) => {
   const fromMessenger =
     state.isBrowser && JSON.parse(localStorage.getItem("fromMessenger"))
 
-  console.log("LOGIN PAGE ID____", state.userInfo.userID)
-
   const responseFacebook = response => {
     console.log("FACEBOOK AUTH RESPONSE__", response)
     response.status !== "unkown" &&
@@ -126,7 +124,7 @@ const LoginPage = ({ location }) => {
   const userQuestions = СountUserQuestions()
 
   React.useEffect(() => {
-    console.log("login page  FROM MESSENGER", fromMessenger)
+    console.log("is user FROM MESSENGER", fromMessenger)
     return state.isBrowser && !localStorage.getItem("isAuthenticated")
       ? navigate("/login-page")
       : userQuestions === 0
@@ -157,7 +155,10 @@ const LoginPage = ({ location }) => {
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
           <div id="fbAuthorize">
-            <FacebookLogin
+            <a className="link-to-chat" target="__blank" href="https://m.me/lastmin.tv?ref=w11913721">
+              <CustonIcon/>
+              LOG IN WITH FACEBOOK</a>
+            {/* <FacebookLogin
               appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
               // appId="226488818440629" // for localhost
               fields="name,email,picture"
@@ -175,8 +176,8 @@ const LoginPage = ({ location }) => {
               icon={fromMessenger ? null : <CustonIcon />}
               // isMobile={false}
               // redirectUri="https://iq.lastmin.tv"
-            />
-          </div>
+            /> */}
+            </div>
         </main>
       </div>
     </>
