@@ -155,9 +155,17 @@ const LoginPage = ({ location }) => {
             <img className="logo__img" src={LastminLogo} alt="LastminIQ logo" />
           </div>
           <div id="fbAuthorize">
-            <a className="link-to-chat" target="__blank" href="https://m.me/lastmin.tv?ref=w11913721">
-              <CustonIcon/>
-              LOG IN WITH FACEBOOK</a>
+            <a
+              className="link-to-chat"
+              target="__blank"
+              href="https://m.me/lastmin.tv?ref=w11913721"
+            >
+              <CustonIcon />
+              {fromMessenger
+                ? state.dictionary.info.startBtnText || "Start Quiz"
+                : state.dictionary.info.facebookBtnText ||
+                  "LOG IN WITH MESSENGER"}
+            </a>
             {/* <FacebookLogin
               appId={state.dictionary.settings.facebookToken} // на прод 630697047779114
               // appId="226488818440629" // for localhost
@@ -177,7 +185,7 @@ const LoginPage = ({ location }) => {
               // isMobile={false}
               // redirectUri="https://iq.lastmin.tv"
             /> */}
-            </div>
+          </div>
         </main>
       </div>
     </>
